@@ -12,6 +12,8 @@ import OrderSuccess from "./pages/OrderSuccess";
 import BottomNav from "./components/BottomNav";
 import Categories from "./pages/Categories";
 import Account from "./pages/Account";
+import Orders from "./pages/Orders";
+
 function App() {
   return (
     <BrowserRouter>
@@ -79,6 +81,15 @@ function App() {
             <>
               <Navbar />
               <Account />
+            </>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <>
+              <Navbar />
+              <Orders />
             </>
           }
         />

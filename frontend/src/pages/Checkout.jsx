@@ -63,16 +63,38 @@ function Checkout() {
       !address.state ||
       !address.pincode
     ) {
-      console.log("Validation Failed");
       toast.error("Please complete the delivery address");
       return;
     }
 
+    const order = {
+      id: Date.now(),
+      date: new Date().toLocaleString(),
+      items: cartItems,
+      address,
+      payment,
+      subtotal,
+      delivery,
+      platformFee,
+      total,
+      status: "Delivered",
+    };
+
+    const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    existingOrders.unshift(order);
+
+    localStorage.setItem("orders", JSON.stringify(existingOrders));
+
     localStorage.setItem("userAddress", JSON.stringify(address));
+
+    clearCart();
 
     toast.success("Order Placed Successfully");
 
-    navigate("/order-success");
+    setTimeout(() => {
+      navigate("/order-success");
+    }, 800);
   };
 
   return (

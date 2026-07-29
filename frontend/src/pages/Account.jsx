@@ -12,7 +12,6 @@ import {
   FaChevronRight,
   FaSignInAlt,
 } from "react-icons/fa";
-
 import PageHeader from "../components/PageHeader";
 import "../styles/account.css";
 
@@ -23,10 +22,10 @@ function Account() {
   const menuItems = [
 
     {
-      title: "My Orders",
-      subtitle: "View all your orders",
-      icon: <FaShoppingBag />,
-      action: () => toast("Login required"),
+    title: "My Orders",
+    subtitle: "View all your orders",
+    icon: <FaShoppingBag />,
+    action: () => navigate("/orders"),
     },
 
     {
