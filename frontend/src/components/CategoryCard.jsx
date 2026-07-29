@@ -1,32 +1,43 @@
 import { FaArrowRight } from "react-icons/fa";
 import "../styles/categorycard.css";
 
-function CategoryCard({ category, onClick }) {
+function CategoryCard({
 
-  return (
+    category,
 
-    <div className="category-card" onClick={onClick}>
+    onClick,
 
-      <img
-        src={category.image}
-        alt={category.name}
-      />
+    active
 
-      <div className="category-info">
+}) {
 
-        <h3>{category.name}</h3>
+    return (
 
-        <button>
+        <div
 
-          <FaArrowRight />
+            className={`category-card ${active ? "active" : ""}`}
 
-        </button>
+            onClick={onClick}
 
-      </div>
+        >
 
-    </div>
+            <img
 
-  );
+                src={category.image}
+
+                alt={category.name}
+
+            />
+
+            <h4>
+
+                {category.name}
+
+            </h4>
+
+        </div>
+
+    );
 
 }
 

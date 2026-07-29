@@ -18,3 +18,7 @@ class ProductList(generics.ListAPIView):
 class ProductListAll(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+class ProductDetail(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer

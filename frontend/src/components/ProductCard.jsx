@@ -1,9 +1,17 @@
 import { FaHeart, FaPlus } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "../styles/productcard.css";
 
 function ProductCard({ product }) {
+
+  const navigate = useNavigate();
+
   return (
-    <div className="product-card">
+
+    <div
+      className="product-card"
+      onClick={() => navigate(`/product/${product.id}`)}
+    >
 
       <div className="product-image">
 
@@ -11,7 +19,10 @@ function ProductCard({ product }) {
           ⭐ 4.8
         </span>
 
-        <button className="wishlist">
+        <button
+          className="wishlist"
+          onClick={(e) => e.stopPropagation()}
+        >
           <FaHeart />
         </button>
 
@@ -32,7 +43,10 @@ function ProductCard({ product }) {
 
           <h2>₹{product.price}</h2>
 
-          <button className="add-btn">
+          <button
+            className="add-btn"
+            onClick={(e) => e.stopPropagation()}
+          >
 
             <FaPlus />
 
@@ -45,7 +59,9 @@ function ProductCard({ product }) {
       </div>
 
     </div>
+
   );
+
 }
 
 export default ProductCard;
