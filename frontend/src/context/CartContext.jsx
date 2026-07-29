@@ -61,19 +61,18 @@ export function CartProvider({ children }) {
   const removeFromCart = (id) => {
     setCartItems(cartItems.filter((item) => item.id !== id));
   };
-
-  const value = {
-    cartItems,
-
-    addToCart,
-
-    increaseQuantity,
-
-    decreaseQuantity,
-
-    removeFromCart,
-  };
-
+const clearCart = () => {
+  setCartItems([]);
+  localStorage.removeItem("cart");
+};
+const value = {
+  cartItems,
+  addToCart,
+  increaseQuantity,
+  decreaseQuantity,
+  removeFromCart,
+  clearCart,
+};
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 

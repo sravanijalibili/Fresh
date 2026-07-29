@@ -109,3 +109,14 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+
+/* Mobile pages should leave space for Bottom Navigation */
+
+@media (max-width:768px){
+
+    body{
+        padding-bottom:80px;
+    }
+
+}

@@ -13,10 +13,11 @@ import BottomNav from "./components/BottomNav";
 import Categories from "./pages/Categories";
 import Account from "./pages/Account";
 import Orders from "./pages/Orders";
-
+import ScrollToTop from "./components/ScrollToTop";
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route
           path="/"
@@ -26,7 +27,6 @@ function App() {
               <SearchBar />
               <HeroBanner />
               <Home />
-              <BottomNav />
             </>
           }
         />
@@ -37,7 +37,6 @@ function App() {
             <>
               <Navbar />
               <Products />
-              <BottomNav />
             </>
           }
         />
@@ -48,7 +47,6 @@ function App() {
             <>
               <Navbar />
               <ProductDetails />
-              <BottomNav />
             </>
           }
         />
@@ -93,7 +91,8 @@ function App() {
             </>
           }
         />
-      </Routes>
+      </Routes>{" "}
+      <BottomNav />
     </BrowserRouter>
   );
 }

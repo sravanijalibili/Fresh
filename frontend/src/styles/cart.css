@@ -197,7 +197,7 @@
     position:fixed;
     left:0;
     right:0;
-    bottom:0;
+    bottom:70px;   /* Height of BottomNav */
 
     background:#fff;
 
@@ -249,5 +249,11 @@
 }
 
 .cart-page{
-    padding-bottom:120px;
+    background:#f5f5f5;
+    min-height:100vh;
+
+    padding:15px;
+
+    /* Enough space for checkout bar */
+    padding-bottom:180px;
 }
