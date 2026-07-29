@@ -14,3 +14,7 @@ class ProductList(generics.ListAPIView):
     def get_queryset(self):
         category_id = self.kwargs["category_id"]
         return Product.objects.filter(category_id=category_id)
+
+class ProductListAll(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
