@@ -3,10 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import HeroBanner from "./components/HeroBanner";
-
+import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
+import Checkout from "./pages/Checkout";
 
 function App() {
 
@@ -50,7 +51,25 @@ function App() {
             </>
           }
         />
+        <Route
+            path="/cart"
+            element={
+                <>
+                    <Navbar />
+                    <Cart />
+                </>
+            }
+        />
 
+        <Route
+            path="/checkout"
+            element={
+                <>
+                    <Navbar />
+                    <Checkout />
+                </>
+            }
+        />
       </Routes>
 
     </BrowserRouter>

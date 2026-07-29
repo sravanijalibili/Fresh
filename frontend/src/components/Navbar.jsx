@@ -1,9 +1,20 @@
 import { FaShoppingCart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 import "./../styles/navbar.css";
 
-function Navbar(){
+function Navbar() {
 
-    return(
+    const navigate = useNavigate();
+
+    const { cartItems } = useCart();
+
+    const cartCount = cartItems.reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
+
+    return (
 
         <nav className="navbar">
 
@@ -15,15 +26,28 @@ function Navbar(){
 
             </div>
 
-            <div className="cart">
+            <div
+                className="cart"
+                onClick={() => navigate("/cart")}
+            >
 
-                <FaShoppingCart/>
+                <FaShoppingCart />
+
+                {cartCount > 0 && (
+
+                    <span className="cart-badge">
+
+                        {cartCount}
+
+                    </span>
+
+                )}
 
             </div>
 
         </nav>
 
-    )
+    );
 
 }
 

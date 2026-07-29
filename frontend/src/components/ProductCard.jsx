@@ -1,11 +1,12 @@
 import { FaHeart, FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 import "../styles/productcard.css";
 
 function ProductCard({ product }) {
 
   const navigate = useNavigate();
-
+  const { addToCart } = useCart();
   return (
 
     <div
@@ -43,10 +44,16 @@ function ProductCard({ product }) {
 
           <h2>₹{product.price}</h2>
 
-          <button
-            className="add-btn"
-            onClick={(e) => e.stopPropagation()}
-          >
+         <button
+    className="add-btn"
+    onClick={(e) => {
+
+        e.stopPropagation();
+
+        addToCart(product);
+
+    }}
+>
 
             <FaPlus />
 

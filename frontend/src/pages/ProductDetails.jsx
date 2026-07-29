@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { FaArrowLeft, FaPlus, FaMinus, FaShoppingCart } from "react-icons/fa";
+import { useCart } from "../context/CartContext";
 import "../styles/productdetails.css";
 
 function ProductDetails() {
@@ -11,6 +12,7 @@ function ProductDetails() {
 
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
+    const { addToCart } = useCart();
 
     useEffect(() => {
 
@@ -50,35 +52,89 @@ function ProductDetails() {
 
     <div className="product-details-card">
 
-        <div className="product-image-large">
+    <div className="product-image-container">
 
-            <img
-                src={product.image}
-                alt={product.name}
-            />
-
+        <div className="discount-tag">
+            10% OFF
         </div>
+
+        <img
+            src={product.image}
+            alt={product.name}
+            className="product-main-image"
+        />
+
+    </div>
 
         <div className="product-info">
 
             <h1>{product.name}</h1>
 
+          <div className="product-meta">
+
             <div className="rating">
                 ⭐ 4.8
             </div>
 
-            <div className="product-price">
-                ₹{product.price}
+            <div className="stock-badge">
+                🟢 In Stock
             </div>
+
+        </div>
+
+        <div className="price-section">
+
+            <div className="product-price">
+
+                ₹{product.price}
+
+            </div>
+
+            <div className="original-price">
+
+                ₹{Math.round(product.price * 1.1)}
+
+            </div>
+
+        </div>
 
             <div className="product-quantity">
                 {product.quantity}
             </div>
 
-            <div className="delivery">
-                ⚡ Delivery in 10 mins
+          <div className="delivery-card">
+
+            <h4>
+                ⚡ Delivery
+            </h4>
+
+            <p>
+
+                Delivery within
+
+                <strong> 10 Minutes</strong>
+
+            </p>
+
+        </div>
+
+            <div className="offer-badge">
+                🔥 10% OFF on this product
             </div>
 
+            <div className="about-product">
+
+                <h3>About this Product</h3>
+
+                <p>
+
+                    Fresh quality {product.name.toLowerCase()}
+                    sourced directly from trusted farms.
+                    Carefully packed to retain freshness.
+
+                </p>
+
+</div>
             <div className="quantity-selector">
 
                 <button
@@ -102,13 +158,24 @@ function ProductDetails() {
 
             </div>
 
-            <button className="cart-btn">
+          <button
+            className="cart-btn"
+            onClick={() => {
 
-                <FaShoppingCart />
+                for (let i = 0; i < quantity; i++) {
+                    addToCart(product);
+                }
 
-                Add to Cart
+                alert(`${product.name} added to cart`);
 
-            </button>
+            }}
+        >
+
+            <FaShoppingCart />
+
+            Add to Cart
+
+        </button>
 
         </div>
 
