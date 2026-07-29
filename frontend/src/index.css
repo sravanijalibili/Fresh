@@ -162,3 +162,13 @@ code {
     }
 
 }
+
+html {
+    color-scheme: light;
+}
+
+body {
+    color-scheme: light;
+    background: #f5f5f5;
+    color: #222;
+}
