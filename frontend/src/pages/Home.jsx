@@ -8,121 +8,71 @@ import "../styles/categorycard.css";
 import "../styles/productcard.css";
 
 function Home() {
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
 
-    const [categories, setCategories] = useState([]);
-    const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-    const [selectedCategory, setSelectedCategory] = useState(null);
+  const BASE_URL = "https://fresh-backend-1007.onrender.com/api";
 
-    const BASE_URL = "https://fresh-backend-1007.onrender.com/api";
-    
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
+  useEffect(() => {
+    loadCategories();
+    loadProducts();
+  }, []);
 
-        loadCategories();
-        loadProducts();
+  const loadCategories = () => {
+    axios.get(`${BASE_URL}/categories/`).then((res) => {
+      setCategories(res.data);
+    });
+  };
 
-    }, []);
+  const loadProducts = () => {
+    axios.get(`${BASE_URL}/products/`).then((res) => {
+      setProducts(res.data);
 
-    const loadCategories = () => {
+      setSelectedCategory(null);
+    });
+  };
 
-        axios
-            .get(`${BASE_URL}/categories/`)
-            .then((res) => {
+  const loadCategoryProducts = (categoryId) => {
+    axios.get(`${BASE_URL}/products/${categoryId}/`).then((res) => {
+      setProducts(res.data);
 
-                setCategories(res.data);
+      setSelectedCategory(categoryId);
+    });
+  };
 
-            });
+  return (
+    <>
+      <div className="categories-section">
+        <h2 className="categories-title">Browse Categories</h2>
 
-    };
+        <div className="categories-grid">
+          {categories.map((category) => (
+            <CategoryCard
+              key={category.id}
+              category={category}
+              onClick={() => navigate(`/products/${category.id}`)}
+            />
+          ))}
+        </div>
+      </div>
 
-    const loadProducts = () => {
+      <div className="products-section">
+        <h2 className="products-title">
+          {selectedCategory ? "Category Products" : "Fresh Products"}
+        </h2>
 
-        axios
-            .get(`${BASE_URL}/products/`)
-            .then((res) => {
-
-                setProducts(res.data);
-
-                setSelectedCategory(null);
-
-            });
-
-    };
-
-    const loadCategoryProducts = (categoryId) => {
-
-        axios
-            .get(`${BASE_URL}/products/${categoryId}/`)
-            .then((res) => {
-
-                setProducts(res.data);
-
-                setSelectedCategory(categoryId);
-
-            });
-
-    };
-
-    return (
-
-        <>
-
-            <div className="categories-section">
-
-                <h2 className="categories-title">
-
-                    Browse Categories
-
-                </h2>
-
-                <div className="categories-grid">
-
-                    {categories.map((category) => (
-
-                    <CategoryCard
-                        key={category.id}
-                        category={category}
-                        onClick={() => navigate(`/products/${category.id}`)}
-                    />
-
-                    ))}
-
-                </div>
-
-            </div>
-
-            <div className="products-section">
-
-                <h2 className="products-title">
-
-                    {selectedCategory ? "Category Products" : "Fresh Products"}
-
-                </h2>
-
-                <div className="products-grid">
-
-                    {products.map(product => (
-
-                        <ProductCard
-
-                            key={product.id}
-
-                            product={product}
-
-                        />
-
-                    ))}
-
-                </div>
-
-            </div>
-
-        </>
-
-    );
-
+        <div className="products-grid">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Home;

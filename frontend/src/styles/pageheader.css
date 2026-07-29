@@ -1,0 +1,37 @@
+.page-header{
+    position: sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:15px 18px;
+
+    background:white;
+
+    border-bottom:1px solid #ececec;
+}
+
+.page-header h2{
+    margin:0;
+    font-size:20px;
+    font-weight:700;
+}
+
+.back-btn{
+    width:36px;
+    height:36px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f2f3f5;
+
+    cursor:pointer;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}

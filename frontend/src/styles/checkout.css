@@ -1,89 +1,185 @@
-.checkout-page{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:30px;
-
+.checkout-page {
+    background: #f5f5f5;
+    min-height: 100vh;
+    padding: 15px;
+    padding-bottom: 120px;
 }
 
-.checkout-container{
+/* ---------- Cards ---------- */
 
-    display:grid;
-
-    grid-template-columns:2fr 1fr;
-
-    gap:30px;
-
+.checkout-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
 }
 
-.address-card,
-.order-summary{
-
-    background:white;
-
-    border-radius:15px;
-
-    padding:25px;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
-
+.checkout-card h3 {
+    margin: 0 0 18px;
+    font-size: 20px;
+    color: #222;
 }
 
-.address-card input,
-.address-card textarea{
+/* ---------- Address ---------- */
 
-    width:100%;
-
-    margin-top:15px;
-
-    padding:14px;
-
-    border-radius:10px;
-
-    border:1px solid #ddd;
-
-    font-size:16px;
-
+.checkout-card input,
+.checkout-card textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 14px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    transition: .2s;
+    box-sizing: border-box;
 }
 
-.summary-row{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    margin:15px 0;
-
+.checkout-card input:focus,
+.checkout-card textarea:focus {
+    border-color: #18b54a;
 }
 
-.total{
-
-    font-size:20px;
-
-    font-weight:bold;
-
+.checkout-card textarea {
+    resize: none;
 }
 
-.place-order{
+/* ---------- Save Address ---------- */
 
-    width:100%;
+.save-address {
+    width: 100%;
+    background: #18b54a;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
 
-    margin-top:20px;
+.save-address:hover {
+    background: #14913b;
+}
 
-    padding:15px;
+/* ---------- Order Summary ---------- */
 
-    border:none;
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 14px 0;
+    font-size: 15px;
+}
 
-    border-radius:10px;
+.summary-row span {
+    color: #555;
+}
 
-    background:#2e7d32;
+.summary-row strong {
+    color: #222;
+}
 
-    color:white;
+.total {
+    font-size: 18px;
+    color: #18b54a;
+    font-weight: bold;
+}
 
-    font-size:18px;
+/* ---------- Payment ---------- */
 
-    cursor:pointer;
+.checkout-card label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 14px 0;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.checkout-card input[type="radio"] {
+    width: auto;
+    margin: 0;
+}
+
+/* ---------- Sticky Bottom ---------- */
+
+.place-order-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 -4px 12px rgba(0,0,0,.08);
+    padding: 14px 18px;
+    z-index: 1000;
+}
+
+.place-order-content {
+    max-width: 650px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.place-order-content small {
+    color: gray;
+}
+
+.place-order-content h2 {
+    margin: 4px 0 0;
+    color: #18b54a;
+}
+
+.place-order {
+    background: #18b54a;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 35px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.place-order:hover {
+    background: #14913b;
+}
+
+/* ---------- Divider ---------- */
+
+.checkout-card hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 18px 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width:768px) {
+
+    .checkout-page {
+        padding: 12px;
+        padding-bottom: 140px;
+    }
+
+    .checkout-card {
+        padding: 16px;
+    }
+
+    .place-order-content {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .place-order {
+        width: 100%;
+    }
 
 }

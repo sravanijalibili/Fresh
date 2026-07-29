@@ -8,15 +8,11 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import Checkout from "./pages/Checkout";
-
+import OrderSuccess from "./pages/OrderSuccess";
 function App() {
-
   return (
-
     <BrowserRouter>
-
       <Routes>
-
         {/* Home Page */}
         <Route
           path="/"
@@ -52,30 +48,28 @@ function App() {
           }
         />
         <Route
-            path="/cart"
-            element={
-                <>
-                    <Navbar />
-                    <Cart />
-                </>
-            }
+          path="/cart"
+          element={
+            <>
+              <Navbar />
+              <Cart />
+            </>
+          }
         />
 
         <Route
-            path="/checkout"
-            element={
-                <>
-                    <Navbar />
-                    <Checkout />
-                </>
-            }
+          path="/checkout"
+          element={
+            <>
+              <Navbar />
+              <Checkout />
+            </>
+          }
         />
+        <Route path="/order-success" element={<OrderSuccess />} />
       </Routes>
-
     </BrowserRouter>
-
   );
-
 }
 
 export default App;
