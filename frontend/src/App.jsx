@@ -9,11 +9,13 @@ import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
+import BottomNav from "./components/BottomNav";
+import Categories from "./pages/Categories";
+import Account from "./pages/Account";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Home Page */}
         <Route
           path="/"
           element={
@@ -22,31 +24,33 @@ function App() {
               <SearchBar />
               <HeroBanner />
               <Home />
+              <BottomNav />
             </>
           }
         />
 
-        {/* Category Products */}
         <Route
           path="/products/:categoryId"
           element={
             <>
               <Navbar />
               <Products />
+              <BottomNav />
             </>
           }
         />
 
-        {/* Product Details */}
         <Route
           path="/product/:productId"
           element={
             <>
               <Navbar />
               <ProductDetails />
+              <BottomNav />
             </>
           }
         />
+
         <Route
           path="/cart"
           element={
@@ -66,7 +70,18 @@ function App() {
             </>
           }
         />
+        <Route path="/categories" element={<Categories />} />
+
         <Route path="/order-success" element={<OrderSuccess />} />
+        <Route
+          path="/account"
+          element={
+            <>
+              <Navbar />
+              <Account />
+            </>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

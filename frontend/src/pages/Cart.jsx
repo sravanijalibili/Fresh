@@ -3,6 +3,7 @@ import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
+import BottomNav from "../components/BottomNav";
 import "../styles/cart.css";
 
 function Cart() {

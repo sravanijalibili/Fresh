@@ -5,7 +5,9 @@ import { FaArrowLeft, FaPlus, FaMinus, FaShoppingCart } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
 import PageHeader from "../components/PageHeader";
 import toast from "react-hot-toast";
+import BottomNav from "../components/BottomNav";
 import "../styles/productdetails.css";
+import API from "../services/api";
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -16,10 +18,7 @@ function ProductDetails() {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    axios
-      .get(
-        `https://fresh-backend-1007.onrender.com/api/productDetails/${productId}/`,
-      )
+      API.get(`productDetails/${productId}/`)
       .then((res) => {
         setProduct(res.data);
       })
@@ -114,6 +113,7 @@ function ProductDetails() {
           </div>
         </div>
       </div>
+      <BottomNav />
     </>
   );
 }

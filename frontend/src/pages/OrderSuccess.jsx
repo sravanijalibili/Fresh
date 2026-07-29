@@ -1,81 +1,75 @@
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheckCircle, FaShoppingBag, FaHome } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import "../styles/ordersuccess.css";
 
 function OrderSuccess() {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const orderId =
+    "FR" + Math.floor(100000 + Math.random() * 900000);
 
-    const orderId =
-        "FR" +
-        Math.floor(Math.random() * 1000000);
+  return (
+    <div className="success-page">
 
-    return (
+      <div className="success-card">
 
-        <div className="success-page">
+        <div className="success-icon">
+          <FaCheckCircle />
+        </div>
 
-            <FaCheckCircle className="success-icon"/>
+        <h1>Order Confirmed!</h1>
 
-            <h1>
+        <p>
+          Your fresh groceries are being prepared.
+        </p>
 
-                Order Placed Successfully
+        <div className="delivery-card">
 
-            </h1>
+          <h3>🚴 Estimated Delivery</h3>
 
-            <p>
+          <h2>10 Minutes</h2>
 
-                Thank you for shopping with Fresh.
-
-            </p>
-
-            <div className="delivery-box">
-
-                <h3>
-
-                    Estimated Delivery
-
-                </h3>
-
-                <h2>
-
-                    10 - 15 Minutes
-
-                </h2>
-
-            </div>
-
-            <div className="order-box">
-
-                <span>
-
-                    Order ID
-
-                </span>
-
-                <strong>
-
-                    #{orderId}
-
-                </strong>
-
-            </div>
-
-            <button
-
-                className="continue-btn"
-
-                onClick={() => navigate("/")}
-
-            >
-
-                Continue Shopping
-
-            </button>
+          <span>
+            Sit back and relax. We'll be there soon.
+          </span>
 
         </div>
 
-    );
+        <div className="order-info">
 
+          <div>
+            <span>Order ID</span>
+            <strong>{orderId}</strong>
+          </div>
+
+          <div>
+            <span>Payment</span>
+            <strong>Cash on Delivery</strong>
+          </div>
+
+        </div>
+
+        <button
+          className="track-btn"
+          onClick={() => toast("Tracking will be available soon 🚴")}
+        >
+          <FaShoppingBag />
+          Track Order
+        </button>
+
+        <button
+          className="home-btn"
+          onClick={() => navigate("/")}
+        >
+          <FaHome />
+          Continue Shopping
+        </button>
+
+      </div>
+
+    </div>
+  );
 }
 
 export default OrderSuccess;

@@ -3,6 +3,7 @@ import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import PageHeader from "../components/PageHeader";
+import BottomNav from "../components/BottomNav";
 import "../styles/checkout.css";
 
 function Checkout() {

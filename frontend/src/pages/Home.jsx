@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
-
+import BottomNav from "../components/BottomNav";
 import "../styles/categorycard.css";
 import "../styles/productcard.css";
+import API from "../services/api";
 
 function Home() {
   const [categories, setCategories] = useState([]);
@@ -13,7 +14,6 @@ function Home() {
 
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const BASE_URL = "https://fresh-backend-1007.onrender.com/api";
 
   const navigate = useNavigate();
 
@@ -23,13 +23,13 @@ function Home() {
   }, []);
 
   const loadCategories = () => {
-    axios.get(`${BASE_URL}/categories/`).then((res) => {
+    API.get('categories/').then((res) => {
       setCategories(res.data);
     });
   };
 
   const loadProducts = () => {
-    axios.get(`${BASE_URL}/products/`).then((res) => {
+    API.get('products/').then((res) => {
       setProducts(res.data);
 
       setSelectedCategory(null);
@@ -37,7 +37,7 @@ function Home() {
   };
 
   const loadCategoryProducts = (categoryId) => {
-    axios.get(`${BASE_URL}/products/${categoryId}/`).then((res) => {
+    API.get(`${BASE_URL}/products/${categoryId}/`).then((res) => {
       setProducts(res.data);
 
       setSelectedCategory(categoryId);
@@ -71,6 +71,7 @@ function Home() {
           ))}
         </div>
       </div>
+      <BottomNav />
     </>
   );
 }

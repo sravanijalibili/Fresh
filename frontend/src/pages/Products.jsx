@@ -5,7 +5,9 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import PageHeader from "../components/PageHeader";
 import ProductCard from "../components/ProductCard";
+import BottomNav from "../components/BottomNav";
 import "../styles/productcard.css";
+import API from "../services/api";
 
 function Products() {
   const { categoryId } = useParams();
@@ -13,10 +15,7 @@ function Products() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://fresh-backend-1007.onrender.com/api/products/${categoryId}/`,
-      )
+      API.get(`products/${categoryId}/`)
       .then((res) => {
         setProducts(res.data);
       })
@@ -35,6 +34,7 @@ function Products() {
           ))}
         </div>
       </div>
+      <BottomNav />
     </>
   );
 }
