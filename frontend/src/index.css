@@ -43,6 +43,35 @@ body,
   }
 }
 
+input,
+textarea,
+select {
+
+    background: #fff !important;
+
+    color: #222 !important;
+
+    border: 1px solid #ddd;
+
+    -webkit-text-fill-color: #222;
+
+    appearance: none;
+
+}
+
+input::placeholder,
+textarea::placeholder {
+
+    color: #777;
+
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #222222 !important;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
