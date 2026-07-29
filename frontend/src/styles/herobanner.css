@@ -1,0 +1,147 @@
+.hero{
+
+    margin:20px;
+
+    background:linear-gradient(135deg,#16a34a,#22c55e);
+
+    border-radius:22px;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:30px;
+
+    overflow:hidden;
+
+}
+
+.hero-left{
+
+    flex:1;
+
+}
+
+.offer{
+
+    background:white;
+
+    color:#16a34a;
+
+    padding:8px 15px;
+
+    border-radius:30px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.hero h1{
+
+    margin-top:20px;
+
+    font-size:42px;
+
+    line-height:50px;
+
+}
+
+.hero p{
+
+    margin:20px 0;
+
+    width:80%;
+
+    color:#f2f2f2;
+
+}
+
+.hero button{
+
+    border:none;
+
+    background:white;
+
+    color:#16a34a;
+
+    padding:15px 28px;
+
+    border-radius:30px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.hero button:hover{
+
+    transform:scale(1.05);
+
+}
+
+.hero-right{
+
+    flex:1;
+
+    text-align:right;
+
+}
+
+.hero-right img{
+
+    width:350px;
+
+    border-radius:20px;
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.hero{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+.hero-right{
+
+margin-top:20px;
+
+}
+
+.hero-right img{
+
+width:100%;
+
+max-width:320px;
+
+}
+
+.hero p{
+
+width:100%;
+
+}
+
+.hero h1{
+
+font-size:32px;
+
+line-height:38px;
+
+}
+
+}
