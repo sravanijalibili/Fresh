@@ -1,18 +1,17 @@
-.checkout-page {
-    background: #f5f5f5;
-    min-height: 100vh;
-    padding: 15px;
-    padding-bottom: 120px;
-}
-
-/* ---------- Cards ---------- */
-
 .checkout-card {
     background: #fff;
     border-radius: 18px;
     padding: 20px;
     margin-bottom: 18px;
     box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+
+.checkout-page{
+    min-height:100vh;
+    padding:15px;
+    padding-bottom:90px;
+    background:#f5f5f5;
 }
 
 .checkout-card h3 {
@@ -106,16 +105,25 @@
 
 /* ---------- Sticky Bottom ---------- */
 
-.place-order-bar {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: white;
-    border-top: 1px solid #ddd;
-    box-shadow: 0 -4px 12px rgba(0,0,0,.08);
-    padding: 14px 18px;
-    z-index: 1000;
+.place-order-bar{
+
+    position:fixed;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    background:#fff;
+
+    border-top:1px solid #ddd;
+
+    padding:12px 16px;
+
+    z-index:9999;
+
+    box-shadow:0 -3px 12px rgba(0,0,0,.08);
 }
 
 .place-order-content {

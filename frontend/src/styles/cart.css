@@ -194,10 +194,14 @@
 }
 
 .checkout-bar{
+
     position:fixed;
+
     left:0;
+
     right:0;
-    bottom:70px;   /* Height of BottomNav */
+
+    bottom:0;
 
     background:#fff;
 
@@ -207,9 +211,9 @@
 
     box-shadow:0 -5px 15px rgba(0,0,0,.08);
 
-    z-index:100;
-}
+    z-index:1000;
 
+}
 .checkout-content{
 
     max-width:600px;
@@ -249,11 +253,13 @@
 }
 
 .cart-page{
+
     background:#f5f5f5;
+
     min-height:100vh;
 
     padding:15px;
 
-    /* Enough space for checkout bar */
-    padding-bottom:180px;
+    padding-bottom:95px;
+
 }
