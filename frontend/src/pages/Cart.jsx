@@ -36,7 +36,10 @@ function Cart() {
 
             <p>Looks like you haven't added anything yet.</p>
 
-            <button className="checkout-btn" onClick={() => navigate("/")}>
+            <button
+              className="continue-shopping-btn"
+              onClick={() => navigate("/")}
+            >
               Continue Shopping
             </button>
           </div>

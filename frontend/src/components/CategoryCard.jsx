@@ -15,7 +15,7 @@ function CategoryCard({
     >
       <img src={category.image} alt={category.name} />
 
-      <h4>{category.name}</h4>
+      <h4 className="category-name">{category.name}</h4>
     </div>
   );
 }

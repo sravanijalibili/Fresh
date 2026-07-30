@@ -1,24 +1,43 @@
 import { FaHeart, FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 import { useCart } from "../context/CartContext";
 import "../styles/productcard.css";
 
 function ProductCard({ product }) {
   const navigate = useNavigate();
+
   const { addToCart } = useCart();
+
   return (
     <div
       className="product-card"
       onClick={() => navigate(`/product/${product.id}`)}
     >
       <div className="product-image">
+        <img src={product.image} alt={product.name} />
+
+        {/* Rating */}
+
         <span className="rating">⭐ 4.8</span>
 
-        <button className="wishlist" onClick={(e) => e.stopPropagation()}>
+        {/* Discount */}
+
+        <span className="discount">20% OFF</span>
+
+        {/* Wishlist */}
+
+        <button
+          className="wishlist"
+          onClick={(e) => {
+            e.stopPropagation();
+
+            toast.success("Added to wishlist");
+          }}
+        >
           <FaHeart />
         </button>
-
-        <img src={product.image} alt={product.name} />
       </div>
 
       <div className="product-body">
@@ -35,6 +54,8 @@ function ProductCard({ product }) {
               e.stopPropagation();
 
               addToCart(product);
+
+              toast.success(`${product.name} added to cart`);
             }}
           >
             <FaPlus />

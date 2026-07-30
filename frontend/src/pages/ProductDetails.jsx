@@ -1,24 +1,21 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import { FaArrowLeft, FaPlus, FaMinus, FaShoppingCart } from "react-icons/fa";
+import { FaPlus, FaMinus, FaShoppingCart } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
 import PageHeader from "../components/PageHeader";
 import toast from "react-hot-toast";
-import BottomNav from "../components/BottomNav";
 import "../styles/productdetails.css";
 import API from "../services/api";
 
 function ProductDetails() {
   const { productId } = useParams();
-  const navigate = useNavigate();
-
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
 
   useEffect(() => {
-      API.get(`productDetails/${productId}/`)
+    API.get(`productDetails/${productId}/`)
       .then((res) => {
         setProduct(res.data);
       })
@@ -51,7 +48,6 @@ function ProductDetails() {
 
             <div className="product-meta">
               <div className="rating">⭐ 4.8</div>
-
               <div className="stock-badge">🟢 In Stock</div>
             </div>
 
@@ -113,7 +109,6 @@ function ProductDetails() {
           </div>
         </div>
       </div>
-      <BottomNav />
     </>
   );
 }
