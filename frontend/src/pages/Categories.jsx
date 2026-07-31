@@ -14,8 +14,7 @@ function Categories() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    API
-      .get("categories/")
+    API.get("categories/")
       .then((response) => setCategories(response.data))
       .catch((error) => console.log(error));
   }, []);

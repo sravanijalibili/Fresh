@@ -15,7 +15,7 @@ function Products() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-      API.get(`products/${categoryId}/`)
+    API.get(`products/${categoryId}/`)
       .then((res) => {
         setProducts(res.data);
       })

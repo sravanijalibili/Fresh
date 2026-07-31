@@ -1,135 +1,113 @@
-.navbar{
+.navbar {
+  display: flex;
 
-    display:flex;
+  justify-content: space-between;
 
-    justify-content:space-between;
+  align-items: center;
 
-    align-items:center;
+  background: white;
 
-    background:white;
+  padding: 18px;
 
-    padding:18px;
+  position: sticky;
 
-    position:sticky;
+  top: 0;
 
-    top:0;
+  z-index: 100;
 
-    z-index:100;
-
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
-
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
-.navbar h2{
+.navbar h2 {
+  color: #16a34a;
 
-    color:#16a34a;
-
-    font-size:28px;
-
+  font-size: 28px;
 }
 
-.navbar p{
+.navbar p {
+  color: gray;
 
-    color:gray;
-
-    font-size:14px;
-
+  font-size: 14px;
 }
 
-.cart{
+.cart {
+  width: 50px;
 
-    width:50px;
+  height: 50px;
 
-    height:50px;
+  border-radius: 50%;
 
-    border-radius:50%;
+  background: #16a34a;
 
-    background:#16a34a;
+  display: flex;
 
-    display:flex;
+  justify-content: center;
 
-    justify-content:center;
+  align-items: center;
 
-    align-items:center;
+  color: white;
 
-    color:white;
-
-    font-size:22px;
-
+  font-size: 22px;
 }
 
-.cart{
+.cart {
+  position: relative;
 
-    position:relative;
+  cursor: pointer;
 
-    cursor:pointer;
-
-    font-size:26px;
-
+  font-size: 26px;
 }
 
-.cart-badge{
+.cart-badge {
+  position: absolute;
 
-    position:absolute;
+  top: -10px;
 
-    top:-10px;
+  right: -10px;
 
-    right:-10px;
+  background: #ff3b30;
 
-    background:#ff3b30;
+  color: white;
 
-    color:white;
+  width: 22px;
 
-    width:22px;
+  height: 22px;
 
-    height:22px;
+  border-radius: 50%;
 
-    border-radius:50%;
+  display: flex;
 
-    display:flex;
+  justify-content: center;
 
-    justify-content:center;
+  align-items: center;
 
-    align-items:center;
+  font-size: 12px;
 
-    font-size:12px;
-
-    font-weight:bold;
-
+  font-weight: bold;
 }
 
-.desktop-menu{
-
-    display:none;
-
+.desktop-menu {
+  display: none;
 }
 
-@media(min-width:768px){
+@media (min-width: 768px) {
+  .desktop-menu {
+    display: flex;
 
-.desktop-menu{
+    gap: 35px;
 
-    display:flex;
+    font-size: 17px;
 
-    gap:35px;
+    font-weight: 600;
+  }
 
-    font-size:17px;
+  .desktop-menu a {
+    text-decoration: none;
 
-    font-weight:600;
+    color: #333;
+  }
 
-}
-
-.desktop-menu a{
-
-    text-decoration:none;
-
-    color:#333;
-
-}
-
-.desktop-menu a.active{
-
-    color:#1ba94c;
-
-}
-
+  .desktop-menu a.active {
+    color: #1ba94c;
+  }
 }

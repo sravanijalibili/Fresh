@@ -16,16 +16,14 @@ import PageHeader from "../components/PageHeader";
 import "../styles/account.css";
 
 function Account() {
-
   const navigate = useNavigate();
 
   const menuItems = [
-
     {
-    title: "My Orders",
-    subtitle: "View all your orders",
-    icon: <FaShoppingBag />,
-    action: () => navigate("/orders"),
+      title: "My Orders",
+      subtitle: "View all your orders",
+      icon: <FaShoppingBag />,
+      action: () => navigate("/orders"),
     },
 
     {
@@ -62,93 +60,52 @@ function Account() {
       icon: <FaInfoCircle />,
       action: () => toast("Fresh Grocery App"),
     },
-
   ];
 
   return (
-
     <>
-
       <PageHeader title="Account" />
 
       <div className="account-page">
-
         <div className="profile-card">
-
           <FaUserCircle className="profile-avatar" />
 
           <h2>Welcome to Fresh</h2>
 
           <p>
-
-            Login to track orders,
-            save addresses and enjoy
-            a personalized shopping experience.
-
+            Login to track orders, save addresses and enjoy a personalized
+            shopping experience.
           </p>
 
           <button
-
             className="login-btn"
-
             onClick={() => toast("Authentication module is under development")}
-
           >
-
             <FaSignInAlt />
-
             Login / Sign Up
-
           </button>
-
         </div>
 
         <div className="account-menu">
-
           {menuItems.map((item, index) => (
-
-            <div
-
-              key={index}
-
-              className="menu-row"
-
-              onClick={item.action}
-
-            >
-
+            <div key={index} className="menu-row" onClick={item.action}>
               <div className="menu-left">
-
-                <div className="menu-icon">
-
-                  {item.icon}
-
-                </div>
+                <div className="menu-icon">{item.icon}</div>
 
                 <div>
-
                   <h4>{item.title}</h4>
 
                   <small>{item.subtitle}</small>
-
                 </div>
-
               </div>
 
               <FaChevronRight />
-
             </div>
-
           ))}
-
         </div>
-
       </div>
-
     </>
-
   );
-
 }
 
 export default Account;

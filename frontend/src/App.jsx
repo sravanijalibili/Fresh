@@ -24,7 +24,6 @@ function App() {
           element={
             <>
               <Navbar />
-              <SearchBar />
               <HeroBanner />
               <Home />
             </>

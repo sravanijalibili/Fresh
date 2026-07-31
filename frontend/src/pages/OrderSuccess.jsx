@@ -6,38 +6,28 @@ import "../styles/ordersuccess.css";
 function OrderSuccess() {
   const navigate = useNavigate();
 
-  const orderId =
-    "FR" + Math.floor(100000 + Math.random() * 900000);
+  const orderId = "FR" + Math.floor(100000 + Math.random() * 900000);
 
   return (
     <div className="success-page">
-
       <div className="success-card">
-
         <div className="success-icon">
           <FaCheckCircle />
         </div>
 
         <h1>Order Confirmed!</h1>
 
-        <p>
-          Your fresh groceries are being prepared.
-        </p>
+        <p>Your fresh groceries are being prepared.</p>
 
         <div className="delivery-card">
-
           <h3>🚴 Estimated Delivery</h3>
 
           <h2>10 Minutes</h2>
 
-          <span>
-            Sit back and relax. We'll be there soon.
-          </span>
-
+          <span>Sit back and relax. We'll be there soon.</span>
         </div>
 
         <div className="order-info">
-
           <div>
             <span>Order ID</span>
             <strong>{orderId}</strong>
@@ -47,7 +37,6 @@ function OrderSuccess() {
             <span>Payment</span>
             <strong>Cash on Delivery</strong>
           </div>
-
         </div>
 
         <button
@@ -58,16 +47,11 @@ function OrderSuccess() {
           Track Order
         </button>
 
-        <button
-          className="home-btn"
-          onClick={() => navigate("/")}
-        >
+        <button className="home-btn" onClick={() => navigate("/")}>
           <FaHome />
           Continue Shopping
         </button>
-
       </div>
-
     </div>
   );
 }

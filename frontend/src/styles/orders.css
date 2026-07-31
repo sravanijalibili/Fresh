@@ -1,63 +1,51 @@
-.orders-page{
+.orders-page {
+  padding: 20px;
 
-    padding:20px;
+  background: #f7f7f7;
 
-    background:#f7f7f7;
-
-    min-height:100vh;
-
+  min-height: 100vh;
 }
 
-.order-card{
+.order-card {
+  background: white;
 
-    background:white;
+  border-radius: 18px;
 
-    border-radius:18px;
+  padding: 18px;
 
-    padding:18px;
+  margin-bottom: 18px;
 
-    margin-bottom:18px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
-
-    cursor:pointer;
-
+  cursor: pointer;
 }
 
-.order-top{
+.order-top {
+  display: flex;
 
-    display:flex;
+  justify-content: space-between;
 
-    justify-content:space-between;
-
-    align-items:center;
-
+  align-items: center;
 }
 
-.status{
+.status {
+  background: #1ba94c;
 
-    background:#1ba94c;
+  color: white;
 
-    color:white;
+  padding: 5px 12px;
 
-    padding:5px 12px;
+  border-radius: 20px;
 
-    border-radius:20px;
-
-    font-size:13px;
-
+  font-size: 13px;
 }
 
-.order-card h2{
-
-    color:#1ba94c;
-
+.order-card h2 {
+  color: #1ba94c;
 }
 
-.empty-orders{
+.empty-orders {
+  text-align: center;
 
-    text-align:center;
-
-    margin-top:100px;
-
+  margin-top: 100px;
 }

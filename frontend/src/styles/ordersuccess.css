@@ -1,245 +1,192 @@
-.success-page{
+.success-page {
+  min-height: 100vh;
 
-    min-height:100vh;
+  background: #f5f7f9;
 
-    background:#f5f7f9;
+  display: flex;
 
-    display:flex;
+  justify-content: center;
 
-    justify-content:center;
+  align-items: center;
 
-    align-items:center;
-
-    padding:25px;
-
+  padding: 25px;
 }
 
-.success-card{
+.success-card {
+  width: 100%;
 
-    width:100%;
+  max-width: 430px;
 
-    max-width:430px;
+  background: white;
 
-    background:white;
+  border-radius: 24px;
 
-    border-radius:24px;
+  padding: 35px 28px;
 
-    padding:35px 28px;
+  text-align: center;
 
-    text-align:center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-
-    animation:pop .4s ease;
-
+  animation: pop 0.4s ease;
 }
 
-@keyframes pop{
+@keyframes pop {
+  from {
+    transform: scale(0.8);
 
-    from{
+    opacity: 0;
+  }
 
-        transform:scale(.8);
+  to {
+    transform: scale(1);
 
-        opacity:0;
-
-    }
-
-    to{
-
-        transform:scale(1);
-
-        opacity:1;
-
-    }
-
+    opacity: 1;
+  }
 }
 
-.success-icon{
+.success-icon {
+  font-size: 75px;
 
-    font-size:75px;
+  color: #18b54a;
 
-    color:#18b54a;
-
-    margin-bottom:20px;
-
+  margin-bottom: 20px;
 }
 
-.success-card h1{
+.success-card h1 {
+  margin: 0;
 
-    margin:0;
-
-    font-size:30px;
-
+  font-size: 30px;
 }
 
-.success-card p{
+.success-card p {
+  color: #666;
 
-    color:#666;
+  margin-top: 10px;
 
-    margin-top:10px;
+  margin-bottom: 30px;
 
-    margin-bottom:30px;
-
-    line-height:1.5;
-
+  line-height: 1.5;
 }
 
-.delivery-card{
+.delivery-card {
+  background: #f2fff4;
 
-    background:#f2fff4;
+  border: 1px solid #d9f7df;
 
-    border:1px solid #d9f7df;
+  border-radius: 18px;
 
-    border-radius:18px;
+  padding: 22px;
 
-    padding:22px;
-
-    margin-bottom:25px;
-
+  margin-bottom: 25px;
 }
 
-.delivery-card h3{
+.delivery-card h3 {
+  margin: 0;
 
-    margin:0;
-
-    color:#18b54a;
-
+  color: #18b54a;
 }
 
-.delivery-card h2{
+.delivery-card h2 {
+  margin: 12px 0;
 
-    margin:12px 0;
+  font-size: 36px;
 
-    font-size:36px;
-
-    color:#18b54a;
-
+  color: #18b54a;
 }
 
-.delivery-card span{
-
-    color:#666;
-
+.delivery-card span {
+  color: #666;
 }
 
-.order-info{
+.order-info {
+  background: #fafafa;
 
-    background:#fafafa;
+  border-radius: 16px;
 
-    border-radius:16px;
+  padding: 18px;
 
-    padding:18px;
-
-    margin-bottom:25px;
-
+  margin-bottom: 25px;
 }
 
-.order-info div{
+.order-info div {
+  display: flex;
 
-    display:flex;
+  justify-content: space-between;
 
-    justify-content:space-between;
-
-    margin:12px 0;
-
+  margin: 12px 0;
 }
 
-.order-info span{
-
-    color:#666;
-
+.order-info span {
+  color: #666;
 }
 
 .track-btn,
+.home-btn {
+  width: 100%;
 
-.home-btn{
+  border: none;
 
-    width:100%;
+  border-radius: 14px;
 
-    border:none;
+  height: 52px;
 
-    border-radius:14px;
+  font-size: 16px;
 
-    height:52px;
+  font-weight: 600;
 
-    font-size:16px;
+  cursor: pointer;
 
-    font-weight:600;
+  display: flex;
 
-    cursor:pointer;
+  justify-content: center;
 
-    display:flex;
+  align-items: center;
 
-    justify-content:center;
-
-    align-items:center;
-
-    gap:10px;
-
+  gap: 10px;
 }
 
-.track-btn{
+.track-btn {
+  background: #18b54a;
 
-    background:#18b54a;
+  color: white;
 
-    color:white;
-
-    margin-bottom:15px;
-
+  margin-bottom: 15px;
 }
 
-.home-btn{
+.home-btn {
+  background: #ececec;
 
-    background:#ececec;
-
-    color:#333;
-
+  color: #333;
 }
 
-.track-btn:hover{
-
-    background:#14963d;
-
+.track-btn:hover {
+  background: #14963d;
 }
 
-.home-btn:hover{
-
-    background:#dddddd;
-
+.home-btn:hover {
+  background: #dddddd;
 }
 
-@media(max-width:600px){
+@media (max-width: 600px) {
+  .success-page {
+    padding: 15px;
+  }
 
-    .success-page{
+  .success-card {
+    border-radius: 20px;
 
-        padding:15px;
+    padding: 28px 22px;
+  }
 
-    }
+  .success-icon {
+    font-size: 65px;
+  }
 
-    .success-card{
+  .success-card h1 {
+    font-size: 26px;
+  }
 
-        border-radius:20px;
-
-        padding:28px 22px;
-
-    }
-
-    .success-icon{
-
-        font-size:65px;
-
-    }
-
-    .success-card h1{
-
-        font-size:26px;
-
-    }
-
-    .delivery-card h2{
-
-        font-size:30px;
-
-    }
-
+  .delivery-card h2 {
+    font-size: 30px;
+  }
 }
