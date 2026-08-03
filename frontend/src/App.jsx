@@ -14,6 +14,13 @@ import Categories from "./pages/Categories";
 import Account from "./pages/Account";
 import Orders from "./pages/Orders";
 import ScrollToTop from "./components/ScrollToTop";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./pages/Profile";
+import Addresses from "./pages/Addresses";
+
 function App() {
   return (
     <BrowserRouter>
@@ -63,10 +70,12 @@ function App() {
         <Route
           path="/checkout"
           element={
-            <>
-              <Navbar />
-              <Checkout />
-            </>
+            <ProtectedRoute>
+              <>
+                <Navbar />
+                <Checkout />
+              </>
+            </ProtectedRoute>
           }
         />
         <Route path="/categories" element={<Categories />} />
@@ -75,19 +84,48 @@ function App() {
         <Route
           path="/account"
           element={
-            <>
-              <Navbar />
-              <Account />
-            </>
+            <ProtectedRoute>
+              <>
+                <Navbar />
+                <Account />
+              </>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/orders"
           element={
-            <>
-              <Navbar />
-              <Orders />
-            </>
+            <ProtectedRoute>
+              <>
+                <Navbar />
+                <Orders />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <>
+                <Navbar />
+                <Profile />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/addresses"
+          element={
+            <ProtectedRoute>
+              <>
+                <Navbar />
+                <Addresses />
+              </>
+            </ProtectedRoute>
           }
         />
       </Routes>{" "}

@@ -14,11 +14,20 @@ import {
 } from "react-icons/fa";
 import PageHeader from "../components/PageHeader";
 import "../styles/account.css";
+import { useAuth } from "../context/AuthContext";
+import { FaSignOutAlt } from "react-icons/fa";
 
 function Account() {
   const navigate = useNavigate();
-
+  const { user, logout } = useAuth();
   const menuItems = [
+    {
+      title: "My Profile",
+      subtitle: "View & update your profile",
+      icon: <FaUserCircle />,
+      action: () => navigate("/profile"),
+    },
+
     {
       title: "My Orders",
       subtitle: "View all your orders",
@@ -30,9 +39,8 @@ function Account() {
       title: "Saved Addresses",
       subtitle: "Manage delivery addresses",
       icon: <FaMapMarkerAlt />,
-      action: () => toast("Login required"),
+      action: () => navigate("/addresses"),
     },
-
     {
       title: "Wishlist",
       subtitle: "Your favourite products",
@@ -70,20 +78,50 @@ function Account() {
         <div className="profile-card">
           <FaUserCircle className="profile-avatar" />
 
-          <h2>Welcome to Fresh</h2>
+          {user ? (
+            <>
+              <h2>Hello, {user.username} 👋</h2>
 
-          <p>
-            Login to track orders, save addresses and enjoy a personalized
-            shopping experience.
-          </p>
+              <p>{user.email}</p>
 
-          <button
-            className="login-btn"
-            onClick={() => toast("Authentication module is under development")}
-          >
-            <FaSignInAlt />
-            Login / Sign Up
-          </button>
+              <small
+                style={{
+                  color: "#777",
+                  display: "block",
+                  marginTop: "6px",
+                  marginBottom: "20px",
+                }}
+              >
+                Welcome back to Fresh Grocery
+              </small>
+
+              <button
+                className="login-btn"
+                onClick={() => {
+                  logout();
+                  toast.success("Logged out successfully");
+                  navigate("/login");
+                }}
+              >
+                <FaSignOutAlt />
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <h2>Welcome to Fresh</h2>
+
+              <p>
+                Login to track orders, save addresses and enjoy a personalized
+                shopping experience.
+              </p>
+
+              <button className="login-btn" onClick={() => navigate("/login")}>
+                <FaSignInAlt />
+                Login / Sign Up
+              </button>
+            </>
+          )}
         </div>
 
         <div className="account-menu">
