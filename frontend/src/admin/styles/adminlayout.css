@@ -1,47 +1,55 @@
 .admin-layout{
-    display:flex;
     min-height:100vh;
     background:#f5f6fa;
 }
 
+/* ---------- Desktop ---------- */
+
+@media (min-width:993px){
+
+.admin-sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:260px;
+    height:100vh;
+}
+
 .admin-main{
-    flex:1;
+    margin-left:260px;
+    min-height:100vh;
     display:flex;
     flex-direction:column;
-    min-width:0;
 }
+
+}
+
+/* ---------- Common ---------- */
 
 .admin-content{
     flex:1;
     padding:30px;
-    overflow:auto;
 }
 
 .sidebar-overlay{
     display:none;
 }
 
-@media(max-width:992px){
+/* ---------- Mobile ---------- */
 
-.admin-layout{
-    display:block;
-}
+@media (max-width:992px){
 
 .admin-main{
+    margin-left:0;
     width:100%;
 }
 
 .sidebar-overlay{
-
     display:block;
-
     position:fixed;
     inset:0;
-
-    background:rgba(0,0,0,.4);
-
+    background:rgba(0,0,0,.45);
     z-index:999;
-
 }
 
 }
