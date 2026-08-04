@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (
+    AdminLoginView,
     RegisterView,
     LoginView,
     AddressView,
@@ -32,5 +33,9 @@ urlpatterns = [
         AddressDetailView.as_view(),
         name="address-detail",
     ),
+    path(
+    "adminLogin/",
+    AdminLoginView.as_view(),
+),
 
 ]

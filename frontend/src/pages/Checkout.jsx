@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import PageHeader from "../components/PageHeader";
 import BottomNav from "../components/BottomNav";
+import { getAddresses } from "../services/addressService";
+import { placeOrder as placeOrderAPI } from "../services/orderService";
 import "../styles/checkout.css";
 
 function Checkout() {
@@ -13,22 +15,28 @@ function Checkout() {
 
   const [payment, setPayment] = useState("cod");
 
-  const [address, setAddress] = useState({
-    fullName: "",
-    mobile: "",
-    address: "",
-    city: "",
-    state: "",
-    pincode: "",
-  });
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState("");
 
   useEffect(() => {
-    const savedAddress = localStorage.getItem("userAddress");
-
-    if (savedAddress) {
-      setAddress(JSON.parse(savedAddress));
-    }
+    loadAddresses();
   }, []);
+
+  const loadAddresses = async () => {
+    try {
+      const data = await getAddresses();
+
+      setAddresses(data);
+
+      const defaultAddress = data.find((a) => a.is_default);
+
+      if (defaultAddress) {
+        setSelectedAddress(defaultAddress.id);
+      }
+    } catch {
+      toast.error("Unable to load addresses");
+    }
+  };
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -41,60 +49,36 @@ function Checkout() {
 
   const total = subtotal + delivery + platformFee;
 
-  const handleChange = (e) => {
-    setAddress({
-      ...address,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const placeOrder = async () => {
+    if (!selectedAddress) {
+      toast.error("Please select an address");
 
-  const saveAddress = () => {
-    localStorage.setItem("userAddress", JSON.stringify(address));
-
-    toast.success("Address Saved");
-  };
-
-  const placeOrder = () => {
-    if (
-      !address.fullName ||
-      !address.mobile ||
-      !address.address ||
-      !address.city ||
-      !address.state ||
-      !address.pincode
-    ) {
-      toast.error("Please complete the delivery address");
       return;
     }
 
-    const order = {
-      id: Date.now(),
-      date: new Date().toLocaleString(),
-      items: cartItems,
-      address,
-      payment,
-      subtotal,
-      delivery,
-      platformFee,
-      total,
-      status: "Delivered",
-    };
+    try {
+      const payload = {
+        address: selectedAddress,
 
-    const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+        payment_method: payment.toUpperCase(),
 
-    existingOrders.unshift(order);
+        items: cartItems.map((item) => ({
+          product: item.id,
 
-    localStorage.setItem("orders", JSON.stringify(existingOrders));
+          quantity: item.quantity,
+        })),
+      };
 
-    localStorage.setItem("userAddress", JSON.stringify(address));
+      await placeOrderAPI(payload);
 
-    clearCart();
+      clearCart();
 
-    toast.success("Order Placed Successfully");
+      toast.success("Order placed successfully");
 
-    setTimeout(() => {
       navigate("/order-success");
-    }, 800);
+    } catch {
+      toast.error("Unable to place order");
+    }
   };
 
   return (
@@ -107,57 +91,29 @@ function Checkout() {
         <div className="checkout-card">
           <h3>Delivery Address</h3>
 
-          <input
-            type="text"
-            name="fullName"
-            placeholder="Full Name"
-            value={address.fullName}
-            onChange={handleChange}
-          />
+          {addresses.map((address) => (
+            <div
+              key={address.id}
+              className={`saved-address ${
+                selectedAddress === address.id ? "selected-address" : ""
+              }`}
+              onClick={() => setSelectedAddress(address.id)}
+            >
+              <h4>{address.full_name}</h4>
 
-          <input
-            type="text"
-            name="mobile"
-            placeholder="Mobile Number"
-            value={address.mobile}
-            onChange={handleChange}
-          />
+              <p>{address.phone}</p>
 
-          <textarea
-            rows="3"
-            name="address"
-            placeholder="House No, Street, Area"
-            value={address.address}
-            onChange={handleChange}
-          />
+              <p>
+                {address.house},{address.street}
+              </p>
 
-          <input
-            type="text"
-            name="city"
-            placeholder="City"
-            value={address.city}
-            onChange={handleChange}
-          />
+              <p>
+                {address.city},{address.state}
+              </p>
 
-          <input
-            type="text"
-            name="state"
-            placeholder="State"
-            value={address.state}
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            name="pincode"
-            placeholder="Pincode"
-            value={address.pincode}
-            onChange={handleChange}
-          />
-
-          <button className="save-address" onClick={saveAddress}>
-            Save Address
-          </button>
+              <p>{address.pincode}</p>
+            </div>
+          ))}
         </div>
 
         {/* Order Summary */}

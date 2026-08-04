@@ -21,15 +21,6 @@ function Addresses() {
     loadAddresses();
   }, []);
 
-
-  useEffect(() => {
-    document.body.style.overflow = showForm ? "hidden" : "auto";
-
-    return () => {
-        document.body.style.overflow = "auto";
-    };
-}, [showForm]);
-
   const loadAddresses = async () => {
     try {
       const data = await getAddresses();
@@ -121,9 +112,13 @@ function Addresses() {
         )}
 
         {showForm && (
-          <div className="address-modal">
-            <div className="address-form">{/* Entire form goes here */}</div>
-          </div>
+          <AddressForm
+            address={selectedAddress}
+            onClose={() => {
+              setShowForm(false);
+              loadAddresses();
+            }}
+          />
         )}
       </div>
     </>

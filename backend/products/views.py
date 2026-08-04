@@ -1,7 +1,10 @@
 from rest_framework import generics
 from .models import Category, Product
 from .serializers import CategorySerializer, ProductSerializer
-
+from .models import Product
+from .serializers import ProductSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
 class CategoryList(generics.ListAPIView):
     queryset = Category.objects.all()
@@ -22,3 +25,44 @@ class ProductListAll(generics.ListAPIView):
 class ProductDetail(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+
+
+class AdminProductListCreate(generics.ListCreateAPIView):
+
+    queryset = Product.objects.all().order_by("id")
+
+    serializer_class = ProductSerializer
+
+    permission_classes = [IsAdminUser]
+
+    parser_classes = [MultiPartParser, FormParser]
+
+class AdminProductDetail(generics.RetrieveUpdateDestroyAPIView):
+
+    queryset = Product.objects.all()
+
+    serializer_class = ProductSerializer
+
+    permission_classes = [IsAdminUser]
+
+    parser_classes = [MultiPartParser, FormParser]
+
+
+
+class ProductCreate(generics.CreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAdminUser]
+
+class ProductUpdate(generics.UpdateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAdminUser]
+
+
+class ProductDelete(generics.DestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAdminUser]

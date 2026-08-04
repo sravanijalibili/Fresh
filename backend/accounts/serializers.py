@@ -97,7 +97,6 @@ class LoginSerializer(serializers.Serializer):
         return attrs
 
 
-from .models import UserProfile
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -119,29 +118,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
         ]
 
 
-from rest_framework import serializers
-from .models import Address
 
 
 class AddressSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Address
-
-        fields = [
-            "id",
-            "full_name",
-            "phone",
-            "house",
-            "street",
-            "city",
-            "state",
-            "pincode",
-            "is_default",
-            "created_at",
-        ]
-
-        read_only_fields = [
-            "id",
-            "created_at",
-        ]
+        fields = "__all__"

@@ -1,0 +1,73 @@
+.order-details-page{
+
+    padding:18px;
+
+    background:#f5f5f5;
+
+    min-height:100vh;
+
+}
+
+.details-card{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+}
+
+.details-card h3{
+
+    color:#2e7d32;
+
+    margin-bottom:12px;
+
+}
+
+.item-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin:10px 0;
+
+}
+
+.price-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:18px;
+
+    font-weight:600;
+
+}
+
+.cancel-order-btn{
+
+    width:100%;
+
+    padding:16px;
+
+    border:none;
+
+    background:#d32f2f;
+
+    color:white;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}

@@ -187,3 +187,29 @@
     width: 100%;
   }
 }
+
+.saved-address {
+  border: 2px solid #ddd;
+
+  padding: 15px;
+
+  margin-bottom: 15px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  background: white;
+}
+
+.saved-address:hover {
+  border-color: #2e7d32;
+}
+
+.selected-address {
+  border-color: #2e7d32;
+
+  background: #f3fff3;
+}

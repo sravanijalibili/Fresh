@@ -111,3 +111,63 @@
     color: #1ba94c;
   }
 }
+
+
+
+.item-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.item-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.item-image{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:12px;
+
+    object-fit:cover;
+
+    border:1px solid #eee;
+
+}
+
+.item-left h4{
+
+    margin:0;
+
+    font-size:16px;
+
+    color:#333;
+
+}
+
+.item-left p{
+
+    margin-top:6px;
+
+    color:#666;
+
+    font-size:14px;
+
+}

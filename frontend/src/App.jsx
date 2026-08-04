@@ -1,5 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import HeroBanner from "./components/HeroBanner";
@@ -20,11 +19,22 @@ import Signup from "./pages/Signup";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import Addresses from "./pages/Addresses";
+import OrderDetails from "./pages/OrderDetails";
+import AdminLayout from "./admin/layouts/AdminLayout";
 
-function App() {
+import Dashboard from "./admin/pages/Dashboard";
+import AdminProducts from "./admin/pages/Products";
+import AdminLogin from "./admin/pages/AdminLogin";
+
+function AppContent() {
+  const location = useLocation();
+
+  const isAdmin = location.pathname.startsWith("/admin");
+
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
+
       <Routes>
         <Route
           path="/"
@@ -128,8 +138,39 @@ function App() {
             </ProtectedRoute>
           }
         />
-      </Routes>{" "}
-      <BottomNav />
+        <Route
+          path="/orders/:id"
+          element={
+            <ProtectedRoute>
+              <>
+                <Navbar />
+                <OrderDetails />
+              </>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin Routes */}
+        {/* Admin Login */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="dashboard" element={<Dashboard />} />
+
+          <Route path="products" element={<AdminProducts />} />
+        </Route>
+      </Routes>
+
+      {!isAdmin && <BottomNav />}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }

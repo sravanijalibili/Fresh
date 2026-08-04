@@ -1,18 +1,29 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PageHeader from "../components/PageHeader";
-import "../styles/orders.css";
+import toast from "react-hot-toast";
 
+import PageHeader from "../components/PageHeader";
+import { getOrders } from "../services/orderService";
+
+import "../styles/orders.css";
 function Orders() {
   const navigate = useNavigate();
 
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("orders")) || [];
-
-    setOrders(data);
+    loadOrders();
   }, []);
+
+  const loadOrders = async () => {
+    try {
+      const data = await getOrders();
+
+      setOrders(data);
+    } catch {
+      toast.error("Unable to load orders");
+    }
+  };
 
   return (
     <>
@@ -35,14 +46,16 @@ function Orders() {
               <div className="order-top">
                 <h3>Order #{order.id}</h3>
 
-                <span className="status">{order.status}</span>
+                <span className={`status ${order.status.toLowerCase()}`}>
+                  {order.status}
+                </span>
               </div>
 
-              <p>{order.date}</p>
+              <p>{new Date(order.created_at).toLocaleString()}</p>
 
-              <p>{order.items.length} Items</p>
+              <p>{order.items.length} Item(s)</p>
 
-              <h2>₹{order.total}</h2>
+              <h2>₹{order.total_amount}</h2>
             </div>
           ))
         )}

@@ -79,6 +79,44 @@ class LoginView(APIView):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
+
+class AdminLoginView(APIView):
+
+    def post(self, request):
+
+        serializer = LoginSerializer(data=request.data)
+
+        if serializer.is_valid():
+
+            user = serializer.validated_data["user"]
+
+            if not user.is_staff:
+                return Response(
+                    {
+                        "error": "You are not authorized as Admin."
+                    },
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+
+            refresh = RefreshToken.for_user(user)
+
+            return Response(
+                {
+                    "message": "Admin Login Successful",
+                    "access": str(refresh.access_token),
+                    "refresh": str(refresh),
+                    "user": {
+                        "id": user.id,
+                        "username": user.username,
+                        "email": user.email,
+                    },
+                }
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 class ProfileView(APIView):
 
     permission_classes = [IsAuthenticated]

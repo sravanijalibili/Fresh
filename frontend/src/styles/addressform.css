@@ -1,50 +1,46 @@
 .address-modal{
+
     position:fixed;
+
     inset:0;
+
     background:rgba(0,0,0,.45);
 
     display:flex;
+
     justify-content:center;
+
     align-items:center;
 
+    padding:20px;
+
     z-index:9999;
+
 }
 
 .address-form-card{
 
-    width:95%;
+    width:100%;
+
     max-width:520px;
 
-    background:#fff;
+    background:white;
 
     border-radius:18px;
 
-    padding:30px;
+    padding:25px;
 
-    animation:popup .25s ease;
-}
+    max-height:90vh;
 
-@keyframes popup{
-
-    from{
-
-        transform:scale(.9);
-        opacity:0;
-
-    }
-
-    to{
-
-        transform:scale(1);
-        opacity:1;
-
-    }
+    overflow:auto;
 
 }
 
 .address-form-card h2{
 
-    margin-bottom:25px;
+    text-align:center;
+
+    margin-bottom:20px;
 
     color:#2e7d32;
 
@@ -56,11 +52,13 @@
 
     flex-direction:column;
 
-    gap:15px;
+    gap:14px;
 
 }
 
 .address-form-card input{
+
+    width:100%;
 
     padding:14px;
 
@@ -69,6 +67,8 @@
     border-radius:10px;
 
     font-size:15px;
+
+    box-sizing:border-box;
 
 }
 
@@ -80,35 +80,35 @@
 
     gap:10px;
 
-    margin-top:5px;
-
 }
 
 .form-buttons{
 
     display:flex;
 
-    justify-content:flex-end;
-
     gap:15px;
 
-    margin-top:15px;
+}
+
+.cancel-btn,
+
+.save-btn{
+
+    flex:1;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
 
 }
 
 .cancel-btn{
 
     background:#eee;
-
-    color:#333;
-
-    border:none;
-
-    padding:12px 22px;
-
-    border-radius:10px;
-
-    cursor:pointer;
 
 }
 
@@ -117,13 +117,5 @@
     background:#2e7d32;
 
     color:white;
-
-    border:none;
-
-    padding:12px 22px;
-
-    border-radius:10px;
-
-    cursor:pointer;
 
 }
