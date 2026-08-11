@@ -5,18 +5,16 @@ from .views import (
     OrderListView,
     OrderDetailView,
     CancelOrderView,
-
     AdminOrderListView,
     AdminOrderDetailView,
     AdminOrderStatusUpdateView,
 )
 
-
 urlpatterns = [
 
-    # ========================================================
-    # CUSTOMER ORDERS
-    # ========================================================
+    # =========================
+    # CUSTOMER
+    # =========================
 
     path(
         "place/",
@@ -42,10 +40,9 @@ urlpatterns = [
         name="cancel-order",
     ),
 
-
-    # ========================================================
-    # ADMIN ORDERS
-    # ========================================================
+    # =========================
+    # ADMIN
+    # =========================
 
     path(
         "admin/",
@@ -64,5 +61,4 @@ urlpatterns = [
         AdminOrderStatusUpdateView.as_view(),
         name="admin-order-status",
     ),
-
 ]

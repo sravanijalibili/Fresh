@@ -1,17 +1,22 @@
 from decimal import Decimal
 
-from django.contrib.auth.models import User
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAdminUser,
+)
 from rest_framework import status
 
 from products.models import Product
 from accounts.models import Address
 
 from .models import Order, OrderItem
-from .serializers import OrderSerializer
+
+from .serializers import (
+    OrderSerializer,
+    AdminOrderSerializer,
+)
 
 
 # ============================================================
@@ -29,19 +34,27 @@ class PlaceOrderView(APIView):
         items = request.data.get("items", [])
 
         if not items:
+
             return Response(
-                {"error": "Cart is empty"},
+                {
+                    "error": "Cart is empty"
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         try:
+
             address = Address.objects.get(
                 id=address_id,
                 user=request.user
             )
+
         except Address.DoesNotExist:
+
             return Response(
-                {"error": "Invalid Address"},
+                {
+                    "error": "Invalid Address"
+                },
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -57,10 +70,13 @@ class PlaceOrderView(APIView):
         for item in items:
 
             try:
+
                 product = Product.objects.get(
                     id=item["product"]
                 )
+
             except Product.DoesNotExist:
+
                 order.delete()
 
                 return Response(
@@ -71,9 +87,12 @@ class PlaceOrderView(APIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            quantity = int(item["quantity"])
+            quantity = int(
+                item["quantity"]
+            )
 
             if quantity <= 0:
+
                 order.delete()
 
                 return Response(
@@ -91,9 +110,12 @@ class PlaceOrderView(APIView):
                 price=product.price,
             )
 
-            total += product.price * quantity
+            total += (
+                product.price * quantity
+            )
 
         order.total_amount = total
+
         order.save()
 
         serializer = OrderSerializer(order)
@@ -123,7 +145,9 @@ class OrderListView(APIView):
             many=True
         )
 
-        return Response(serializer.data)
+        return Response(
+            serializer.data
+        )
 
 
 # ============================================================
@@ -149,9 +173,13 @@ class OrderDetailView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        serializer = OrderSerializer(order)
+        serializer = OrderSerializer(
+            order
+        )
 
-        return Response(serializer.data)
+        return Response(
+            serializer.data
+        )
 
 
 # ============================================================
@@ -198,6 +226,7 @@ class CancelOrderView(APIView):
             )
 
         order.status = "Cancelled"
+
         order.save()
 
         return Response(
@@ -218,14 +247,18 @@ class AdminOrderListView(APIView):
 
     def get(self, request):
 
-        orders = Order.objects.all().order_by("-created_at")
+        orders = Order.objects.all().order_by(
+            "-created_at"
+        )
 
-        serializer = OrderSerializer(
+        serializer = AdminOrderSerializer(
             orders,
             many=True
         )
 
-        return Response(serializer.data)
+        return Response(
+            serializer.data
+        )
 
 
 # ============================================================
@@ -253,9 +286,13 @@ class AdminOrderDetailView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        serializer = OrderSerializer(order)
+        serializer = AdminOrderSerializer(
+            order
+        )
 
-        return Response(serializer.data)
+        return Response(
+            serializer.data
+        )
 
 
 # ============================================================
@@ -283,7 +320,9 @@ class AdminOrderStatusUpdateView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        new_status = request.data.get("status")
+        new_status = request.data.get(
+            "status"
+        )
 
         valid_statuses = [
             choice[0]
@@ -294,20 +333,29 @@ class AdminOrderStatusUpdateView(APIView):
 
             return Response(
                 {
-                    "error": "Invalid order status.",
-                    "valid_statuses": valid_statuses,
+                    "error":
+                    "Invalid order status.",
+
+                    "valid_statuses":
+                    valid_statuses,
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
 
         order.status = new_status
+
         order.save()
 
-        serializer = OrderSerializer(order)
+        serializer = AdminOrderSerializer(
+            order
+        )
 
         return Response(
             {
-                "message": "Order status updated successfully.",
-                "order": serializer.data,
+                "message":
+                "Order status updated successfully.",
+
+                "order":
+                serializer.data,
             }
         )
