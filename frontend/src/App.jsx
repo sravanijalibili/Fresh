@@ -27,6 +27,8 @@ import AdminProducts from "./admin/pages/Products";
 import AdminLogin from "./admin/pages/AdminLogin";
 import AdminCategories from "./admin/pages/AdminCategories";
 import AdminOrders from "./admin/pages/Orders";
+import AdminCustomers from "./admin/pages/AdminCustomers";
+import AdminCustomerDetails from "./admin/pages/AdminCustomerDetails";
 
 function AppContent() {
   const location = useLocation();
@@ -163,6 +165,8 @@ function AppContent() {
           <Route path="products" element={<AdminProducts />} />
           <Route path="categories" element={<AdminCategories />} />
           <Route path="orders" element={<AdminOrders />} />
+          <Route path="customers" element={<AdminCustomers />} />
+          <Route path="customers/:id" element={<AdminCustomerDetails />} />
         </Route>
       </Routes>
 

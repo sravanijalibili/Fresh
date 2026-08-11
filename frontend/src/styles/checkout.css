@@ -213,3 +213,224 @@
 
   background: #f3fff3;
 }
+
+
+/* =========================================================
+   ADDRESS SECTION HEADER
+========================================================= */
+
+.checkout-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.checkout-section-header h3 {
+  margin: 0;
+}
+
+
+/* =========================================================
+   ADD ADDRESS BUTTON
+========================================================= */
+
+.add-address-btn {
+  border: none;
+  background: #e8f5e9;
+  color: #18a844;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-address-btn:hover {
+  background: #d7f0da;
+}
+
+
+/* =========================================================
+   NO ADDRESS
+========================================================= */
+
+.no-address {
+  text-align: center;
+  padding: 30px 15px;
+  border: 1px dashed #cfcfcf;
+  border-radius: 14px;
+  background: #fafafa;
+}
+
+.no-address-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.no-address h4 {
+  margin: 0 0 7px;
+  font-size: 17px;
+  color: #333;
+}
+
+.no-address p {
+  margin: 0 0 18px;
+  color: #777;
+  font-size: 14px;
+}
+
+.add-first-address {
+  border: none;
+  background: #18b54a;
+  color: white;
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-first-address:hover {
+  background: #14913b;
+}
+
+
+/* =========================================================
+   SAVED ADDRESS
+========================================================= */
+
+.address-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.address-card-top h4 {
+  margin: 0;
+  color: #222;
+}
+
+.saved-address p {
+  margin: 6px 0 0;
+  color: #555;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   DEFAULT BADGE
+========================================================= */
+
+.default-badge {
+  background: #e8f5e9;
+  color: #188b3b;
+  padding: 4px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   ADDRESS FORM
+========================================================= */
+
+.address-form {
+  margin-top: 18px;
+  padding: 18px;
+  background: #f8faf8;
+  border: 1px solid #e1e5e1;
+  border-radius: 14px;
+}
+
+.address-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.address-form-header h4 {
+  margin: 0;
+  font-size: 17px;
+  color: #333;
+}
+
+.cancel-address-btn {
+  border: none;
+  background: transparent;
+  color: #777;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancel-address-btn:hover {
+  color: #d32f2f;
+}
+
+
+/* =========================================================
+   TWO COLUMN ADDRESS INPUTS
+========================================================= */
+
+.address-two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+
+/* =========================================================
+   DEFAULT ADDRESS CHECKBOX
+========================================================= */
+
+.default-address-checkbox {
+  display: flex !important;
+  align-items: center;
+  gap: 9px !important;
+  margin: 5px 0 15px !important;
+  font-size: 14px !important;
+  color: #555;
+}
+
+.default-address-checkbox input {
+  width: auto !important;
+  margin: 0 !important;
+}
+
+
+/* =========================================================
+   DISABLED PLACE ORDER
+========================================================= */
+
+.place-order:disabled {
+  background: #bdbdbd;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   MOBILE ADDRESS FORM
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .checkout-section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .add-address-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .address-two-column {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+}

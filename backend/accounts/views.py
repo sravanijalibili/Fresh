@@ -10,12 +10,15 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import UserProfile, Address
 
 from .serializers import (
+    AdminCustomerSerializer,
     RegisterSerializer,
     LoginSerializer,
     UserProfileSerializer,
     AddressSerializer,
 )
 
+from django.db.models import Count, Sum
+from rest_framework.permissions import IsAdminUser
 
 # =========================================================
 # REGISTER
@@ -169,9 +172,7 @@ class AddressView(APIView):
 
     def post(self, request):
 
-        serializer = AddressSerializer(
-            data=request.data
-        )
+        serializer = AddressSerializer(data=request.data)
 
         if serializer.is_valid():
 
@@ -180,13 +181,9 @@ class AddressView(APIView):
                 Address.objects.filter(
                     user=request.user,
                     is_default=True
-                ).update(
-                    is_default=False
-                )
+                ).update(is_default=False)
 
-            serializer.save(
-                user=request.user
-            )
+            serializer.save(user=request.user)
 
             return Response(
                 serializer.data,
@@ -197,7 +194,6 @@ class AddressView(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-
 
 # =========================================================
 # ADDRESS DETAIL
@@ -262,3 +258,115 @@ class AddressDetailView(APIView):
         return Response(
             status=status.HTTP_204_NO_CONTENT
         )
+
+
+class AdminCustomerListView(APIView):
+
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+
+        customers = (
+            User.objects
+            .filter(is_staff=False)
+            .annotate(
+                order_count=Count(
+                    "orders",
+                    distinct=True
+                ),
+                total_spent=Sum(
+                    "orders__total_amount"
+                )
+            )
+            .order_by("-date_joined")
+        )
+
+        serializer = AdminCustomerSerializer(
+            customers,
+            many=True
+        )
+
+        return Response(
+            serializer.data
+        )
+
+# =========================================================
+# ADMIN - CUSTOMER DETAIL
+# =========================================================
+
+class AdminCustomerDetailView(APIView):
+
+    permission_classes = [IsAdminUser]
+
+    def get(self, request, pk):
+
+        try:
+            customer = (
+                User.objects
+                .filter(
+                    id=pk,
+                    is_staff=False
+                )
+                .annotate(
+                    order_count=Count(
+                        "orders",
+                        distinct=True
+                    ),
+                    total_spent=Sum(
+                        "orders__total_amount"
+                    )
+                )
+                .first()
+            )
+
+            if not customer:
+                return Response(
+                    {
+                        "error": "Customer not found."
+                    },
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            serializer = AdminCustomerSerializer(customer)
+
+            # Get customer's addresses
+            addresses = Address.objects.filter(
+                user=customer
+            )
+
+            address_serializer = AddressSerializer(
+                addresses,
+                many=True
+            )
+
+            # Get customer's orders
+            from orders.models import Order
+            from orders.serializers import OrderSerializer
+
+            orders = Order.objects.filter(
+                user=customer
+            ).order_by("-created_at")
+
+            order_serializer = OrderSerializer(
+                orders,
+                many=True
+            )
+
+            return Response(
+                {
+                    "customer": serializer.data,
+
+                    "addresses": address_serializer.data,
+
+                    "orders": order_serializer.data,
+                }
+            )
+
+        except Exception as e:
+
+            return Response(
+                {
+                    "error": str(e)
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

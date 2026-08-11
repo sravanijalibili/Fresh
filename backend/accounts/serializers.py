@@ -125,3 +125,29 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = "__all__"
+        read_only_fields = ["user", "created_at"]
+
+class AdminCustomerSerializer(serializers.ModelSerializer):
+
+    order_count = serializers.IntegerField(
+        read_only=True
+    )
+
+    total_spent = serializers.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        read_only=True
+    )
+
+    class Meta:
+
+        model = User
+
+        fields = [
+            "id",
+            "username",
+            "email",
+            "date_joined",
+            "order_count",
+            "total_spent",
+        ]
