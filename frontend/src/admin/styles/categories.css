@@ -1,0 +1,536 @@
+/* =========================================================
+   ADMIN CATEGORIES PAGE
+========================================================= */
+
+.admin-categories {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.admin-categories .page-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.admin-categories .page-top h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #1f2937;
+}
+
+/* =========================================================
+   ADD CATEGORY BUTTON
+========================================================= */
+
+.admin-categories .add-btn {
+  background: #2e7d32;
+  color: #ffffff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.admin-categories .add-btn:hover {
+  background: #256628;
+}
+
+/* =========================================================
+   DESKTOP TABLE
+========================================================= */
+
+.desktop-category-table {
+  width: 100%;
+  overflow-x: auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* Keep table from becoming too compressed */
+
+.desktop-category-table table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+}
+
+/* Table header */
+
+.desktop-category-table th {
+  background: #2e7d32;
+  color: #ffffff;
+  padding: 16px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Table cells */
+
+.desktop-category-table td {
+  padding: 15px 16px;
+  border-bottom: 1px solid #eeeeee;
+  color: #333333;
+  vertical-align: middle;
+}
+
+/* Row hover */
+
+.desktop-category-table tbody tr:hover {
+  background: #f8faf8;
+}
+
+/* Remove border from last row */
+
+.desktop-category-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================================================
+   CATEGORY IMAGE
+========================================================= */
+
+.category-thumb {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  border: 1px solid #eeeeee;
+}
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.admin-categories .edit-btn {
+  background: #2196f3;
+  color: #ffffff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 7px;
+  margin-right: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.admin-categories .edit-btn:hover {
+  background: #1976d2;
+}
+
+.admin-categories .delete-btn {
+  background: #f44336;
+  color: #ffffff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.admin-categories .delete-btn:hover {
+  background: #d32f2f;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-cell {
+  text-align: center !important;
+  padding: 40px !important;
+  color: #777777 !important;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading-text {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  color: #666666;
+}
+
+/* =========================================================
+   MOBILE CATEGORY CARDS
+========================================================= */
+
+.mobile-category-list {
+  display: none;
+}
+
+/* =========================================================
+   CATEGORY MODAL
+========================================================= */
+
+.category-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  z-index: 2000;
+}
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.category-form-card {
+  width: 100%;
+  max-width: 480px;
+
+  background: #ffffff;
+
+  border-radius: 14px;
+
+  padding: 28px;
+
+  box-sizing: border-box;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.category-form-card h2 {
+  margin: 0 0 25px;
+
+  color: #1f2937;
+
+  font-size: 24px;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.category-form-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.category-form-card input[type="text"] {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  outline: none;
+}
+
+.category-form-card input[type="text"]:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.1);
+}
+
+.category-form-card input[type="file"] {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 10px;
+
+  border: 1px dashed #cbd5e1;
+
+  border-radius: 8px;
+
+  background: #f8fafc;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   IMAGE PREVIEW
+========================================================= */
+
+.category-preview {
+  width: 120px;
+  height: 120px;
+
+  object-fit: cover;
+
+  border-radius: 10px;
+
+  border: 1px solid #eeeeee;
+}
+
+/* =========================================================
+   FORM BUTTONS
+========================================================= */
+
+.category-form-buttons {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 10px;
+}
+
+.cancel-btn {
+  background: #e5e7eb;
+
+  color: #374151;
+
+  border: none;
+
+  padding: 10px 18px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+}
+
+.cancel-btn:hover {
+  background: #d1d5db;
+}
+
+.save-btn {
+  background: #2e7d32;
+
+  color: #ffffff;
+
+  border: none;
+
+  padding: 10px 20px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.save-btn:hover {
+  background: #256628;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 992px) {
+  .admin-categories .page-top h2 {
+    font-size: 25px;
+  }
+
+  .desktop-category-table {
+    overflow-x: auto;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+  .admin-categories .page-top {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .admin-categories .page-top h2 {
+    font-size: 24px;
+  }
+
+  .admin-categories .add-btn {
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* Hide desktop table */
+
+  .desktop-category-table {
+    display: none;
+  }
+
+  /* Show mobile cards */
+
+  .mobile-category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .category-card-mobile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    background: #ffffff;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .category-mobile-image {
+    width: 85px;
+    height: 85px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    flex-shrink: 0;
+  }
+
+  .category-mobile-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .category-mobile-info h3 {
+    margin: 0 0 7px;
+
+    font-size: 18px;
+
+    color: #1f2937;
+
+    word-break: break-word;
+  }
+
+  .category-mobile-info p {
+    margin: 0 0 12px;
+
+    font-size: 14px;
+
+    color: #666666;
+  }
+
+  .category-mobile-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .admin-categories .edit-btn,
+  .admin-categories .delete-btn {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+
+  /* Modal */
+
+  .category-modal {
+    padding: 15px;
+    align-items: center;
+  }
+
+  .category-form-card {
+    padding: 22px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+  }
+
+  .category-form-card h2 {
+    font-size: 21px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .category-card-mobile {
+    align-items: flex-start;
+  }
+
+  .category-mobile-image {
+    width: 70px;
+    height: 70px;
+  }
+
+  .category-mobile-info h3 {
+    font-size: 16px;
+  }
+
+  .category-mobile-actions {
+    width: 100%;
+  }
+
+  .admin-categories .edit-btn,
+  .admin-categories .delete-btn {
+    flex: 1;
+  }
+
+  .category-form-buttons {
+    flex-direction: column;
+  }
+
+  .category-form-buttons button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   PRODUCT COUNT
+========================================================= */
+
+.product-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 38px;
+  height: 30px;
+
+  padding: 0 10px;
+
+  background: #e8f5e9;
+  color: #2e7d32;
+
+  border-radius: 20px;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Mobile product count */
+
+.product-count-mobile {
+  margin: 0 0 12px;
+
+  color: #555;
+  font-size: 14px;
+}
+
+.product-count-mobile strong {
+  color: #333;
+}

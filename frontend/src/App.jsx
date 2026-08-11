@@ -25,6 +25,8 @@ import AdminLayout from "./admin/layouts/AdminLayout";
 import Dashboard from "./admin/pages/Dashboard";
 import AdminProducts from "./admin/pages/Products";
 import AdminLogin from "./admin/pages/AdminLogin";
+import AdminCategories from "./admin/pages/AdminCategories";
+import AdminOrders from "./admin/pages/Orders";
 
 function AppContent() {
   const location = useLocation();
@@ -159,6 +161,8 @@ function AppContent() {
           <Route path="dashboard" element={<Dashboard />} />
 
           <Route path="products" element={<AdminProducts />} />
+          <Route path="categories" element={<AdminCategories />} />
+          <Route path="orders" element={<AdminOrders />} />
         </Route>
       </Routes>
 

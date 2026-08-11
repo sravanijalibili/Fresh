@@ -1,15 +1,25 @@
 from django.contrib.auth.models import User
+
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import RegisterSerializer, LoginSerializer
-from rest_framework.permissions import IsAuthenticated
-from .models import UserProfile
-from .serializers import UserProfileSerializer
-from rest_framework.permissions import IsAuthenticated
-from .models import Address
-from .serializers import AddressSerializer
+
+from .models import UserProfile, Address
+
+from .serializers import (
+    RegisterSerializer,
+    LoginSerializer,
+    UserProfileSerializer,
+    AddressSerializer,
+)
+
+
+# =========================================================
+# REGISTER
+# =========================================================
 
 class RegisterView(APIView):
 
@@ -35,6 +45,10 @@ class RegisterView(APIView):
                         "id": user.id,
                         "username": user.username,
                         "email": user.email,
+
+                        # Normal users are not admins
+                        "is_staff": user.is_staff,
+                        "is_superuser": user.is_superuser,
                     },
                 },
                 status=status.HTTP_201_CREATED,
@@ -45,6 +59,10 @@ class RegisterView(APIView):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
+
+# =========================================================
+# LOGIN
+# =========================================================
 
 class LoginView(APIView):
 
@@ -70,8 +88,14 @@ class LoginView(APIView):
                         "id": user.id,
                         "username": user.username,
                         "email": user.email,
+
+                        # IMPORTANT
+                        # This tells React whether this is an admin
+                        "is_staff": user.is_staff,
+                        "is_superuser": user.is_superuser,
                     },
-                }
+                },
+                status=status.HTTP_200_OK,
             )
 
         return Response(
@@ -80,43 +104,10 @@ class LoginView(APIView):
         )
 
 
-class AdminLoginView(APIView):
+# =========================================================
+# PROFILE
+# =========================================================
 
-    def post(self, request):
-
-        serializer = LoginSerializer(data=request.data)
-
-        if serializer.is_valid():
-
-            user = serializer.validated_data["user"]
-
-            if not user.is_staff:
-                return Response(
-                    {
-                        "error": "You are not authorized as Admin."
-                    },
-                    status=status.HTTP_403_FORBIDDEN,
-                )
-
-            refresh = RefreshToken.for_user(user)
-
-            return Response(
-                {
-                    "message": "Admin Login Successful",
-                    "access": str(refresh.access_token),
-                    "refresh": str(refresh),
-                    "user": {
-                        "id": user.id,
-                        "username": user.username,
-                        "email": user.email,
-                    },
-                }
-            )
-
-        return Response(
-            serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST,
-        )
 class ProfileView(APIView):
 
     permission_classes = [IsAuthenticated]
@@ -144,14 +135,20 @@ class ProfileView(APIView):
         )
 
         if serializer.is_valid():
+
             serializer.save()
+
             return Response(serializer.data)
 
         return Response(
             serializer.errors,
-            status=400
+            status=status.HTTP_400_BAD_REQUEST
         )
 
+
+# =========================================================
+# ADDRESSES
+# =========================================================
 
 class AddressView(APIView):
 
@@ -159,7 +156,9 @@ class AddressView(APIView):
 
     def get(self, request):
 
-        addresses = Address.objects.filter(user=request.user)
+        addresses = Address.objects.filter(
+            user=request.user
+        )
 
         serializer = AddressSerializer(
             addresses,
@@ -168,10 +167,11 @@ class AddressView(APIView):
 
         return Response(serializer.data)
 
-
     def post(self, request):
 
-        serializer = AddressSerializer(data=request.data)
+        serializer = AddressSerializer(
+            data=request.data
+        )
 
         if serializer.is_valid():
 
@@ -180,9 +180,13 @@ class AddressView(APIView):
                 Address.objects.filter(
                     user=request.user,
                     is_default=True
-                ).update(is_default=False)
+                ).update(
+                    is_default=False
+                )
 
-            serializer.save(user=request.user)
+            serializer.save(
+                user=request.user
+            )
 
             return Response(
                 serializer.data,
@@ -193,8 +197,11 @@ class AddressView(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-    
 
+
+# =========================================================
+# ADDRESS DETAIL
+# =========================================================
 
 class AddressDetailView(APIView):
 
@@ -206,7 +213,6 @@ class AddressDetailView(APIView):
             pk=pk,
             user=user
         )
-
 
     def put(self, request, pk):
 
@@ -227,17 +233,22 @@ class AddressDetailView(APIView):
                 Address.objects.filter(
                     user=request.user,
                     is_default=True
-                ).exclude(pk=pk).update(is_default=False)
+                ).exclude(
+                    pk=pk
+                ).update(
+                    is_default=False
+                )
 
             serializer.save()
 
-            return Response(serializer.data)
+            return Response(
+                serializer.data
+            )
 
         return Response(
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-
 
     def delete(self, request, pk):
 

@@ -28,46 +28,34 @@ function AdminLogin() {
     try {
       const data = await adminLogin(formData);
 
-      localStorage.setItem(
-        "admin_access",
-        data.access
-      );
+      // Clear normal customer authentication
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
+      localStorage.removeItem("user");
 
-      localStorage.setItem(
-        "admin_refresh",
-        data.refresh
-      );
+      // Store admin authentication separately
+      localStorage.setItem("admin_access", data.access);
 
-      localStorage.setItem(
-        "admin_user",
-        JSON.stringify(data.user)
-      );
+      localStorage.setItem("admin_refresh", data.refresh);
+
+      localStorage.setItem("admin_user", JSON.stringify(data.user));
 
       toast.success("Welcome Admin");
 
       navigate("/admin/dashboard");
-
     } catch (err) {
-
-      toast.error(
-        err.response?.data?.error ||
-        "Invalid Credentials"
-      );
-
+      toast.error(err.response?.data?.error || "Invalid Credentials");
     }
   };
 
   return (
     <div className="admin-login-page">
-
       <div className="admin-login-card">
-
         <h1>Fresh Admin</h1>
 
         <p>Administrator Login</p>
 
         <form onSubmit={handleSubmit}>
-
           <input
             type="text"
             name="username"
@@ -86,14 +74,9 @@ function AdminLogin() {
             required
           />
 
-          <button type="submit">
-            Login
-          </button>
-
+          <button type="submit">Login</button>
         </form>
-
       </div>
-
     </div>
   );
 }

@@ -1,12 +1,13 @@
 from django.urls import path
 
 from .views import (
-    AdminLoginView,
     RegisterView,
     LoginView,
+    ProfileView,
     AddressView,
     AddressDetailView,
 )
+
 
 urlpatterns = [
 
@@ -23,6 +24,12 @@ urlpatterns = [
     ),
 
     path(
+        "profile/",
+        ProfileView.as_view(),
+        name="profile",
+    ),
+
+    path(
         "addresses/",
         AddressView.as_view(),
         name="addresses",
@@ -33,9 +40,5 @@ urlpatterns = [
         AddressDetailView.as_view(),
         name="address-detail",
     ),
-    path(
-    "adminLogin/",
-    AdminLoginView.as_view(),
-),
 
 ]

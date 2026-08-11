@@ -1,47 +1,41 @@
+/* Full Page */
+
 .admin-layout{
+    display:flex;
     min-height:100vh;
-    background:#f5f6fa;
+    background:#f3f6fb;
 }
 
-/* ---------- Desktop ---------- */
-
-@media (min-width:993px){
-
-.admin-sidebar{
-    position:fixed;
-    top:0;
-    left:0;
-    width:260px;
-    height:100vh;
-}
+/* Sidebar Space */
 
 .admin-main{
+    flex:1;
     margin-left:260px;
-    min-height:100vh;
     display:flex;
     flex-direction:column;
+    min-width:0;
 }
 
-}
-
-/* ---------- Common ---------- */
+/* Content */
 
 .admin-content{
     flex:1;
     padding:30px;
+    overflow-y:auto;
 }
+
+/* Overlay */
 
 .sidebar-overlay{
     display:none;
 }
 
-/* ---------- Mobile ---------- */
+/* Tablet & Mobile */
 
 @media (max-width:992px){
 
 .admin-main{
     margin-left:0;
-    width:100%;
 }
 
 .sidebar-overlay{
@@ -50,6 +44,10 @@
     inset:0;
     background:rgba(0,0,0,.45);
     z-index:999;
+}
+
+.admin-content{
+    padding:20px;
 }
 
 }

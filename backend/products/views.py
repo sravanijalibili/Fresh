@@ -66,3 +66,29 @@ class ProductDelete(generics.DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAdminUser]
+
+
+
+class AdminCategoryListCreate(generics.ListCreateAPIView):
+
+    queryset = Category.objects.all().order_by("id")
+
+    serializer_class = CategorySerializer
+
+    permission_classes = [IsAdminUser]
+
+    parser_classes = [MultiPartParser, FormParser]
+
+
+class AdminCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+
+    queryset = Category.objects.all()
+
+    serializer_class = CategorySerializer
+
+    permission_classes = [IsAdminUser]
+
+    parser_classes = [MultiPartParser, FormParser]
+
+
+    
