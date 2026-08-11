@@ -1,56 +1,62 @@
-import axios from "axios";
+import API from "./api";
 
-const API = "http://127.0.0.1:8000/api/orders/";
-
-const getHeaders = () => ({
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("access")}`,
-  },
-});
+// ============================================================
+// PLACE ORDER
+// ============================================================
 
 export const placeOrder = async (orderData) => {
-  const response = await axios.post(
-    API + "place/",
-    orderData,
-    getHeaders()
+  const response = await API.post(
+    "/orders/place/",
+    orderData
   );
 
   return response.data;
 };
+
+// ============================================================
+// GET ALL ORDERS
+// ============================================================
 
 export const getOrders = async () => {
-  const response = await axios.get(
-    API,
-    getHeaders()
+  const response = await API.get(
+    "/orders/"
   );
 
   return response.data;
 };
+
+// ============================================================
+// GET SINGLE ORDER
+// ============================================================
 
 export const getOrder = async (id) => {
-  const response = await axios.get(
-    API + `${id}/`,
-    getHeaders()
+  const response = await API.get(
+    `/orders/${id}/`
   );
 
   return response.data;
 };
 
+// ============================================================
+// GET ORDER DETAILS
+// ============================================================
 
 export const getOrderDetails = async (id) => {
-  const response = await axios.get(
-    API + `${id}/`,
-    getHeaders()
+  const response = await API.get(
+    `/orders/${id}/`
   );
 
   return response.data;
 };
 
+// ============================================================
+// CANCEL ORDER
+// ============================================================
+
 export const cancelOrder = async (id) => {
-  const response = await axios.patch(
-    API + `${id}/cancel/`,
-    {},
-    getHeaders()
+  const response = await API.patch(
+    `/orders/${id}/cancel/`,
+    {}
   );
 
   return response.data;

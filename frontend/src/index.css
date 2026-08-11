@@ -63,7 +63,7 @@ body,
   }
 }
 
-input,
+input:not([type="radio"]),
 textarea,
 select {
   background: #fff !important;

@@ -7,7 +7,6 @@ import {
   updateCategory,
   deleteCategory,
 } from "../services/categoryService";
-
 import "../styles/categories.css";
 
 function AdminCategories() {
@@ -234,7 +233,7 @@ function AdminCategories() {
                     <td>
                       {category.image && (
                         <img
-                          src={`http://127.0.0.1:8000${category.image}`}
+                          src={category.image}
                           alt={category.name}
                           className="category-thumb"
                         />
@@ -282,7 +281,7 @@ function AdminCategories() {
             <div className="category-card-mobile" key={category.id}>
               {category.image && (
                 <img
-                  src={`http://127.0.0.1:8000${category.image}`}
+                  src={category.image}
                   alt={category.name}
                   className="category-mobile-image"
                 />
@@ -344,7 +343,7 @@ function AdminCategories() {
 
               {selectedCategory && selectedCategory.image && (
                 <img
-                  src={`http://127.0.0.1:8000${selectedCategory.image}`}
+                  src={selectedCategory.image}
                   alt={selectedCategory.name}
                   className="category-preview"
                 />

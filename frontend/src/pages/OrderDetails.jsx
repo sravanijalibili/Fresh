@@ -86,7 +86,7 @@ function OrderDetails() {
             <div className="item-row" key={item.id}>
               <div className="item-left">
                 <img
-                  src={`http://127.0.0.1:8000${item.product_image}`}
+                  src={item.product_image}
                   alt={item.product_name}
                   className="item-image"
                 />

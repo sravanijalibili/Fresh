@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { getProducts, deleteProduct } from "../services/productService";
 
 import ProductForm from "../components/ProductForm";
-
+import API_BASE_URL from "../../services/api";
 import "../styles/products.css";
 
 function AdminProducts() {
@@ -77,7 +77,7 @@ function AdminProducts() {
               <tr key={product.id}>
                 <td>
                   <img
-                    src={`http://127.0.0.1:8000${product.image}`}
+                    src={product.image}
                     alt={product.name}
                     className="product-thumb"
                   />
@@ -121,7 +121,7 @@ function AdminProducts() {
         {products.map((product) => (
           <div className="product-card-mobile" key={product.id}>
             <img
-              src={`http://127.0.0.1:8000${product.image}`}
+              src={product.image}
               alt={product.name}
             />
 

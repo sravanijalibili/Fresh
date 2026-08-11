@@ -7,7 +7,6 @@ import {
   updateProduct,
   getCategories,
 } from "../services/productService";
-
 import "../styles/productform.css";
 
 function ProductForm({ product, onClose }) {
@@ -136,7 +135,7 @@ function ProductForm({ product, onClose }) {
 
           {product && product.image && (
             <img
-              src={`http://127.0.0.1:8000${product.image}`}
+              src={product.image}
               alt={product.name}
               style={{
                 width: "120px",
