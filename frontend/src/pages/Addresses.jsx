@@ -91,6 +91,7 @@ function Addresses() {
                 </p>
 
                 <p>{address.pincode}</p>
+                
               </div>
 
               <div className="address-actions">

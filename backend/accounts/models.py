@@ -22,22 +22,33 @@ class UserProfile(models.Model):
 
 
 class Address(models.Model):
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="addresses")
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="addresses",
+    )
 
     full_name = models.CharField(max_length=100)
-
     phone = models.CharField(max_length=15)
-
     house = models.CharField(max_length=200)
-
     street = models.CharField(max_length=200)
-
     city = models.CharField(max_length=100)
-
     state = models.CharField(max_length=100)
-
     pincode = models.CharField(max_length=10)
+
+    latitude = models.DecimalField(
+        max_digits=10,
+        decimal_places=7,
+        blank=True,
+        null=True,
+    )
+
+    longitude = models.DecimalField(
+        max_digits=10,
+        decimal_places=7,
+        blank=True,
+        null=True,
+    )
 
     is_default = models.BooleanField(default=False)
 

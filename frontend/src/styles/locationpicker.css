@@ -1,0 +1,49 @@
+.location-picker {
+  margin-bottom: 20px;
+}
+
+.location-picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.location-picker-header h3 {
+  margin: 0;
+}
+
+.current-location-btn {
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.location-map {
+  width: 100%;
+  height: 350px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.coordinates {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.coordinates p {
+  margin: 0;
+}
+
+.confirm-location-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
