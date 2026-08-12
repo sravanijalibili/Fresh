@@ -47,11 +47,7 @@ function Login() {
       const data = await loginUser(formData);
 
       // Store user + JWT using AuthContext
-      login(
-        data.user,
-        data.access,
-        data.refresh
-      );
+      login(data.user, data.access, data.refresh);
 
       toast.success("Login Successful");
 
@@ -59,14 +55,8 @@ function Login() {
       // ADMIN
       // ======================================
 
-      if (
-        data.user.is_staff === true ||
-        data.user.is_superuser === true
-      ) {
-        navigate(
-          "/admin/dashboard",
-          { replace: true }
-        );
+      if (data.user.is_staff === true || data.user.is_superuser === true) {
+        navigate("/admin/dashboard", { replace: true });
 
         return;
       }
@@ -75,27 +65,18 @@ function Login() {
       // NORMAL CUSTOMER
       // ======================================
 
-      const from =
-        location.state?.from?.pathname || "/";
+      const from = location.state?.from?.pathname || "/";
 
-      navigate(
-        from,
-        { replace: true }
-      );
-
+      navigate(from, { replace: true });
     } catch (error) {
-      console.error(
-        "Login Error:",
-        error
-      );
+      console.error("Login Error:", error);
 
       toast.error(
         error.response?.data?.detail ||
-        error.response?.data?.non_field_errors?.[0] ||
-        error.response?.data?.error ||
-        "Invalid username or password"
+          error.response?.data?.non_field_errors?.[0] ||
+          error.response?.data?.error ||
+          "Invalid username or password"
       );
-
     } finally {
       setLoading(false);
     }
@@ -103,7 +84,6 @@ function Login() {
 
   return (
     <div className="auth-page">
-
       {/* ======================================
           Decorative Background
       ====================================== */}
@@ -112,21 +92,15 @@ function Login() {
       <div className="auth-decoration auth-decoration-two" />
 
       <div className="auth-container">
-
         {/* ======================================
             LEFT BRANDING SECTION
         ====================================== */}
 
         <div className="auth-brand-section">
-
           <div className="brand-logo">
-            <span className="brand-logo-icon">
-              🥬
-            </span>
+            <span className="brand-logo-icon">🥬</span>
 
-            <span>
-              Fresh
-            </span>
+            <span>Fresh</span>
           </div>
 
           <h2>
@@ -136,19 +110,15 @@ function Login() {
           </h2>
 
           <p>
-            Shop fresh vegetables, fruits and
-            everyday essentials with ease.
+            Shop fresh vegetables, fruits and everyday essentials with ease.
           </p>
 
           <div className="fresh-features">
-
             <div className="fresh-feature">
               <span>🥦</span>
               <div>
                 <strong>Fresh Products</strong>
-                <small>
-                  Quality groceries every day
-                </small>
+                <small>Quality groceries every day</small>
               </div>
             </div>
 
@@ -156,9 +126,7 @@ function Login() {
               <span>🚚</span>
               <div>
                 <strong>Fast Delivery</strong>
-                <small>
-                  Delivered right to your doorstep
-                </small>
+                <small>Delivered right to your doorstep</small>
               </div>
             </div>
 
@@ -166,14 +134,10 @@ function Login() {
               <span>🔒</span>
               <div>
                 <strong>Secure Shopping</strong>
-                <small>
-                  Your account is always protected
-                </small>
+                <small>Your account is always protected</small>
               </div>
             </div>
-
           </div>
-
         </div>
 
         {/* ======================================
@@ -181,41 +145,24 @@ function Login() {
         ====================================== */}
 
         <div className="auth-card">
-
           <div className="auth-card-header">
-
             <div className="mobile-brand-logo">
               <span>🥬</span>
             </div>
 
-            <h1>
-              Welcome Back 👋
-            </h1>
+            <h1>Welcome Back 👋</h1>
 
-            <p>
-              Login to continue to Fresh
-            </p>
-
+            <p>Login to continue to Fresh</p>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="login-form"
-          >
-
+          <form onSubmit={handleSubmit} className="login-form">
             {/* Username */}
 
             <div className="input-group">
-
-              <label htmlFor="username">
-                Username
-              </label>
+              <label htmlFor="username">Username</label>
 
               <div className="input-wrapper">
-
-                <span className="input-icon">
-                  👤
-                </span>
+                <span className="input-icon">👤</span>
 
                 <input
                   id="username"
@@ -227,32 +174,20 @@ function Login() {
                   autoComplete="username"
                   required
                 />
-
               </div>
-
             </div>
 
             {/* Password */}
 
             <div className="input-group">
-
-              <label htmlFor="password">
-                Password
-              </label>
+              <label htmlFor="password">Password</label>
 
               <div className="input-wrapper">
-
-                <span className="input-icon">
-                  🔒
-                </span>
+                <span className="input-icon">🔒</span>
 
                 <input
                   id="password"
-                  type={
-                    showPassword
-                      ? "text"
-                      : "password"
-                  }
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Enter your password"
                   value={formData.password}
@@ -264,32 +199,17 @@ function Login() {
                 <button
                   type="button"
                   className="password-toggle"
-                  onClick={() =>
-                    setShowPassword(
-                      !showPassword
-                    )
-                  }
-                  aria-label={
-                    showPassword
-                      ? "Hide password"
-                      : "Show password"
-                  }
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? "🙈" : "👁️"}
                 </button>
-
               </div>
-
             </div>
 
             {/* Login Button */}
 
-            <button
-              type="submit"
-              className="login-button"
-              disabled={loading}
-            >
-
+            <button type="submit" className="login-button" disabled={loading}>
               {loading ? (
                 <>
                   <span className="login-spinner" />
@@ -298,39 +218,26 @@ function Login() {
               ) : (
                 <>
                   Login
-                  <span className="login-arrow">
-                    →
-                  </span>
+                  <span className="login-arrow">→</span>
                 </>
               )}
-
             </button>
-
           </form>
 
           {/* Signup */}
 
           <div className="auth-link">
+            <span>Don't have an account?</span>
 
-            <span>
-              Don't have an account?
-            </span>
-
-            <Link to="/signup">
-              Sign Up
-            </Link>
-
+            <Link to="/signup">Sign Up</Link>
           </div>
 
           <div className="login-footer">
             <span>🌱</span>
             Fresh shopping made simple
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 }

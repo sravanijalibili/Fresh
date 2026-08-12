@@ -30,9 +30,7 @@ function OrderTimeline({ status }) {
           {index !== steps.length - 1 && (
             <div
               className={
-                index < currentIndex
-                  ? "timeline-line active"
-                  : "timeline-line"
+                index < currentIndex ? "timeline-line active" : "timeline-line"
               }
             />
           )}

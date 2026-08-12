@@ -1,17 +1,13 @@
 import api from "../../services/api";
 
-
 // ============================================================
 // GET ALL CUSTOMERS - ADMIN
 // ============================================================
 
 export const getAdminCustomers = async () => {
+  const response = await api.get("/auth/admin/customers/");
 
-    const response = await api.get(
-        "/auth/admin/customers/"
-    );
-
-    return response.data;
+  return response.data;
 };
 
 // ============================================================
@@ -19,10 +15,7 @@ export const getAdminCustomers = async () => {
 // ============================================================
 
 export const getAdminCustomer = async (id) => {
+  const response = await api.get(`/auth/admin/customers/${id}/`);
 
-    const response = await api.get(
-        `/auth/admin/customers/${id}/`
-    );
-
-    return response.data;
+  return response.data;
 };

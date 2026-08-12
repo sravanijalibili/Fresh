@@ -1,5 +1,5 @@
-from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -35,15 +35,9 @@ class Command(BaseCommand):
             user.save()
 
             self.stdout.write(
-                self.style.SUCCESS(
-                    f"PASSWORD RESET SUCCESSFULLY: {username}"
-                )
+                self.style.SUCCESS(f"PASSWORD RESET SUCCESSFULLY: {username}")
             )
 
         except User.DoesNotExist:
 
-            self.stdout.write(
-                self.style.ERROR(
-                    f"USER NOT FOUND: {username}"
-                )
-            )
+            self.stdout.write(self.style.ERROR(f"USER NOT FOUND: {username}"))

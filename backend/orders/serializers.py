@@ -1,25 +1,19 @@
 from rest_framework import serializers
 
-from .models import Order, OrderItem
-
 from accounts.serializers import AddressSerializer
 
+from .models import Order, OrderItem
 
 # ============================================================
 # ORDER ITEM
 # ============================================================
 
+
 class OrderItemSerializer(serializers.ModelSerializer):
 
-    product_name = serializers.CharField(
-        source="product.name",
-        read_only=True
-    )
+    product_name = serializers.CharField(source="product.name", read_only=True)
 
-    product_image = serializers.ImageField(
-        source="product.image",
-        read_only=True
-    )
+    product_image = serializers.ImageField(source="product.image", read_only=True)
 
     class Meta:
 
@@ -39,24 +33,16 @@ class OrderItemSerializer(serializers.ModelSerializer):
 # CUSTOMER ORDER SERIALIZER
 # ============================================================
 
+
 class OrderSerializer(serializers.ModelSerializer):
 
     address = AddressSerializer(read_only=True)
 
-    items = OrderItemSerializer(
-        many=True,
-        read_only=True
-    )
+    items = OrderItemSerializer(many=True, read_only=True)
 
-    customer_name = serializers.CharField(
-        source="user.username",
-        read_only=True
-    )
+    customer_name = serializers.CharField(source="user.username", read_only=True)
 
-    customer_email = serializers.EmailField(
-        source="user.email",
-        read_only=True
-    )
+    customer_email = serializers.EmailField(source="user.email", read_only=True)
 
     class Meta:
         model = Order
@@ -72,31 +58,21 @@ class OrderSerializer(serializers.ModelSerializer):
             "items",
         ]
 
-        
+
 # ============================================================
 # ADMIN ORDER SERIALIZER
 # ============================================================
 
+
 class AdminOrderSerializer(serializers.ModelSerializer):
 
-    customer_name = serializers.CharField(
-        source="user.username",
-        read_only=True
-    )
+    customer_name = serializers.CharField(source="user.username", read_only=True)
 
-    customer_email = serializers.EmailField(
-        source="user.email",
-        read_only=True
-    )
+    customer_email = serializers.EmailField(source="user.email", read_only=True)
 
-    address = AddressSerializer(
-        read_only=True
-    )
+    address = AddressSerializer(read_only=True)
 
-    items = OrderItemSerializer(
-        many=True,
-        read_only=True
-    )
+    items = OrderItemSerializer(many=True, read_only=True)
 
     class Meta:
 

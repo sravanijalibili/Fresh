@@ -12,13 +12,7 @@ function ProtectedRoute({ children }) {
 
   // User is not logged in
   if (!user) {
-    return (
-      <Navigate
-        to="/login"
-        replace
-        state={{ from: location }}
-      />
-    );
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
   return children;

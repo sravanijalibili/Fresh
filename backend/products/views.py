@@ -1,10 +1,10 @@
 from rest_framework import generics
+from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.permissions import IsAdminUser
+
 from .models import Category, Product
 from .serializers import CategorySerializer, ProductSerializer
-from .models import Product
-from .serializers import ProductSerializer
-from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.permissions import IsAuthenticated,IsAdminUser
+
 
 class CategoryList(generics.ListAPIView):
     queryset = Category.objects.all()
@@ -18,15 +18,15 @@ class ProductList(generics.ListAPIView):
         category_id = self.kwargs["category_id"]
         return Product.objects.filter(category_id=category_id)
 
+
 class ProductListAll(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+
 class ProductDetail(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-
-
 
 
 class AdminProductListCreate(generics.ListCreateAPIView):
@@ -39,6 +39,7 @@ class AdminProductListCreate(generics.ListCreateAPIView):
 
     parser_classes = [MultiPartParser, FormParser]
 
+
 class AdminProductDetail(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Product.objects.all()
@@ -50,11 +51,11 @@ class AdminProductDetail(generics.RetrieveUpdateDestroyAPIView):
     parser_classes = [MultiPartParser, FormParser]
 
 
-
 class ProductCreate(generics.CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAdminUser]
+
 
 class ProductUpdate(generics.UpdateAPIView):
     queryset = Product.objects.all()
@@ -66,7 +67,6 @@ class ProductDelete(generics.DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAdminUser]
-
 
 
 class AdminCategoryListCreate(generics.ListCreateAPIView):
@@ -89,6 +89,3 @@ class AdminCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminUser]
 
     parser_classes = [MultiPartParser, FormParser]
-
-
-    

@@ -14,30 +14,22 @@ export const getCategories = async () => {
 
 // Create product
 export const createProduct = async (formData) => {
-  const res = await API.post(
-    "/admin/products/create/",
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
+  const res = await API.post("/admin/products/create/", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 
   return res.data;
 };
 
 // Update product
 export const updateProduct = async (id, formData) => {
-  const res = await API.put(
-    `/admin/products/${id}/update/`,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
+  const res = await API.put(`/admin/products/${id}/update/`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 
   return res.data;
 };

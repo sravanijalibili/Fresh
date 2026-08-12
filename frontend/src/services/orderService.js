@@ -5,10 +5,7 @@ import API from "./api";
 // ============================================================
 
 export const placeOrder = async (orderData) => {
-  const response = await API.post(
-    "/orders/place/",
-    orderData
-  );
+  const response = await API.post("/orders/place/", orderData);
 
   return response.data;
 };
@@ -18,9 +15,7 @@ export const placeOrder = async (orderData) => {
 // ============================================================
 
 export const getOrders = async () => {
-  const response = await API.get(
-    "/orders/"
-  );
+  const response = await API.get("/orders/");
 
   return response.data;
 };
@@ -30,9 +25,7 @@ export const getOrders = async () => {
 // ============================================================
 
 export const getOrder = async (id) => {
-  const response = await API.get(
-    `/orders/${id}/`
-  );
+  const response = await API.get(`/orders/${id}/`);
 
   return response.data;
 };
@@ -42,9 +35,7 @@ export const getOrder = async (id) => {
 // ============================================================
 
 export const getOrderDetails = async (id) => {
-  const response = await API.get(
-    `/orders/${id}/`
-  );
+  const response = await API.get(`/orders/${id}/`);
 
   return response.data;
 };
@@ -54,10 +45,7 @@ export const getOrderDetails = async (id) => {
 // ============================================================
 
 export const cancelOrder = async (id) => {
-  const response = await API.patch(
-    `/orders/${id}/cancel/`,
-    {}
-  );
+  const response = await API.patch(`/orders/${id}/cancel/`, {});
 
   return response.data;
 };

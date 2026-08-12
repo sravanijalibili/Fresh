@@ -1,164 +1,136 @@
-.addresses-page{
-    max-width:900px;
-    margin:30px auto;
-    padding:20px;
+.addresses-page {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
 }
 
-.add-address-btn{
+.add-address-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-    display:flex;
-    align-items:center;
-    gap:10px;
+  background: #2e7d32;
+  color: #fff;
 
-    background:#2e7d32;
-    color:#fff;
+  border: none;
 
-    border:none;
+  padding: 14px 22px;
 
-    padding:14px 22px;
+  border-radius: 12px;
 
-    border-radius:12px;
+  cursor: pointer;
 
-    cursor:pointer;
+  margin-bottom: 25px;
 
-    margin-bottom:25px;
-
-    font-size:15px;
-
+  font-size: 15px;
 }
 
-.add-address-btn:hover{
-
-    background:#256628;
-
+.add-address-btn:hover {
+  background: #256628;
 }
 
-.empty-address{
+.empty-address {
+  display: flex;
 
-    display:flex;
+  flex-direction: column;
 
-    flex-direction:column;
+  align-items: center;
 
-    align-items:center;
+  justify-content: center;
 
-    justify-content:center;
+  text-align: center;
 
-    text-align:center;
+  padding: 80px 20px;
 
-    padding:80px 20px;
-
-    color:#777;
-
+  color: #777;
 }
 
-.empty-address svg{
+.empty-address svg {
+  color: #2e7d32;
 
-    color:#2e7d32;
-
-    margin-bottom:15px;
-
+  margin-bottom: 15px;
 }
 
-.address-card{
+.address-card {
+  display: flex;
 
-    display:flex;
+  justify-content: space-between;
 
-    justify-content:space-between;
+  align-items: flex-start;
 
-    align-items:flex-start;
+  background: #fff;
 
-    background:#fff;
+  border-radius: 16px;
 
-    border-radius:16px;
+  padding: 20px;
 
-    padding:20px;
+  margin-bottom: 18px;
 
-    margin-bottom:18px;
-
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
-
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
-.address-info h3{
-
-    margin-bottom:10px;
-
+.address-info h3 {
+  margin-bottom: 10px;
 }
 
-.address-info p{
+.address-info p {
+  margin: 6px 0;
 
-    margin:6px 0;
-
-    color:#666;
-
+  color: #666;
 }
 
-.default-badge{
+.default-badge {
+  background: #2e7d32;
 
-    background:#2e7d32;
+  color: #fff;
 
-    color:#fff;
+  padding: 3px 10px;
 
-    padding:3px 10px;
+  border-radius: 30px;
 
-    border-radius:30px;
+  margin-left: 10px;
 
-    margin-left:10px;
-
-    font-size:12px;
-
+  font-size: 12px;
 }
 
-.address-actions{
+.address-actions {
+  display: flex;
 
-    display:flex;
+  flex-direction: column;
 
-    flex-direction:column;
-
-    gap:12px;
-
+  gap: 12px;
 }
 
-.address-actions button{
+.address-actions button {
+  width: 42px;
 
-    width:42px;
+  height: 42px;
 
-    height:42px;
+  border: none;
 
-    border:none;
+  border-radius: 10px;
 
-    border-radius:10px;
+  background: #f3f3f3;
 
-    background:#f3f3f3;
+  cursor: pointer;
 
-    cursor:pointer;
-
-    transition:.2s;
-
+  transition: 0.2s;
 }
 
-.address-actions button:hover{
+.address-actions button:hover {
+  background: #2e7d32;
 
-    background:#2e7d32;
-
-    color:white;
-
+  color: white;
 }
 
-@media(max-width:650px){
+@media (max-width: 650px) {
+  .address-card {
+    flex-direction: column;
 
-.address-card{
+    gap: 20px;
+  }
 
-    flex-direction:column;
-
-    gap:20px;
-
-}
-
-.address-actions{
-
-    flex-direction:row;
-
-}
-
+  .address-actions {
+    flex-direction: row;
+  }
 }

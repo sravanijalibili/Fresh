@@ -27,12 +27,7 @@ function Register() {
   const register = async (e) => {
     e.preventDefault();
 
-    if (
-      !form.first_name ||
-      !form.last_name ||
-      !form.email ||
-      !form.password
-    ) {
+    if (!form.first_name || !form.last_name || !form.email || !form.password) {
       toast.error("Please fill all fields");
       return;
     }
@@ -56,10 +51,7 @@ function Register() {
 
       navigate("/login");
     } catch (err) {
-      toast.error(
-        err.response?.data?.message ||
-          "Registration failed"
-      );
+      toast.error(err.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);
     }
@@ -68,13 +60,11 @@ function Register() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-
         <h1>Create Account</h1>
 
         <p>Join Fresh Grocery today</p>
 
         <form onSubmit={register}>
-
           <input
             name="first_name"
             placeholder="First Name"
@@ -116,14 +106,12 @@ function Register() {
           <button type="submit">
             {loading ? "Creating..." : "Create Account"}
           </button>
-
         </form>
 
         <p className="auth-footer">
           Already have an account?
           <Link to="/login"> Login</Link>
         </p>
-
       </div>
     </div>
   );

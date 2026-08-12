@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  addAddress,
-  updateAddress,
-} from "../services/addressService";
+import { addAddress, updateAddress } from "../services/addressService";
 
 import toast from "react-hot-toast";
 
@@ -55,15 +52,10 @@ function AddressForm({ address, onClose }) {
 
   return (
     <div className="address-modal">
-
       <div className="address-form-card">
-
-        <h2>
-          {address ? "Edit Address" : "Add Address"}
-        </h2>
+        <h2>{address ? "Edit Address" : "Add Address"}</h2>
 
         <form onSubmit={handleSubmit}>
-
           <input
             name="full_name"
             placeholder="Full Name"
@@ -121,41 +113,26 @@ function AddressForm({ address, onClose }) {
           />
 
           <label className="default-checkbox">
-
             <input
               type="checkbox"
               name="is_default"
               checked={formData.is_default}
               onChange={handleChange}
             />
-
             Set as Default Address
-
           </label>
 
           <div className="form-buttons">
-
-            <button
-              type="button"
-              className="cancel-btn"
-              onClick={onClose}
-            >
+            <button type="button" className="cancel-btn" onClick={onClose}>
               Cancel
             </button>
 
-            <button
-              type="submit"
-              className="save-btn"
-            >
+            <button type="submit" className="save-btn">
               Save
             </button>
-
           </div>
-
         </form>
-
       </div>
-
     </div>
   );
 }

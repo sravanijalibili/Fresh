@@ -1,72 +1,51 @@
 .dashboard {
-
-    width: 100%;
-
+  width: 100%;
 }
 
 /* Page Heading */
 
-.dashboard-title{
-
-    margin-bottom:30px;
-
+.dashboard-title {
+  margin-bottom: 30px;
 }
 
-.dashboard-title h1{
+.dashboard-title h1 {
+  font-size: 32px;
 
-    font-size:32px;
+  color: #1f2937;
 
-    color:#1f2937;
-
-    margin-bottom:6px;
-
+  margin-bottom: 6px;
 }
 
-.dashboard-title p{
-
-    color:#6b7280;
-
+.dashboard-title p {
+  color: #6b7280;
 }
 
 /* Cards */
 
-.dashboard-grid{
+.dashboard-grid {
+  display: grid;
 
-    display:grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
 
-    grid-template-columns:repeat(3,minmax(260px,1fr));
-
-    gap:24px;
-
+  gap: 24px;
 }
 
 /* Desktop */
 
-@media(max-width:1200px){
-
-.dashboard-grid{
-
-    grid-template-columns:repeat(2,1fr);
-
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
-
-}
-
 
 /* Tablet */
 
-@media (max-width:768px){
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
 
-.dashboard-grid{
-
-    grid-template-columns:1fr;
-
-}
-
-.dashboard-title h1{
-
-    font-size:26px;
-
-}
-
+  .dashboard-title h1 {
+    font-size: 26px;
+  }
 }

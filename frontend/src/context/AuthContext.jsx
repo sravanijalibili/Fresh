@@ -1,9 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
@@ -47,28 +42,15 @@ export function AuthProvider({ children }) {
   // Login
   // ==========================================
 
-  const login = (
-    userData,
-    accessToken,
-    refreshToken
-  ) => {
+  const login = (userData, accessToken, refreshToken) => {
     // Save user
-    localStorage.setItem(
-      "user",
-      JSON.stringify(userData)
-    );
+    localStorage.setItem("user", JSON.stringify(userData));
 
     // Save JWT access token
-    localStorage.setItem(
-      "access",
-      accessToken
-    );
+    localStorage.setItem("access", accessToken);
 
     // Save JWT refresh token
-    localStorage.setItem(
-      "refresh",
-      refreshToken
-    );
+    localStorage.setItem("refresh", refreshToken);
 
     // Update React state
     setUser(userData);

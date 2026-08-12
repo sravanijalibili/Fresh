@@ -40,10 +40,7 @@ function Signup() {
 
       navigate("/login");
     } catch (error) {
-      toast.error(
-        error.response?.data?.message ||
-        "Registration failed"
-      );
+      toast.error(error.response?.data?.message || "Registration failed");
     }
 
     setLoading(false);
@@ -52,13 +49,11 @@ function Signup() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-
         <h1>Create Account</h1>
 
         <p>Join Fresh Grocery</p>
 
         <form onSubmit={handleSubmit}>
-
           <input
             type="text"
             name="username"
@@ -98,14 +93,12 @@ function Signup() {
           <button type="submit" disabled={loading}>
             {loading ? "Creating..." : "Sign Up"}
           </button>
-
         </form>
 
         <p className="auth-link">
           Already have an account?
           <Link to="/login"> Login</Link>
         </p>
-
       </div>
     </div>
   );

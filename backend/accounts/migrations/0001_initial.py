@@ -15,16 +15,34 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='UserProfile',
+            name="UserProfile",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('phone', models.CharField(blank=True, max_length=15)),
-                ('address', models.TextField(blank=True)),
-                ('city', models.CharField(blank=True, max_length=100)),
-                ('state', models.CharField(blank=True, max_length=100)),
-                ('pincode', models.CharField(blank=True, max_length=10)),
-                ('profile_image', models.ImageField(blank=True, null=True, upload_to='profiles/')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("phone", models.CharField(blank=True, max_length=15)),
+                ("address", models.TextField(blank=True)),
+                ("city", models.CharField(blank=True, max_length=100)),
+                ("state", models.CharField(blank=True, max_length=100)),
+                ("pincode", models.CharField(blank=True, max_length=10)),
+                (
+                    "profile_image",
+                    models.ImageField(blank=True, null=True, upload_to="profiles/"),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="profile",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

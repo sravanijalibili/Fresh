@@ -15,15 +15,11 @@ export const getProfile = async () => {
 export const updateProfile = async (profileData) => {
   const token = localStorage.getItem("access");
 
-  const response = await API.put(
-    "/auth/profile/",
-    profileData,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const response = await API.put("/auth/profile/", profileData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return response.data;
 };

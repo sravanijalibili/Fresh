@@ -1,85 +1,83 @@
-.profile-page{
-    max-width:700px;
-    margin:30px auto;
-    padding:20px;
+.profile-page {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 20px;
 }
 
-.profile-card{
-    background:#fff;
-    border-radius:20px;
-    padding:30px;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
+.profile-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
-.profile-title{
-    text-align:center;
-    margin-bottom:30px;
+.profile-title {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.profile-title h2{
-    margin:0;
-    color:#222;
+.profile-title h2 {
+  margin: 0;
+  color: #222;
 }
 
-.profile-title p{
-    color:#777;
-    margin-top:8px;
+.profile-title p {
+  color: #777;
+  margin-top: 8px;
 }
 
-.profile-form{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.form-group{
-    display:flex;
-    flex-direction:column;
+.form-group {
+  display: flex;
+  flex-direction: column;
 }
 
-.form-group label{
-    margin-bottom:8px;
-    font-weight:600;
-    color:#444;
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #444;
 }
 
-.form-group input{
-    padding:14px;
-    border:1px solid #ddd;
-    border-radius:12px;
-    font-size:16px;
-    outline:none;
-    transition:.25s;
+.form-group input {
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.25s;
 }
 
-.form-group input:focus{
-    border-color:#16a34a;
+.form-group input:focus {
+  border-color: #16a34a;
 }
 
-.save-btn{
-    margin-top:10px;
-    background:#16a34a;
-    color:#fff;
-    border:none;
-    padding:15px;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:17px;
-    font-weight:600;
+.save-btn {
+  margin-top: 10px;
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 600;
 }
 
-.save-btn:hover{
-    background:#15803d;
+.save-btn:hover {
+  background: #15803d;
 }
 
-@media(max-width:768px){
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 15px;
+  }
 
-.profile-page{
-    padding:15px;
-}
-
-.profile-card{
-    padding:20px;
-}
-
+  .profile-card {
+    padding: 20px;
+  }
 }

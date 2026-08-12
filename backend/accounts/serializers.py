@@ -1,7 +1,9 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from django.contrib.auth import authenticate
-from .models import UserProfile, Address
+
+from .models import Address, UserProfile
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only=True)
@@ -15,31 +17,22 @@ class RegisterSerializer(serializers.ModelSerializer):
             "confirm_password",
         ]
 
-        extra_kwargs = {
-            "password": {"write_only": True}
-        }
+        extra_kwargs = {"password": {"write_only": True}}
 
     def validate_email(self, value):
         if User.objects.filter(email=value).exists():
-            raise serializers.ValidationError(
-                "Email already exists."
-            )
+            raise serializers.ValidationError("Email already exists.")
         return value
 
     def validate_username(self, value):
         if User.objects.filter(username=value).exists():
-            raise serializers.ValidationError(
-                "Username already exists."
-            )
+            raise serializers.ValidationError("Username already exists.")
         return value
 
     def validate(self, attrs):
         if attrs["password"] != attrs["confirm_password"]:
             raise serializers.ValidationError(
-                {
-                    "confirm_password":
-                    "Passwords do not match."
-                }
+                {"confirm_password": "Passwords do not match."}
             )
 
         return attrs
@@ -56,15 +49,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-
-
 class LoginSerializer(serializers.Serializer):
 
     username = serializers.CharField()
 
-    password = serializers.CharField(
-        write_only=True
-    )
+    password = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
 
@@ -78,25 +67,16 @@ class LoginSerializer(serializers.Serializer):
                 user = User.objects.get(email=username)
                 username = user.username
             except User.DoesNotExist:
-                raise serializers.ValidationError(
-                    "Invalid credentials."
-                )
+                raise serializers.ValidationError("Invalid credentials.")
 
-        user = authenticate(
-            username=username,
-            password=password
-        )
+        user = authenticate(username=username, password=password)
 
         if not user:
-            raise serializers.ValidationError(
-                "Invalid credentials."
-            )
+            raise serializers.ValidationError("Invalid credentials.")
 
         attrs["user"] = user
 
         return attrs
-
-
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -118,8 +98,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         ]
 
 
-
-
 class AddressSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -127,16 +105,13 @@ class AddressSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ["user", "created_at"]
 
+
 class AdminCustomerSerializer(serializers.ModelSerializer):
 
-    order_count = serializers.IntegerField(
-        read_only=True
-    )
+    order_count = serializers.IntegerField(read_only=True)
 
     total_spent = serializers.DecimalField(
-        max_digits=12,
-        decimal_places=2,
-        read_only=True
+        max_digits=12, decimal_places=2, read_only=True
     )
 
     class Meta:

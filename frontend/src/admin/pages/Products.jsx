@@ -120,10 +120,7 @@ function AdminProducts() {
       <div className="mobile-products">
         {products.map((product) => (
           <div className="product-card-mobile" key={product.id}>
-            <img
-              src={product.image}
-              alt={product.name}
-            />
+            <img src={product.image} alt={product.name} />
 
             <div className="product-info">
               <h3>{product.name}</h3>

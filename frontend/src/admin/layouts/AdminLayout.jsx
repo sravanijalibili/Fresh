@@ -7,41 +7,28 @@ import AdminHeader from "../components/AdminHeader";
 import "../styles/adminlayout.css";
 
 function AdminLayout() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+  return (
+    <div className="admin-layout">
+      <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-    return (
+      {sidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-        <div className="admin-layout">
+      <div className="admin-main">
+        <AdminHeader onMenu={() => setSidebarOpen(true)} />
 
-            <AdminSidebar
-                open={sidebarOpen}
-                onClose={() => setSidebarOpen(false)}
-            />
-
-            {sidebarOpen && (
-                <div
-                    className="sidebar-overlay"
-                    onClick={() => setSidebarOpen(false)}
-                />
-            )}
-
-            <div className="admin-main">
-
-                <AdminHeader
-                    onMenu={() => setSidebarOpen(true)}
-                />
-
-                <div className="admin-content">
-                    <Outlet />
-                </div>
-
-            </div>
-
+        <div className="admin-content">
+          <Outlet />
         </div>
-
-    );
-
+      </div>
+    </div>
+  );
 }
 
 export default AdminLayout;

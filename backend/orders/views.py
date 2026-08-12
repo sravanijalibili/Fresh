@@ -1,27 +1,26 @@
 from decimal import Decimal
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import (
-    IsAuthenticated,
-    IsAdminUser,
-)
 from rest_framework import status
+from rest_framework.permissions import (
+    IsAdminUser,
+    IsAuthenticated,
+)
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from products.models import Product
 from accounts.models import Address
+from products.models import Product
 
 from .models import Order, OrderItem
-
 from .serializers import (
-    OrderSerializer,
     AdminOrderSerializer,
+    OrderSerializer,
 )
-
 
 # ============================================================
 # CUSTOMER - PLACE ORDER
 # ============================================================
+
 
 class PlaceOrderView(APIView):
 
@@ -36,25 +35,18 @@ class PlaceOrderView(APIView):
         if not items:
 
             return Response(
-                {
-                    "error": "Cart is empty"
-                },
+                {"error": "Cart is empty"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         try:
 
-            address = Address.objects.get(
-                id=address_id,
-                user=request.user
-            )
+            address = Address.objects.get(id=address_id, user=request.user)
 
         except Address.DoesNotExist:
 
             return Response(
-                {
-                    "error": "Invalid Address"
-                },
+                {"error": "Invalid Address"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -71,35 +63,25 @@ class PlaceOrderView(APIView):
 
             try:
 
-                product = Product.objects.get(
-                    id=item["product"]
-                )
+                product = Product.objects.get(id=item["product"])
 
             except Product.DoesNotExist:
 
                 order.delete()
 
                 return Response(
-                    {
-                        "error":
-                        f"Product {item['product']} does not exist."
-                    },
+                    {"error": f"Product {item['product']} does not exist."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            quantity = int(
-                item["quantity"]
-            )
+            quantity = int(item["quantity"])
 
             if quantity <= 0:
 
                 order.delete()
 
                 return Response(
-                    {
-                        "error":
-                        "Product quantity must be greater than zero."
-                    },
+                    {"error": "Product quantity must be greater than zero."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -110,9 +92,7 @@ class PlaceOrderView(APIView):
                 price=product.price,
             )
 
-            total += (
-                product.price * quantity
-            )
+            total += product.price * quantity
 
         order.total_amount = total
 
@@ -120,15 +100,13 @@ class PlaceOrderView(APIView):
 
         serializer = OrderSerializer(order)
 
-        return Response(
-            serializer.data,
-            status=status.HTTP_201_CREATED
-        )
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 # ============================================================
 # CUSTOMER - ORDER LIST
 # ============================================================
+
 
 class OrderListView(APIView):
 
@@ -136,23 +114,17 @@ class OrderListView(APIView):
 
     def get(self, request):
 
-        orders = Order.objects.filter(
-            user=request.user
-        ).order_by("-created_at")
+        orders = Order.objects.filter(user=request.user).order_by("-created_at")
 
-        serializer = OrderSerializer(
-            orders,
-            many=True
-        )
+        serializer = OrderSerializer(orders, many=True)
 
-        return Response(
-            serializer.data
-        )
+        return Response(serializer.data)
 
 
 # ============================================================
 # CUSTOMER - ORDER DETAIL
 # ============================================================
+
 
 class OrderDetailView(APIView):
 
@@ -162,29 +134,21 @@ class OrderDetailView(APIView):
 
         try:
 
-            order = Order.objects.get(
-                id=pk,
-                user=request.user
-            )
+            order = Order.objects.get(id=pk, user=request.user)
 
         except Order.DoesNotExist:
 
-            return Response(
-                status=status.HTTP_404_NOT_FOUND
-            )
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
-        serializer = OrderSerializer(
-            order
-        )
+        serializer = OrderSerializer(order)
 
-        return Response(
-            serializer.data
-        )
+        return Response(serializer.data)
 
 
 # ============================================================
 # CUSTOMER - CANCEL ORDER
 # ============================================================
+
 
 class CancelOrderView(APIView):
 
@@ -194,34 +158,23 @@ class CancelOrderView(APIView):
 
         try:
 
-            order = Order.objects.get(
-                id=pk,
-                user=request.user
-            )
+            order = Order.objects.get(id=pk, user=request.user)
 
         except Order.DoesNotExist:
 
-            return Response(
-                status=status.HTTP_404_NOT_FOUND
-            )
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
         if order.status == "Delivered":
 
             return Response(
-                {
-                    "error":
-                    "Delivered order cannot be cancelled."
-                },
+                {"error": "Delivered order cannot be cancelled."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         if order.status == "Cancelled":
 
             return Response(
-                {
-                    "error":
-                    "Order is already cancelled."
-                },
+                {"error": "Order is already cancelled."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -229,17 +182,13 @@ class CancelOrderView(APIView):
 
         order.save()
 
-        return Response(
-            {
-                "message":
-                "Order Cancelled"
-            }
-        )
+        return Response({"message": "Order Cancelled"})
 
 
 # ============================================================
 # ADMIN - ALL ORDERS
 # ============================================================
+
 
 class AdminOrderListView(APIView):
 
@@ -247,23 +196,17 @@ class AdminOrderListView(APIView):
 
     def get(self, request):
 
-        orders = Order.objects.all().order_by(
-            "-created_at"
-        )
+        orders = Order.objects.all().order_by("-created_at")
 
-        serializer = AdminOrderSerializer(
-            orders,
-            many=True
-        )
+        serializer = AdminOrderSerializer(orders, many=True)
 
-        return Response(
-            serializer.data
-        )
+        return Response(serializer.data)
 
 
 # ============================================================
 # ADMIN - ORDER DETAIL
 # ============================================================
+
 
 class AdminOrderDetailView(APIView):
 
@@ -273,31 +216,23 @@ class AdminOrderDetailView(APIView):
 
         try:
 
-            order = Order.objects.get(
-                id=pk
-            )
+            order = Order.objects.get(id=pk)
 
         except Order.DoesNotExist:
 
             return Response(
-                {
-                    "error": "Order not found."
-                },
-                status=status.HTTP_404_NOT_FOUND
+                {"error": "Order not found."}, status=status.HTTP_404_NOT_FOUND
             )
 
-        serializer = AdminOrderSerializer(
-            order
-        )
+        serializer = AdminOrderSerializer(order)
 
-        return Response(
-            serializer.data
-        )
+        return Response(serializer.data)
 
 
 # ============================================================
 # ADMIN - UPDATE ORDER STATUS
 # ============================================================
+
 
 class AdminOrderStatusUpdateView(APIView):
 
@@ -307,55 +242,37 @@ class AdminOrderStatusUpdateView(APIView):
 
         try:
 
-            order = Order.objects.get(
-                id=pk
-            )
+            order = Order.objects.get(id=pk)
 
         except Order.DoesNotExist:
 
             return Response(
-                {
-                    "error": "Order not found."
-                },
-                status=status.HTTP_404_NOT_FOUND
+                {"error": "Order not found."}, status=status.HTTP_404_NOT_FOUND
             )
 
-        new_status = request.data.get(
-            "status"
-        )
+        new_status = request.data.get("status")
 
-        valid_statuses = [
-            choice[0]
-            for choice in Order.STATUS_CHOICES
-        ]
+        valid_statuses = [choice[0] for choice in Order.STATUS_CHOICES]
 
         if new_status not in valid_statuses:
 
             return Response(
                 {
-                    "error":
-                    "Invalid order status.",
-
-                    "valid_statuses":
-                    valid_statuses,
+                    "error": "Invalid order status.",
+                    "valid_statuses": valid_statuses,
                 },
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
         order.status = new_status
 
         order.save()
 
-        serializer = AdminOrderSerializer(
-            order
-        )
+        serializer = AdminOrderSerializer(order)
 
         return Response(
             {
-                "message":
-                "Order status updated successfully.",
-
-                "order":
-                serializer.data,
+                "message": "Order status updated successfully.",
+                "order": serializer.data,
             }
         )

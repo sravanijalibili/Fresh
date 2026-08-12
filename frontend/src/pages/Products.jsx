@@ -34,7 +34,6 @@ function Products() {
           ))}
         </div>
       </div>
-      <BottomNav />
     </>
   );
 }

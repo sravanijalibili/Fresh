@@ -15,13 +15,9 @@ import "../styles/sidebar.css";
 function Sidebar() {
   return (
     <aside className="sidebar">
-
-      <div className="logo">
-        Fresh Admin
-      </div>
+      <div className="logo">Fresh Admin</div>
 
       <nav>
-
         <NavLink to="/admin/dashboard">
           <FaHome />
           Dashboard
@@ -51,17 +47,12 @@ function Sidebar() {
           <FaChartBar />
           Analytics
         </NavLink>
-
       </nav>
 
       <button className="logout-btn">
-
         <FaSignOutAlt />
-
         Logout
-
       </button>
-
     </aside>
   );
 }

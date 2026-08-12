@@ -1,7 +1,7 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+
 from products.models import Product
-from accounts.models import UserProfile
 
 
 class Order(models.Model):
@@ -20,34 +20,19 @@ class Order(models.Model):
         ("ONLINE", "Online Payment"),
     ]
 
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="orders"
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
 
     address = models.ForeignKey(
-        "accounts.Address",
-        on_delete=models.SET_NULL,
-        null=True
+        "accounts.Address", on_delete=models.SET_NULL, null=True
     )
 
     payment_method = models.CharField(
-        max_length=20,
-        choices=PAYMENT_CHOICES,
-        default="COD"
+        max_length=20, choices=PAYMENT_CHOICES, default="COD"
     )
 
-    total_amount = models.DecimalField(
-        max_digits=10,
-        decimal_places=2
-    )
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
 
-    status = models.CharField(
-        max_length=30,
-        choices=STATUS_CHOICES,
-        default="Pending"
-    )
+    status = models.CharField(max_length=30, choices=STATUS_CHOICES, default="Pending")
 
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -57,23 +42,13 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
 
-    order = models.ForeignKey(
-        Order,
-        on_delete=models.CASCADE,
-        related_name="items"
-    )
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
 
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE
-    )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     quantity = models.PositiveIntegerField()
 
-    price = models.DecimalField(
-        max_digits=10,
-        decimal_places=2
-    )
+    price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return self.product.name

@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
-import BottomNav from "../components/BottomNav";
 import SearchBar from "../components/SearchBar";
 import "../styles/categorycard.css";
 import "../styles/productcard.css";
@@ -107,10 +106,7 @@ function Home() {
         <div className="products-grid">
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-              />
+              <ProductCard key={product.id} product={product} />
             ))
           ) : (
             <div
@@ -127,8 +123,6 @@ function Home() {
           )}
         </div>
       </div>
-
-      <BottomNav />
     </>
   );
 }

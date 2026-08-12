@@ -1,13 +1,11 @@
 from rest_framework import serializers
+
 from .models import Category, Product
 
 
 class ProductSerializer(serializers.ModelSerializer):
 
-    category_name = serializers.CharField(
-        source="category.name",
-        read_only=True
-    )
+    category_name = serializers.CharField(source="category.name", read_only=True)
 
     image = serializers.SerializerMethodField()
 
@@ -26,12 +24,10 @@ class ProductSerializer(serializers.ModelSerializer):
 
         return obj.image.url
 
+
 class CategorySerializer(serializers.ModelSerializer):
 
-    products = ProductSerializer(
-        many=True,
-        read_only=True
-    )
+    products = ProductSerializer(many=True, read_only=True)
 
     image = serializers.SerializerMethodField()
 

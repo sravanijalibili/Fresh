@@ -22,8 +22,8 @@ export function CartProvider({ children }) {
                 ...item,
                 quantity: item.quantity + 1,
               }
-            : item,
-        ),
+            : item
+        )
       );
     } else {
       setCartItems([
@@ -44,8 +44,8 @@ export function CartProvider({ children }) {
               ...item,
               quantity: item.quantity + 1,
             }
-          : item,
-      ),
+          : item
+      )
     );
   };
 
@@ -58,9 +58,9 @@ export function CartProvider({ children }) {
                 ...item,
                 quantity: item.quantity - 1,
               }
-            : item,
+            : item
         )
-        .filter((item) => item.quantity > 0),
+        .filter((item) => item.quantity > 0)
     );
   };
 

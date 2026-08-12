@@ -1,42 +1,26 @@
 import axios from "axios";
 
-
 const API = axios.create({
-
-    // baseURL: "http://127.0.0.1:8000/api",
-    baseURL: "https://fresh-backend-1007.onrender.com/api",
-
+  // baseURL: "http://127.0.0.1:8000/api",
+  baseURL: "https://fresh-backend-1007.onrender.com/api",
 });
-
 
 // ============================================================
 // ATTACH JWT TOKEN
 // ============================================================
 
 API.interceptors.request.use((config) => {
+  const adminToken = localStorage.getItem("admin_access");
 
-    const adminToken =
-        localStorage.getItem("admin_access");
+  const userToken = localStorage.getItem("access");
 
-    const userToken =
-        localStorage.getItem("access");
+  const token = adminToken || userToken;
 
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
 
-    const token =
-        adminToken || userToken;
-
-
-    if (token) {
-
-        config.headers.Authorization =
-            `Bearer ${token}`;
-
-    }
-
-
-    return config;
-
+  return config;
 });
-
 
 export default API;

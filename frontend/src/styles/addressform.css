@@ -1,121 +1,100 @@
-.address-modal{
+.address-modal {
+  position: fixed;
 
-    position:fixed;
+  inset: 0;
 
-    inset:0;
+  background: rgba(0, 0, 0, 0.45);
 
-    background:rgba(0,0,0,.45);
+  display: flex;
 
-    display:flex;
+  justify-content: center;
 
-    justify-content:center;
+  align-items: center;
 
-    align-items:center;
+  padding: 20px;
 
-    padding:20px;
-
-    z-index:9999;
-
+  z-index: 9999;
 }
 
-.address-form-card{
+.address-form-card {
+  width: 100%;
 
-    width:100%;
+  max-width: 520px;
 
-    max-width:520px;
+  background: white;
 
-    background:white;
+  border-radius: 18px;
 
-    border-radius:18px;
+  padding: 25px;
 
-    padding:25px;
+  max-height: 90vh;
 
-    max-height:90vh;
-
-    overflow:auto;
-
+  overflow: auto;
 }
 
-.address-form-card h2{
+.address-form-card h2 {
+  text-align: center;
 
-    text-align:center;
+  margin-bottom: 20px;
 
-    margin-bottom:20px;
-
-    color:#2e7d32;
-
+  color: #2e7d32;
 }
 
-.address-form-card form{
+.address-form-card form {
+  display: flex;
 
-    display:flex;
+  flex-direction: column;
 
-    flex-direction:column;
-
-    gap:14px;
-
+  gap: 14px;
 }
 
-.address-form-card input{
+.address-form-card input {
+  width: 100%;
 
-    width:100%;
+  padding: 14px;
 
-    padding:14px;
+  border: 1px solid #ddd;
 
-    border:1px solid #ddd;
+  border-radius: 10px;
 
-    border-radius:10px;
+  font-size: 15px;
 
-    font-size:15px;
-
-    box-sizing:border-box;
-
+  box-sizing: border-box;
 }
 
-.default-checkbox{
+.default-checkbox {
+  display: flex;
 
-    display:flex;
+  align-items: center;
 
-    align-items:center;
-
-    gap:10px;
-
+  gap: 10px;
 }
 
-.form-buttons{
+.form-buttons {
+  display: flex;
 
-    display:flex;
-
-    gap:15px;
-
+  gap: 15px;
 }
 
 .cancel-btn,
+.save-btn {
+  flex: 1;
 
-.save-btn{
+  padding: 14px;
 
-    flex:1;
+  border: none;
 
-    padding:14px;
+  border-radius: 10px;
 
-    border:none;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
+  cursor: pointer;
 }
 
-.cancel-btn{
-
-    background:#eee;
-
+.cancel-btn {
+  background: #eee;
 }
 
-.save-btn{
+.save-btn {
+  background: #2e7d32;
 
-    background:#2e7d32;
-
-    color:white;
-
+  color: white;
 }
