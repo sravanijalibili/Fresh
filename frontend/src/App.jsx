@@ -43,11 +43,13 @@ function AppContent() {
         <Route
           path="/"
           element={
-            <>
-              <Navbar />
-              <HeroBanner />
-              <Home />
-            </>
+            <ProtectedRoute>
+              <>
+                <Navbar />
+                <HeroBanner />
+                <Home />
+              </>
+            </ProtectedRoute>
           }
         />
 

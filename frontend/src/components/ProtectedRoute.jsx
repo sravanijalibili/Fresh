@@ -2,9 +2,15 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function ProtectedRoute({ children }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const location = useLocation();
 
+  // Wait for localStorage session restoration
+  if (loading) {
+    return null;
+  }
+
+  // User is not logged in
   if (!user) {
     return (
       <Navigate
