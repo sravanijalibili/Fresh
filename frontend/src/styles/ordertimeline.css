@@ -1,189 +1,166 @@
 .timeline {
-  margin-top: 25px;
+  margin-top: 10px;
 }
 
-/* =========================================================
-   TIMELINE STEP
-========================================================= */
+/* =========================================
+   STEP
+========================================= */
 
 .timeline-step {
   display: flex;
 
-  position: relative;
-
-  min-height: 65px;
-}
-
-/* =========================================================
-   LEFT SIDE
-========================================================= */
-
-.timeline-left {
-  width: 35px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
+  min-height: 58px;
 
   position: relative;
-
-  flex-shrink: 0;
 }
 
-/* =========================================================
-   CIRCLE
-========================================================= */
+/* =========================================
+   INDICATOR
+========================================= */
 
-.timeline-circle {
-  width: 32px;
+.timeline-indicator {
+  width: 40px;
 
-  height: 32px;
-
-  border-radius: 50%;
-
-  background: #e1e1e1;
-
-  color: white;
+  position: relative;
 
   display: flex;
 
   justify-content: center;
 
+  flex-shrink: 0;
+}
+
+/* =========================================
+   CIRCLE
+========================================= */
+
+.timeline-circle {
+  width: 34px;
+
+  height: 34px;
+
+  border-radius: 50%;
+
+  background: #eeeeee;
+
+  color: #999;
+
+  display: flex;
+
   align-items: center;
 
-  font-size: 12px;
+  justify-content: center;
+
+  font-size: 13px;
 
   position: relative;
 
   z-index: 2;
 
-  transition: all 0.3s ease;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
-
-/* Completed */
 
 .timeline-circle.completed {
-  background: #18a84a;
+  background: #18b54a;
 
-  box-shadow: 0 0 0 5px #eaf8ed;
+  color: white;
 }
 
-/* Current */
+.timeline-circle.active {
+  background: #18b54a;
 
-.timeline-circle.current {
-  background: #18a84a;
+  color: white;
 
-  box-shadow: 0 0 0 6px #eaf8ed;
+  transform: scale(1.08);
 
-  animation: pulseTimeline 1.8s infinite;
+  box-shadow:
+    0 0 0 6px rgba(24, 181, 74, 0.12);
+
+  animation: pulse 2s infinite;
 }
 
-/* =========================================================
-   CONNECTING LINE
-========================================================= */
+/* =========================================
+   LINE
+========================================= */
 
 .timeline-line {
   position: absolute;
 
-  top: 32px;
+  top: 34px;
 
-  width: 3px;
+  left: 19px;
 
-  height: 35px;
+  width: 2px;
 
-  background: #e1e1e1;
+  height: 32px;
 
-  border-radius: 5px;
+  background: #e0e0e0;
 
-  transition: background 0.4s ease;
+  transition:
+    background 0.4s ease;
 }
 
-.timeline-line.active {
-  background: #18a84a;
+.timeline-line.completed {
+  background: #18b54a;
 }
 
-/* =========================================================
+/* =========================================
    CONTENT
-========================================================= */
+========================================= */
 
 .timeline-content {
   padding-left: 15px;
 
-  padding-top: 5px;
+  padding-top: 7px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
 }
 
-.timeline-content p {
-  margin: 0;
+.timeline-content strong {
+  color: #999;
 
   font-size: 15px;
 
-  color: #777;
-
-  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
-.timeline-content .current-text {
-  color: #18a84a;
-
-  font-weight: 700;
+.timeline-label-active {
+  color: #222 !important;
 }
 
 .current-status {
-  display: inline-block;
+  color: #18b54a;
 
-  margin-top: 5px;
-
-  font-size: 11px;
-
-  color: #18a84a;
-
-  background: #eaf8ed;
-
-  padding: 4px 8px;
-
-  border-radius: 20px;
+  font-size: 12px;
 
   font-weight: 600;
 }
 
-/* =========================================================
-   CURRENT STATUS ANIMATION
-========================================================= */
-
-@keyframes pulseTimeline {
-  0% {
-    box-shadow: 0 0 0 0 rgba(24, 168, 74, 0.4);
-  }
-
-  70% {
-    box-shadow: 0 0 0 9px rgba(24, 168, 74, 0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(24, 168, 74, 0);
-  }
-}
-
-/* =========================================================
+/* =========================================
    CANCELLED
-========================================================= */
+========================================= */
 
 .cancelled-timeline {
   display: flex;
 
   align-items: center;
 
-  gap: 15px;
+  gap: 14px;
 
-  padding: 18px;
+  padding: 15px;
 
-  border-radius: 15px;
+  background: #fff5f5;
 
-  background: #fff4f4;
+  border-radius: 14px;
 
-  border: 1px solid #ffd5d5;
+  border: 1px solid #ffcdd2;
 }
 
 .cancelled-icon {
@@ -193,51 +170,50 @@
 
   border-radius: 50%;
 
-  background: #dc2626;
+  background: #d32f2f;
 
   color: white;
 
   display: flex;
 
-  justify-content: center;
-
   align-items: center;
 
-  font-size: 24px;
+  justify-content: center;
 
-  flex-shrink: 0;
+  font-weight: bold;
 }
 
-.cancelled-timeline h4 {
-  margin: 0 0 4px;
-
-  color: #dc2626;
+.cancelled-timeline strong {
+  color: #d32f2f;
 
   font-size: 16px;
 }
 
 .cancelled-timeline p {
-  margin: 0;
+  margin: 4px 0 0;
 
   color: #777;
 
   font-size: 13px;
 }
 
-/* =========================================================
-   MOBILE
-========================================================= */
+/* =========================================
+   ANIMATION
+========================================= */
 
-@media (max-width: 600px) {
-  .timeline-content p {
-    font-size: 14px;
+@keyframes pulse {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(24, 181, 74, 0.25);
   }
 
-  .timeline-step {
-    min-height: 60px;
+  70% {
+    box-shadow:
+      0 0 0 8px rgba(24, 181, 74, 0);
   }
 
-  .timeline-line {
-    height: 30px;
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(24, 181, 74, 0);
   }
 }

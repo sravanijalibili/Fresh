@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import {
   FaMapMarkerAlt,
   FaCreditCard,
-  FaBoxOpen,
-  FaTimes,
+  FaBox,
+  FaTimesCircle,
+  FaSyncAlt,
 } from "react-icons/fa";
 
 import PageHeader from "../components/PageHeader";
@@ -14,16 +16,19 @@ import {
   cancelOrder,
 } from "../services/orderService";
 
+import { BASE_URL } from "../services/api";
+
 import toast from "react-hot-toast";
 
 import OrderTimeline from "../components/OrderTimeline";
-import API, { BASE_URL } from "../services/api";
+
 import "../styles/orderdetails.css";
 
 function OrderDetails() {
   const { id } = useParams();
 
   const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [cancelling, setCancelling] = useState(false);
 
   useEffect(() => {
@@ -32,6 +37,8 @@ function OrderDetails() {
 
   const loadOrder = async () => {
     try {
+      setLoading(true);
+
       const data = await getOrderDetails(id);
 
       setOrder(data);
@@ -39,17 +46,23 @@ function OrderDetails() {
       console.error(error);
 
       toast.error("Unable to load order");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleCancel = async () => {
-    if (!window.confirm("Are you sure you want to cancel this order?")) {
+    const confirmed = window.confirm(
+      "Are you sure you want to cancel this order?"
+    );
+
+    if (!confirmed) {
       return;
     }
 
-    setCancelling(true);
-
     try {
+      setCancelling(true);
+
       await cancelOrder(id);
 
       toast.success("Order cancelled successfully");
@@ -67,13 +80,42 @@ function OrderDetails() {
     }
   };
 
-  if (!order) {
+  if (loading) {
     return (
-      <div className="order-loading">
-        Loading order...
-      </div>
+      <>
+        <PageHeader title={`Order #${id}`} />
+
+        <div className="order-loading">
+          <FaSyncAlt className="loading-icon" />
+
+          <p>Loading order...</p>
+        </div>
+      </>
     );
   }
+
+  if (!order) {
+    return null;
+  }
+
+  const subtotal = order.items.reduce(
+    (sum, item) =>
+      sum + Number(item.price) * item.quantity,
+    0
+  );
+
+  const delivery = subtotal >= 199 ? 0 : 30;
+
+  const platformFee = 5;
+
+  const paymentMethod =
+    order.payment_method === "COD"
+      ? "Cash on Delivery"
+      : order.payment_method === "UPI"
+        ? "UPI"
+        : order.payment_method === "CARD"
+          ? "Credit / Debit Card"
+          : order.payment_method;
 
   const canCancel =
     order.status !== "Delivered" &&
@@ -85,69 +127,107 @@ function OrderDetails() {
 
       <div className="order-details-page">
 
-        {/* =====================================================
-            ORDER STATUS
-        ===================================================== */}
+        {/* =========================================
+            ORDER HEADER
+        ========================================= */}
 
-        <div className="details-card status-card">
-          <div className="details-card-title">
-            <FaBoxOpen />
+        <div className="order-status-card">
 
-            <h3>Order Tracking</h3>
+          <div className="order-status-content">
+
+            <span className="order-label">
+              ORDER #{order.id}
+            </span>
+
+            <h2>{order.status}</h2>
+
+            <p>
+              Placed on{" "}
+              {new Date(
+                order.created_at
+              ).toLocaleString()}
+            </p>
+
           </div>
 
-          <div className="tracking-status">
-            <span
-              className={`status-dot ${order.status
-                .toLowerCase()
-                .replace(/\s+/g, "-")}`}
-            />
-
-            <span>{order.status}</span>
+          <div className="order-status-icon">
+            <FaBox />
           </div>
 
-          <OrderTimeline status={order.status} />
         </div>
 
-        {/* =====================================================
-            PAYMENT
-        ===================================================== */}
+        {/* =========================================
+            ORDER TRACKING
+        ========================================= */}
 
         <div className="details-card">
-          <div className="details-card-title">
+
+          <h3 className="section-title">
+            <FaBox />
+            Order Tracking
+          </h3>
+
+          <OrderTimeline
+            status={order.status}
+          />
+
+        </div>
+
+        {/* =========================================
+            PAYMENT
+        ========================================= */}
+
+        <div className="details-card">
+
+          <h3 className="section-title">
             <FaCreditCard />
+            Payment
+          </h3>
 
-            <h3>Payment</h3>
-          </div>
+          <div className="info-row">
 
-          <div className="simple-info">
             <span>Payment Method</span>
 
-            <strong>{order.payment_method}</strong>
+            <strong>
+              {paymentMethod}
+            </strong>
+
           </div>
 
-          <div className="simple-info">
+          <div className="info-row">
+
             <span>Payment Status</span>
 
-            <strong>Pending</strong>
+            <strong className="payment-status">
+              {order.payment_method === "COD"
+                ? "Pay on Delivery"
+                : "Payment Selected"}
+            </strong>
+
           </div>
+
         </div>
 
-        {/* =====================================================
-            ADDRESS
-        ===================================================== */}
+        {/* =========================================
+            DELIVERY ADDRESS
+        ========================================= */}
 
         <div className="details-card">
-          <div className="details-card-title">
+
+          <h3 className="section-title">
             <FaMapMarkerAlt />
+            Delivery Address
+          </h3>
 
-            <h3>Delivery Address</h3>
-          </div>
+          <div className="address-details">
 
-          <div className="delivery-address">
-            <h4>{order.address.full_name}</h4>
+            <strong>
+              {order.address.full_name}
+            </strong>
 
-            <p>{order.address.phone}</p>
+            <p>
+              📞 {order.address.phone}
+            </p>
 
             <p>
               {order.address.house},{" "}
@@ -159,85 +239,153 @@ function OrderDetails() {
               {order.address.state}
             </p>
 
-            <p>{order.address.pincode}</p>
+            <p>
+              {order.address.pincode}
+            </p>
+
           </div>
+
         </div>
 
-        {/* =====================================================
-            ITEMS
-        ===================================================== */}
+        {/* =========================================
+            ORDER ITEMS
+        ========================================= */}
 
         <div className="details-card">
-          <div className="details-card-title">
-            <FaBoxOpen />
 
-            <h3>Items</h3>
-          </div>
+          <h3 className="section-title">
+            <FaBox />
+            Order Items
+          </h3>
 
           {order.items.map((item) => (
-            <div className="item-row" key={item.id}>
+
+            <div
+              className="item-row"
+              key={item.id}
+            >
+
               <div className="item-left">
+
                 <img
-                  src={`${BASE_URL}${item.product_image}`}
+                  src={
+                    item.product_image.startsWith(
+                      "http"
+                    )
+                      ? item.product_image
+                      : `${BASE_URL}${item.product_image}`
+                  }
                   alt={item.product_name}
                   className="item-image"
                 />
 
                 <div className="item-info">
-                  <h4>{item.product_name}</h4>
+
+                  <h4>
+                    {item.product_name}
+                  </h4>
 
                   <p>
-                    Qty: {item.quantity} × ₹
-                    {item.price}
+                    ₹{item.price} ×{" "}
+                    {item.quantity}
                   </p>
+
                 </div>
+
               </div>
 
-              <strong>
+              <strong className="item-total">
                 ₹
                 {(
                   Number(item.price) *
                   item.quantity
                 ).toFixed(2)}
               </strong>
+
             </div>
+
           ))}
 
-          <div className="order-total">
+        </div>
+
+        {/* =========================================
+            PRICE DETAILS
+        ========================================= */}
+
+        <div className="details-card">
+
+          <h3 className="section-title">
+            Price Details
+          </h3>
+
+          <div className="info-row">
+
+            <span>Subtotal</span>
+
+            <strong>
+              ₹{subtotal.toFixed(2)}
+            </strong>
+
+          </div>
+
+          <div className="info-row">
+
+            <span>Delivery</span>
+
+            <strong>
+              {delivery === 0
+                ? "FREE"
+                : `₹${delivery}`}
+            </strong>
+
+          </div>
+
+          <div className="info-row">
+
+            <span>Platform Fee</span>
+
+            <strong>
+              ₹{platformFee}
+            </strong>
+
+          </div>
+
+          <hr />
+
+          <div className="info-row grand-total">
+
             <span>Total</span>
 
             <strong>
-              ₹{Number(order.total_amount).toFixed(2)}
+              ₹{order.total_amount}
             </strong>
+
           </div>
+
         </div>
 
-        {/* =====================================================
-            ORDER DATE
-        ===================================================== */}
-
-        <div className="order-created">
-          Order placed on{" "}
-          {new Date(order.created_at).toLocaleString()}
-        </div>
-
-        {/* =====================================================
-            CANCEL
-        ===================================================== */}
+        {/* =========================================
+            CANCEL ORDER
+        ========================================= */}
 
         {canCancel && (
+
           <button
             className="cancel-order-btn"
             onClick={handleCancel}
             disabled={cancelling}
           >
-            <FaTimes />
+
+            <FaTimesCircle />
 
             {cancelling
               ? "Cancelling..."
               : "Cancel Order"}
+
           </button>
+
         )}
+
       </div>
     </>
   );
