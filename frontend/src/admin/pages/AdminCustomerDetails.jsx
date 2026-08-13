@@ -157,6 +157,20 @@ function AdminCustomerDetails() {
                 </p>
 
                 <p>{address.pincode}</p>
+
+                {address.latitude !== null && address.longitude !== null && (
+                  <button
+                    className="view-location-btn"
+                    onClick={() =>
+                      window.open(
+                        `https://www.openstreetmap.org/?mlat=${address.latitude}&mlon=${address.longitude}#map=17/${address.latitude}/${address.longitude}`,
+                        "_blank"
+                      )
+                    }
+                  >
+                    📍 View Location
+                  </button>
+                )}
               </div>
             ))}
           </div>

@@ -435,3 +435,17 @@
     font-size: 18px;
   }
 }
+
+
+.view-location-btn {
+  margin-top: 12px;
+
+  padding: 8px 12px;
+
+  border: none;
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-size: 13px;
+}
