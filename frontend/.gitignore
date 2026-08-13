@@ -31,3 +31,4 @@ android/.gradle/
 android/.cxx/
 
 *.log
+/frontend/src/services/api.js
