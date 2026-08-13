@@ -13,7 +13,6 @@ import Categories from "./pages/Categories";
 import Account from "./pages/Account";
 import Orders from "./pages/Orders";
 import ScrollToTop from "./components/ScrollToTop";
-import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -119,7 +118,6 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
-        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
