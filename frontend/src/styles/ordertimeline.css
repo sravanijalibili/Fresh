@@ -1,45 +1,243 @@
 .timeline {
-  margin-top: 15px;
+  margin-top: 25px;
 }
+
+/* =========================================================
+   TIMELINE STEP
+========================================================= */
 
 .timeline-step {
   display: flex;
-  align-items: center;
-  margin-bottom: 18px;
+
   position: relative;
+
+  min-height: 65px;
 }
 
-.timeline-circle {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #ddd;
-  color: white;
+/* =========================================================
+   LEFT SIDE
+========================================================= */
+
+.timeline-left {
+  width: 35px;
+
   display: flex;
-  justify-content: center;
+
+  flex-direction: column;
+
   align-items: center;
-  font-size: 14px;
+
+  position: relative;
+
   flex-shrink: 0;
 }
 
-.timeline-circle.active {
-  background: #2e7d32;
+/* =========================================================
+   CIRCLE
+========================================================= */
+
+.timeline-circle {
+  width: 32px;
+
+  height: 32px;
+
+  border-radius: 50%;
+
+  background: #e1e1e1;
+
+  color: white;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-size: 12px;
+
+  position: relative;
+
+  z-index: 2;
+
+  transition: all 0.3s ease;
 }
+
+/* Completed */
+
+.timeline-circle.completed {
+  background: #18a84a;
+
+  box-shadow: 0 0 0 5px #eaf8ed;
+}
+
+/* Current */
+
+.timeline-circle.current {
+  background: #18a84a;
+
+  box-shadow: 0 0 0 6px #eaf8ed;
+
+  animation: pulseTimeline 1.8s infinite;
+}
+
+/* =========================================================
+   CONNECTING LINE
+========================================================= */
 
 .timeline-line {
   position: absolute;
-  left: 15px;
+
   top: 32px;
-  width: 2px;
-  height: 22px;
-  background: #ddd;
+
+  width: 3px;
+
+  height: 35px;
+
+  background: #e1e1e1;
+
+  border-radius: 5px;
+
+  transition: background 0.4s ease;
 }
 
 .timeline-line.active {
-  background: #2e7d32;
+  background: #18a84a;
 }
 
-.timeline-step p {
-  margin-left: 15px;
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.timeline-content {
+  padding-left: 15px;
+
+  padding-top: 5px;
+}
+
+.timeline-content p {
+  margin: 0;
+
+  font-size: 15px;
+
+  color: #777;
+
   font-weight: 500;
+}
+
+.timeline-content .current-text {
+  color: #18a84a;
+
+  font-weight: 700;
+}
+
+.current-status {
+  display: inline-block;
+
+  margin-top: 5px;
+
+  font-size: 11px;
+
+  color: #18a84a;
+
+  background: #eaf8ed;
+
+  padding: 4px 8px;
+
+  border-radius: 20px;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   CURRENT STATUS ANIMATION
+========================================================= */
+
+@keyframes pulseTimeline {
+  0% {
+    box-shadow: 0 0 0 0 rgba(24, 168, 74, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 9px rgba(24, 168, 74, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(24, 168, 74, 0);
+  }
+}
+
+/* =========================================================
+   CANCELLED
+========================================================= */
+
+.cancelled-timeline {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 18px;
+
+  border-radius: 15px;
+
+  background: #fff4f4;
+
+  border: 1px solid #ffd5d5;
+}
+
+.cancelled-icon {
+  width: 40px;
+
+  height: 40px;
+
+  border-radius: 50%;
+
+  background: #dc2626;
+
+  color: white;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-size: 24px;
+
+  flex-shrink: 0;
+}
+
+.cancelled-timeline h4 {
+  margin: 0 0 4px;
+
+  color: #dc2626;
+
+  font-size: 16px;
+}
+
+.cancelled-timeline p {
+  margin: 0;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .timeline-content p {
+    font-size: 14px;
+  }
+
+  .timeline-step {
+    min-height: 60px;
+  }
+
+  .timeline-line {
+    height: 30px;
+  }
 }

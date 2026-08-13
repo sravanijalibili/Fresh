@@ -761,3 +761,105 @@
     transition: none;
   }
 }
+
+
+/* =========================================================
+   PREMIUM PRODUCT CARD ANIMATIONS
+   ========================================================= */
+
+.product-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.10);
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE
+   ========================================================= */
+
+.product-image {
+  overflow: hidden;
+}
+
+.product-image img {
+  transition: transform 0.35s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.035);
+}
+
+
+/* =========================================================
+   ADD BUTTON
+   ========================================================= */
+
+.add-btn {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.add-btn:hover {
+  transform: scale(1.05);
+
+  box-shadow:
+    0 5px 12px rgba(22, 163, 74, 0.25);
+}
+
+.add-btn:active {
+  transform: scale(0.94);
+}
+
+
+/* =========================================================
+   WISHLIST
+   ========================================================= */
+
+.wishlist {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.wishlist:hover {
+  transform: scale(1.08);
+
+  box-shadow:
+    0 5px 14px rgba(0, 0, 0, 0.16);
+}
+
+.wishlist:active {
+  transform: scale(0.92);
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .product-card,
+  .product-image img,
+  .add-btn,
+  .wishlist {
+    transition: none;
+  }
+
+  .product-card:hover {
+    transform: none;
+  }
+
+  .product-card:hover .product-image img {
+    transform: none;
+  }
+}

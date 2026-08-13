@@ -159,13 +159,17 @@ function Checkout() {
         })),
       };
 
-      await placeOrderAPI(payload);
+      const order = await placeOrderAPI(payload);
 
       clearCart();
 
       toast.success("Order placed successfully");
 
-      navigate("/order-success");
+      navigate("/order-success", {
+        state: {
+          order,
+        },
+      });
     } catch (error) {
       console.error(error);
 

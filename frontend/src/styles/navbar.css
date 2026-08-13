@@ -440,3 +440,107 @@
     transition: none;
   }
 }
+
+/* =========================================================
+   PREMIUM NAVBAR POLISH
+   ========================================================= */
+
+.navbar {
+  transition:
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+/* Desktop menu links */
+
+.desktop-menu a {
+  position: relative;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.desktop-menu a:hover {
+  color: #16a34a;
+
+  transform: translateY(-1px);
+}
+
+/* Animated underline */
+
+.desktop-menu a::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  bottom: -7px;
+
+  width: 0;
+  height: 2px;
+
+  background: #16a34a;
+
+  border-radius: 10px;
+
+  transform: translateX(-50%);
+
+  transition: width 0.2s ease;
+}
+
+.desktop-menu a:hover::after,
+.desktop-menu a.active::after {
+  width: 70%;
+}
+
+/* Cart */
+
+.cart {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cart:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 14px rgba(22, 163, 74, 0.22);
+}
+
+.cart:active {
+  transform: scale(0.94);
+}
+
+/* Cart badge */
+
+.cart-badge {
+  animation: cartBadgePop 0.25s ease;
+}
+
+@keyframes cartBadgePop {
+  0% {
+    transform: scale(0.7);
+  }
+
+  70% {
+    transform: scale(1.12);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .desktop-menu a,
+  .cart,
+  .cart-badge {
+    transition: none;
+    animation: none;
+  }
+}

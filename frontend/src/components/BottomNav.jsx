@@ -16,7 +16,6 @@ function BottomNav() {
   const location = useLocation();
 
   const hideBottomNav = [
-    "/cart",
     "/checkout",
     "/order-success",
     "/login",
