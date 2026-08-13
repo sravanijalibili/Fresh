@@ -19,8 +19,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import Addresses from "./pages/Addresses";
 import OrderDetails from "./pages/OrderDetails";
-import AdminLayout from "./admin/layouts/AdminLayout";
+import About from "./pages/About";
 
+import AdminLayout from "./admin/layouts/AdminLayout";
 import Dashboard from "./admin/pages/Dashboard";
 import AdminProducts from "./admin/pages/Products";
 import AdminLogin from "./admin/pages/AdminLogin";
@@ -107,6 +108,8 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+        <Route path="/about" element={<About />} />
+
         <Route
           path="/orders"
           element={

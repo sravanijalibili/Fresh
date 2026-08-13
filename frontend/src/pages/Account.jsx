@@ -64,9 +64,9 @@ function Account() {
 
     {
       title: "About Fresh",
-      subtitle: "Version 1.0",
+      subtitle: "About the app & developer",
       icon: <FaInfoCircle />,
-      action: () => toast("Fresh Grocery App"),
+      action: () => navigate("/about"),
     },
   ];
 
