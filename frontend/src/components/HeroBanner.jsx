@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import "../styles/herobanner.css";
 
 function HeroBanner() {
+  const navigate = useNavigate();
+
   return (
     <div className="hero">
       <div className="hero-left">
@@ -17,7 +20,9 @@ function HeroBanner() {
           doorstep.
         </p>
 
-        <button>Shop Now</button>
+        <button onClick={() => navigate("/categories")}>
+          Shop Now
+        </button>
       </div>
 
       <div className="hero-right">
