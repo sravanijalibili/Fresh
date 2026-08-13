@@ -1,8 +1,6 @@
 import { FaShoppingCart } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { NavLink } from "react-router-dom";
-
 import "./../styles/navbar.css";
 
 function Navbar() {
@@ -15,76 +13,72 @@ function Navbar() {
     0
   );
 
-  // Get logged-in user
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  const username = user?.username || "";
-
-  const initial = username
-    ? username.charAt(0).toUpperCase()
-    : "U";
+  // Temporary profile initial
+  // Later we can get this from the logged-in user's data.
+  const profileInitial = "S";
 
   return (
     <nav className="navbar">
+      {/* =================================================
+          BRAND
+      ================================================= */}
 
-      {/* BRAND */}
-      <div>
+      <div
+        className="navbar-brand"
+        onClick={() => navigate("/")}
+      >
         <h2>🌿 Fresh</h2>
 
         <p>Deliver in 10 Minutes</p>
       </div>
 
+      {/* =================================================
+          DESKTOP MENU
+      ================================================= */}
 
-      {/* DESKTOP MENU */}
       <div className="desktop-menu">
+        <NavLink to="/">Home</NavLink>
 
-        <NavLink to="/">
-          Home
-        </NavLink>
+        <NavLink to="/categories">Categories</NavLink>
 
-        <NavLink to="/categories">
-          Categories
-        </NavLink>
+        <NavLink to="/cart">Cart</NavLink>
 
-        <NavLink to="/cart">
-          Cart
-        </NavLink>
-
-        <NavLink to="/account">
-          Account
-        </NavLink>
-
+        <NavLink to="/account">Account</NavLink>
       </div>
 
+      {/* =================================================
+          RIGHT SIDE
+      ================================================= */}
 
-      {/* RIGHT SIDE */}
-      <div className="navbar-right">
+      <div className="navbar-actions">
+        {/* Profile */}
 
-        {/* PROFILE INITIAL */}
         <button
+          type="button"
           className="profile-initial"
           onClick={() => navigate("/account")}
+          aria-label="Open account"
         >
-          {initial}
+          {profileInitial}
         </button>
 
+        {/* Cart */}
 
-        {/* CART */}
-        <div
+        <button
+          type="button"
           className="cart"
           onClick={() => navigate("/cart")}
+          aria-label="Open cart"
         >
           <FaShoppingCart />
 
           {cartCount > 0 && (
             <span className="cart-badge">
-              {cartCount}
+              {cartCount > 99 ? "99+" : cartCount}
             </span>
           )}
-        </div>
-
+        </button>
       </div>
-
     </nav>
   );
 }
