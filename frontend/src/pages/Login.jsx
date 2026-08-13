@@ -234,12 +234,13 @@ function Login() {
 
         <div className="login-footer">
           <span>🌱</span>
-          Fresh shopping made simple
-        </div>
 
-        <Link to="/about" className="about-developer-link">
-          About Fresh · Developer & Owner
-        </Link>
+          Fresh shopping made simple
+
+          <Link to="/about" className="about-link">
+            About Developer
+          </Link>
+        </div>
         </div>
       </div>
     </div>

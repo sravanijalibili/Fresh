@@ -34,7 +34,7 @@ function AppContent() {
   const location = useLocation();
 
   const isAdmin = location.pathname.startsWith("/admin");
-
+  const isAbout = location.pathname === "/about";
   return (
     <>
       <ScrollToTop />
@@ -173,8 +173,7 @@ function AppContent() {
         </Route>
       </Routes>
 
-      {!isAdmin && <BottomNav />}
-    </>
+      {!isAdmin && !isAbout && <BottomNav />}    </>
   );
 }
 

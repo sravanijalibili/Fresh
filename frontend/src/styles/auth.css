@@ -1090,3 +1090,16 @@
 
   text-decoration: underline;
 }
+
+.about-link {
+  display: block;
+  margin-top: 8px;
+  color: #18b54a;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.about-link:hover {
+  text-decoration: underline;
+}
