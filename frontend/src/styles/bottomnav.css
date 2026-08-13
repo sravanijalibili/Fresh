@@ -1,92 +1,187 @@
+/* =========================================================
+   BOTTOM NAVIGATION
+   ========================================================= */
+
 .bottom-nav {
   position: fixed;
 
   left: 0;
-
   right: 0;
-
   bottom: 0;
+
+  width: 100%;
 
   height: 70px;
 
-  background: #fff;
+  padding: 5px 8px;
+
+  box-sizing: border-box;
 
   display: flex;
 
-  justify-content: space-around;
-
   align-items: center;
 
-  border-top: 1px solid #ddd;
+  justify-content: space-around;
 
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.97);
+
+  border-top: 1px solid #e8e8e8;
+
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.07);
 
   z-index: 1000;
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter: blur(10px);
 }
+
+
+/* =========================================================
+   NAV ITEM
+   ========================================================= */
 
 .nav-item {
   flex: 1;
+
+  min-width: 0;
+
+  height: 60px;
 
   display: flex;
 
   flex-direction: column;
 
+  align-items: center;
+
   justify-content: center;
 
-  align-items: center;
+  gap: 3px;
 
   text-decoration: none;
 
-  color: #666;
+  color: #777;
 
-  font-size: 12px;
+  font-size: 11px;
 
   font-weight: 500;
+
+  border-radius: 12px;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
 }
 
-.nav-item svg {
-  font-size: 22px;
 
-  margin-bottom: 4px;
-}
-
-.nav-item.active {
-  color: #1ba94c;
-}
+/* =========================================================
+   ICON WRAPPER
+   ========================================================= */
 
 .icon-wrapper {
+  width: 28px;
+
+  height: 28px;
+
   position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
 }
 
-.cart-badge {
+
+/* =========================================================
+   ICON
+   ========================================================= */
+
+.nav-item svg {
+  font-size: 20px;
+
+  margin: 0;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   ACTIVE
+   ========================================================= */
+
+.nav-item.active {
+  color: #16a34a;
+
+  font-weight: 650;
+}
+
+
+.nav-item.active .icon-wrapper {
+  background: #ecfdf3;
+
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   CART BADGE
+   ========================================================= */
+
+.icon-wrapper .cart-badge {
   position: absolute;
 
   top: -6px;
 
-  right: -8px;
+  right: -7px;
 
-  width: 18px;
+  min-width: 18px;
 
   height: 18px;
 
-  border-radius: 50%;
+  padding: 0 4px;
 
-  background: #ff3b30;
-
-  color: #fff;
+  box-sizing: border-box;
 
   display: flex;
 
-  justify-content: center;
-
   align-items: center;
 
-  font-size: 10px;
+  justify-content: center;
 
-  font-weight: bold;
+  border-radius: 20px;
+
+  background: #ff3b30;
+
+  color: #ffffff;
+
+  border: 2px solid #ffffff;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  line-height: 1;
 }
 
-/* Desktop */
+
+/* =========================================================
+   HOVER / TOUCH
+   ========================================================= */
+
+.nav-item:hover {
+  color: #16a34a;
+}
+
+
+.nav-item:active {
+  background: #f4faf6;
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
 
 @media (min-width: 769px) {
   .bottom-nav {
@@ -94,31 +189,62 @@
   }
 }
 
-/* Mobile */
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 768px) {
   .bottom-nav {
     display: flex;
+
+    padding-bottom: env(safe-area-inset-bottom);
+
+    height: calc(70px + env(safe-area-inset-bottom));
   }
 }
 
 
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
 
-.bottom-profile {
-  width: 24px;
-  height: 24px;
+@media (max-width: 380px) {
+  .bottom-nav {
+    height: calc(66px + env(safe-area-inset-bottom));
 
-  border-radius: 50%;
+    padding-left: 4px;
 
-  background: #dcfce7;
-  color: #15803d;
+    padding-right: 4px;
+  }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  font-size: 13px;
-  font-weight: 700;
+  .nav-item {
+    height: 58px;
 
-  margin-bottom: 2px;
+    font-size: 10px;
+  }
+
+
+  .nav-item svg {
+    font-size: 19px;
+  }
+
+
+  .icon-wrapper {
+    width: 26px;
+
+    height: 26px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-item {
+    transition: none;
+  }
 }

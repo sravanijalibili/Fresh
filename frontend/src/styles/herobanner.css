@@ -3,57 +3,99 @@
    ========================================================= */
 
 .hero {
-  width: calc(100% - 40px);
+  margin: 20px;
 
-  max-width: 1400px;
+  background: linear-gradient(135deg, #16a34a, #22c55e);
 
-  min-height: 320px;
+  border-radius: 22px;
 
-  margin: 20px auto;
-
-  padding: 38px 45px;
-
-  box-sizing: border-box;
+  color: white;
 
   display: flex;
 
-  align-items: center;
-
   justify-content: space-between;
 
-  gap: 40px;
+  align-items: center;
+
+  padding: 30px;
 
   overflow: hidden;
 
   position: relative;
 
-  border-radius: 24px;
+  isolation: isolate;
 
-  background: linear-gradient(
-    135deg,
-    #15803d 0%,
-    #16a34a 55%,
-    #22c55e 100%
-  );
+  box-shadow:
+    0 10px 30px rgba(22, 163, 74, 0.14);
 
-  color: #ffffff;
-
-  box-shadow: 0 10px 30px rgba(22, 163, 74, 0.16);
+  animation: heroFadeIn 0.6s ease both;
 }
 
 
 /* =========================================================
-   LEFT CONTENT
+   SOFT BACKGROUND GLOW
+   ========================================================= */
+
+.hero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 350px;
+
+  height: 350px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  top: -180px;
+
+  right: 20%;
+
+  filter: blur(2px);
+
+  z-index: -1;
+
+  animation: heroGlow 6s ease-in-out infinite alternate;
+}
+
+
+.hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 260px;
+
+  height: 260px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  bottom: -150px;
+
+  left: 25%;
+
+  z-index: -1;
+
+  animation: heroGlowTwo 7s ease-in-out infinite alternate;
+}
+
+
+/* =========================================================
+   HERO LEFT
    ========================================================= */
 
 .hero-left {
   flex: 1;
 
-  min-width: 0;
-
   position: relative;
 
   z-index: 2;
+
+  animation: heroTextIn 0.7s ease both;
 }
 
 
@@ -62,63 +104,70 @@
    ========================================================= */
 
 .offer {
-  display: inline-flex;
-
-  align-items: center;
-
-  padding: 7px 14px;
-
-  border-radius: 30px;
+  display: inline-block;
 
   background: rgba(255, 255, 255, 0.96);
 
-  color: #15803d;
+  color: #16a34a;
 
-  font-size: 13px;
+  padding: 8px 15px;
 
-  font-weight: 700;
+  border-radius: 30px;
 
-  line-height: 1;
+  font-size: 14px;
 
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  font-weight: 600;
+
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.08);
+
+  animation: offerPop 0.6s ease 0.15s both;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.offer:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 
 /* =========================================================
-   HEADING
+   HERO HEADING
    ========================================================= */
 
 .hero h1 {
-  margin: 18px 0 12px;
+  margin-top: 20px;
 
-  color: #ffffff;
+  font-size: 42px;
 
-  font-size: clamp(34px, 4vw, 52px);
+  line-height: 50px;
 
-  line-height: 1.08;
+  letter-spacing: -1px;
 
-  letter-spacing: -1.2px;
-
-  font-weight: 800;
+  animation: heroHeadingIn 0.7s ease 0.1s both;
 }
 
 
 /* =========================================================
-   DESCRIPTION
+   HERO DESCRIPTION
    ========================================================= */
 
 .hero p {
-  width: 100%;
+  margin: 20px 0;
 
-  max-width: 520px;
-
-  margin: 0 0 24px;
+  width: 80%;
 
   color: rgba(255, 255, 255, 0.9);
 
-  font-size: 16px;
-
   line-height: 1.6;
+
+  animation: heroTextIn 0.7s ease 0.2s both;
 }
 
 
@@ -127,79 +176,265 @@
    ========================================================= */
 
 .hero button {
-  min-height: 48px;
-
-  padding: 0 24px;
-
   border: none;
 
-  border-radius: 25px;
+  background: white;
 
-  background: #ffffff;
+  color: #16a34a;
 
-  color: #15803d;
+  padding: 15px 28px;
 
-  font-size: 15px;
+  border-radius: 30px;
+
+  font-size: 16px;
 
   font-weight: 700;
 
   cursor: pointer;
 
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  box-shadow:
+    0 7px 18px rgba(0, 0, 0, 0.12);
 
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+
+  animation: heroButtonIn 0.7s ease 0.3s both;
 }
 
 
 .hero button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 
-  box-shadow: 0 9px 20px rgba(0, 0, 0, 0.16);
+  box-shadow:
+    0 12px 25px rgba(0, 0, 0, 0.17);
 }
 
 
 .hero button:active {
-  transform: translateY(0);
+  transform: scale(0.96);
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 
 /* =========================================================
-   RIGHT IMAGE
+   HERO RIGHT
    ========================================================= */
 
 .hero-right {
-  flex: 0 0 42%;
+  flex: 1;
 
-  min-width: 0;
-
-  display: flex;
-
-  justify-content: flex-end;
-
-  align-items: center;
+  text-align: right;
 
   position: relative;
 
-  z-index: 1;
+  z-index: 2;
+
+  animation: heroImageIn 0.8s ease 0.15s both;
 }
 
 
+/* =========================================================
+   HERO IMAGE
+   ========================================================= */
+
 .hero-right img {
-  display: block;
-
-  width: 100%;
-
-  max-width: 430px;
-
-  height: 245px;
-
-  object-fit: cover;
+  width: 350px;
 
   border-radius: 20px;
 
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+  display: inline-block;
+
+  object-fit: cover;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.14);
+
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+
+  animation: heroFloat 5s ease-in-out 1s infinite;
+}
+
+
+/* =========================================================
+   IMAGE HOVER
+   ========================================================= */
+
+.hero-right img:hover {
+  transform: scale(1.035);
+
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, 0.2);
+}
+
+
+/* =========================================================
+   PAGE LOAD
+   ========================================================= */
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   TEXT
+   ========================================================= */
+
+@keyframes heroTextIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+@keyframes heroHeadingIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+@keyframes heroButtonIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   OFFER
+   ========================================================= */
+
+@keyframes offerPop {
+  from {
+    opacity: 0;
+
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: scale(1);
+  }
+}
+
+
+/* =========================================================
+   IMAGE ENTRANCE
+   ========================================================= */
+
+@keyframes heroImageIn {
+  from {
+    opacity: 0;
+
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateX(0);
+  }
+}
+
+
+/* =========================================================
+   FLOATING IMAGE
+   ========================================================= */
+
+@keyframes heroFloat {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   BACKGROUND GLOW
+   ========================================================= */
+
+@keyframes heroGlow {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(-40px, 30px) scale(1.15);
+  }
+}
+
+
+@keyframes heroGlowTwo {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(35px, -25px) scale(1.1);
+  }
 }
 
 
@@ -209,35 +444,19 @@
 
 @media (max-width: 900px) {
   .hero {
-    width: calc(100% - 30px);
-
-    margin: 15px auto;
-
-    padding: 30px;
-
-    gap: 25px;
-
-    border-radius: 20px;
+    padding: 28px;
   }
+
 
   .hero h1 {
-    font-size: 38px;
+    font-size: 36px;
+
+    line-height: 43px;
   }
 
-  .hero p {
-    font-size: 15px;
-
-    max-width: 430px;
-  }
-
-  .hero-right {
-    flex-basis: 40%;
-  }
 
   .hero-right img {
-    height: 210px;
-
-    border-radius: 18px;
+    width: 300px;
   }
 }
 
@@ -248,100 +467,78 @@
 
 @media (max-width: 768px) {
   .hero {
-    width: calc(100% - 24px);
-
-    min-height: auto;
-
-    margin: 12px auto;
-
-    padding: 25px 20px 22px;
-
     flex-direction: column;
 
-    align-items: stretch;
-
-    justify-content: center;
-
-    gap: 20px;
-
     text-align: center;
+
+    padding: 25px 20px;
+
+    margin: 15px;
 
     border-radius: 20px;
   }
 
-
-  /* LEFT */
 
   .hero-left {
     width: 100%;
   }
 
 
-  .offer {
-    font-size: 12px;
-
-    padding: 7px 12px;
-  }
-
-
-  .hero h1 {
-    margin: 15px 0 10px;
-
-    font-size: 32px;
-
-    line-height: 1.12;
-
-    letter-spacing: -0.7px;
-  }
-
-
-  .hero p {
-    width: 100%;
-
-    max-width: 430px;
-
-    margin: 0 auto 20px;
-
-    font-size: 14px;
-
-    line-height: 1.55;
-  }
-
-
-  .hero button {
-    min-height: 46px;
-
-    padding: 0 22px;
-
-    font-size: 14px;
-  }
-
-
-  /* IMAGE */
-
   .hero-right {
     width: 100%;
 
-    flex: none;
+    margin-top: 22px;
 
-    display: flex;
-
-    justify-content: center;
-
-    margin-top: 2px;
+    text-align: center;
   }
 
 
   .hero-right img {
     width: 100%;
 
-    max-width: 340px;
+    max-width: 320px;
 
-    height: 175px;
+    animation:
+      heroImageIn 0.8s ease 0.15s both,
+      heroFloat 5s ease-in-out 1s infinite;
+  }
 
-    object-fit: cover;
 
-    border-radius: 16px;
+  .hero p {
+    width: 100%;
+
+    font-size: 14px;
+  }
+
+
+  .hero h1 {
+    font-size: 32px;
+
+    line-height: 38px;
+
+    letter-spacing: -0.6px;
+  }
+
+
+  .hero button {
+    padding: 13px 25px;
+
+    font-size: 15px;
+  }
+
+
+  /* No hover effects on touch devices */
+
+  .hero-right img:hover {
+    transform: none;
+
+    box-shadow:
+      0 12px 30px rgba(0, 0, 0, 0.14);
+  }
+
+
+  .offer:hover {
+    transform: none;
   }
 }
 
@@ -350,86 +547,48 @@
    SMALL MOBILE
    ========================================================= */
 
-@media (max-width: 480px) {
+@media (max-width: 380px) {
   .hero {
-    width: calc(100% - 20px);
+    margin: 12px;
 
-    margin: 10px auto;
-
-    padding: 22px 16px 18px;
-
-    gap: 17px;
+    padding: 22px 16px;
 
     border-radius: 18px;
   }
 
 
-  .offer {
-    font-size: 11px;
-
-    padding: 6px 11px;
-  }
-
-
   .hero h1 {
-    margin: 13px 0 9px;
-
     font-size: 28px;
 
-    line-height: 1.12;
+    line-height: 34px;
+
+    margin-top: 17px;
   }
 
 
   .hero p {
-    margin-bottom: 17px;
-
     font-size: 13px;
 
     line-height: 1.5;
+
+    margin: 16px 0;
+  }
+
+
+  .hero-right {
+    margin-top: 18px;
+  }
+
+
+  .hero-right img {
+    max-width: 280px;
   }
 
 
   .hero button {
-    min-height: 44px;
+    padding: 12px 22px;
 
-    padding: 0 20px;
-
-    font-size: 13px;
-  }
-
-
-  .hero-right img {
-    max-width: 100%;
-
-    height: 150px;
-
-    border-radius: 14px;
-  }
-}
-
-
-/* =========================================================
-   VERY SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 360px) {
-  .hero {
-    padding: 20px 14px 16px;
-  }
-
-
-  .hero h1 {
-    font-size: 25px;
-  }
-
-
-  .hero p {
-    font-size: 12px;
-  }
-
-
-  .hero-right img {
-    height: 135px;
+    font-size: 14px;
   }
 }
 
@@ -439,7 +598,23 @@
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .hero button {
-    transition: none;
+  .hero,
+  .hero-left,
+  .offer,
+  .hero h1,
+  .hero p,
+  .hero button,
+  .hero-right,
+  .hero-right img,
+  .hero::before,
+  .hero::after {
+    animation: none !important;
+  }
+
+
+  .hero button,
+  .hero-right img,
+  .offer {
+    transition: none !important;
   }
 }
