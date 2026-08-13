@@ -232,10 +232,14 @@ function Login() {
             <Link to="/signup">Sign Up</Link>
           </div>
 
-          <div className="login-footer">
-            <span>🌱</span>
-            Fresh shopping made simple
-          </div>
+        <div className="login-footer">
+          <span>🌱</span>
+          Fresh shopping made simple
+        </div>
+
+        <Link to="/about" className="about-developer-link">
+          About Fresh · Developer & Owner
+        </Link>
         </div>
       </div>
     </div>

@@ -1065,3 +1065,28 @@
     animation: none;
   }
 }
+
+
+.about-developer-link {
+  display: block;
+
+  margin-top: 18px;
+
+  text-align: center;
+
+  color: #18b54a;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition: 0.2s ease;
+}
+
+.about-developer-link:hover {
+  color: #14963d;
+
+  text-decoration: underline;
+}
