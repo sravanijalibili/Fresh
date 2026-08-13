@@ -156,6 +156,54 @@ function OrderDetails() {
 
         </div>
 
+        <div className="details-card delivery-estimate-card">
+          <div className="delivery-estimate-icon">
+            🚴
+          </div>
+
+          <div>
+            <h3>Estimated Delivery</h3>
+            <strong>Within 10 Minutes</strong>
+            <p>Your order is being prepared.</p>
+          </div>
+        </div>
+
+        <div className="details-card">
+            <h3>Price Details</h3>
+
+            <div className="price-row">
+              <span>Items Total</span>
+
+              <strong>
+                ₹
+                {order.items.reduce(
+                  (sum, item) => sum + Number(item.price) * item.quantity,
+                  0
+                )}
+              </strong>
+            </div>
+
+            <div className="price-row">
+              <span>Delivery</span>
+
+              <strong>FREE</strong>
+            </div>
+
+            <div className="price-row">
+              <span>Platform Fee</span>
+
+              <strong>₹5</strong>
+            </div>
+
+            <hr />
+
+            <div className="price-row total-row">
+              <span>Total</span>
+
+              <strong>₹{order.total_amount}</strong>
+            </div>
+          </div>
+
         {/* =========================================
             ORDER TRACKING
         ========================================= */}
@@ -267,11 +315,9 @@ function OrderDetails() {
 
               <div className="item-left">
 
-                <img
+               <img
                   src={
-                    item.product_image.startsWith(
-                      "http"
-                    )
+                    item.product_image?.startsWith("http")
                       ? item.product_image
                       : `${BASE_URL}${item.product_image}`
                   }

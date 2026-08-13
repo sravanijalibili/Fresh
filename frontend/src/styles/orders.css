@@ -69,60 +69,38 @@
   color: #222;
 }
 
-/* =========================================================
-   STATUS
-========================================================= */
-
 .status {
-  padding: 7px 13px;
-
+  padding: 6px 12px;
   border-radius: 30px;
-
   color: white;
-
-  font-size: 12px;
-
-  font-weight: 700;
-
+  font-size: 13px;
+  font-weight: 600;
   white-space: nowrap;
 }
 
-/* Pending */
-
 .status.pending {
-  background: #f59e0b;
+  background: #f9a825;
 }
-
-/* Confirmed */
 
 .status.confirmed {
-  background: #2563eb;
+  background: #2e7d32;
 }
-
-/* Packed */
 
 .status.packed {
-  background: #8b5cf6;
+  background: #00897b;
 }
-
-/* Out for Delivery */
 
 .status.out-for-delivery {
-  background: #0ea5e9;
+  background: #1976d2;
 }
-
-/* Delivered */
 
 .status.delivered {
-  background: #16a34a;
+  background: #43a047;
 }
-
-/* Cancelled */
 
 .status.cancelled {
-  background: #dc2626;
+  background: #d32f2f;
 }
-
 /* =========================================================
    DATE
 ========================================================= */

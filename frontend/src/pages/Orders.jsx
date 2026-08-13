@@ -67,8 +67,10 @@ function Orders() {
                     <h3>#{order.id}</h3>
                   </div>
 
-                  <span
-                    className={`status ${getStatusClass(order.status)}`}
+                 <span
+                    className={`status ${order.status
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`}
                   >
                     {order.status}
                   </span>

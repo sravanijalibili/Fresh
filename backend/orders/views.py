@@ -22,6 +22,11 @@ from .serializers import (
 # ============================================================
 
 
+# ============================================================
+# CUSTOMER - PLACE ORDER
+# ============================================================
+
+
 class PlaceOrderView(APIView):
 
     permission_classes = [IsAuthenticated]
@@ -33,24 +38,28 @@ class PlaceOrderView(APIView):
         items = request.data.get("items", [])
 
         if not items:
-
             return Response(
                 {"error": "Cart is empty"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         try:
-
-            address = Address.objects.get(id=address_id, user=request.user)
+            address = Address.objects.get(
+                id=address_id,
+                user=request.user,
+            )
 
         except Address.DoesNotExist:
-
             return Response(
                 {"error": "Invalid Address"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        total = Decimal("0.00")
+        # ====================================================
+        # CALCULATE SUBTOTAL
+        # ====================================================
+
+        subtotal = Decimal("0.00")
 
         order = Order.objects.create(
             user=request.user,
@@ -62,15 +71,21 @@ class PlaceOrderView(APIView):
         for item in items:
 
             try:
-
-                product = Product.objects.get(id=item["product"])
+                product = Product.objects.get(
+                    id=item["product"]
+                )
 
             except Product.DoesNotExist:
 
                 order.delete()
 
                 return Response(
-                    {"error": f"Product {item['product']} does not exist."},
+                    {
+                        "error": (
+                            f"Product {item['product']} "
+                            "does not exist."
+                        )
+                    },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -81,7 +96,12 @@ class PlaceOrderView(APIView):
                 order.delete()
 
                 return Response(
-                    {"error": "Product quantity must be greater than zero."},
+                    {
+                        "error": (
+                            "Product quantity must be "
+                            "greater than zero."
+                        )
+                    },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -92,17 +112,45 @@ class PlaceOrderView(APIView):
                 price=product.price,
             )
 
-            total += product.price * quantity
+            subtotal += product.price * quantity
+
+        # ====================================================
+        # DELIVERY CHARGE
+        # ====================================================
+
+        if subtotal >= Decimal("199.00"):
+            delivery_charge = Decimal("0.00")
+        else:
+            delivery_charge = Decimal("30.00")
+
+        # ====================================================
+        # PLATFORM FEE
+        # ====================================================
+
+        platform_fee = Decimal("5.00")
+
+        # ====================================================
+        # FINAL TOTAL
+        # ====================================================
+
+        total = (
+            subtotal
+            + delivery_charge
+            + platform_fee
+        )
 
         order.total_amount = total
+
 
         order.save()
 
         serializer = OrderSerializer(order)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED,
+        )
+    
 # ============================================================
 # CUSTOMER - ORDER LIST
 # ============================================================

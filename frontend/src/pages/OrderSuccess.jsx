@@ -1,11 +1,6 @@
-import {
-  FaCheckCircle,
-  FaShoppingBag,
-  FaHome,
-  FaReceipt,
-} from "react-icons/fa";
-
-import { useLocation, useNavigate } from "react-router-dom";
+import { FaCheckCircle, FaShoppingBag, FaHome } from "react-icons/fa";
+import { useNavigate, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import "../styles/ordersuccess.css";
 
@@ -15,63 +10,33 @@ function OrderSuccess() {
 
   const order = location.state?.order;
 
-  // If user directly opens /order-success
-  // without placing an order
-  if (!order) {
-    return (
-      <div className="success-page">
-        <div className="success-card">
-          <div className="success-icon">
-            <FaCheckCircle />
-          </div>
+  const getPaymentMethod = () => {
+    if (order?.payment_method === "COD") {
+      return "Cash on Delivery";
+    }
 
-          <h1>Order Completed</h1>
+    if (order?.payment_method === "UPI") {
+      return "UPI";
+    }
 
-          <p>
-            Your order information is no longer available on this page.
-          </p>
+    if (order?.payment_method === "CARD") {
+      return "Credit / Debit Card";
+    }
 
-          <button
-            className="home-btn"
-            onClick={() => navigate("/orders")}
-          >
-            <FaShoppingBag />
-            View My Orders
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  const paymentMethod =
-    order.payment_method === "COD"
-      ? "Cash on Delivery"
-      : order.payment_method === "UPI"
-        ? "UPI"
-        : order.payment_method === "CARD"
-          ? "Credit / Debit Card"
-          : order.payment_method;
-
-  const itemCount = order.items?.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
+    return order?.payment_method || "N/A";
+  };
 
   return (
     <div className="success-page">
       <div className="success-card">
-        {/* SUCCESS ICON */}
         <div className="success-icon">
           <FaCheckCircle />
         </div>
 
         <h1>Order Confirmed!</h1>
 
-        <p>
-          Your fresh groceries are being prepared.
-        </p>
+        <p>Your fresh groceries are being prepared.</p>
 
-        {/* DELIVERY */}
         <div className="delivery-card">
           <h3>🚴 Estimated Delivery</h3>
 
@@ -82,43 +47,46 @@ function OrderSuccess() {
           </span>
         </div>
 
-        {/* ORDER INFORMATION */}
         <div className="order-info">
           <div>
             <span>Order ID</span>
 
-            <strong>#{order.id}</strong>
+            <strong>
+              #{order?.id || "N/A"}
+            </strong>
           </div>
 
           <div>
             <span>Payment</span>
 
-            <strong>{paymentMethod}</strong>
-          </div>
-
-          <div>
-            <span>Items</span>
-
-            <strong>{itemCount}</strong>
+            <strong>
+              {getPaymentMethod()}
+            </strong>
           </div>
 
           <div>
             <span>Total</span>
 
-            <strong>₹{order.total_amount}</strong>
+            <strong>
+              ₹{order?.total_amount || "0.00"}
+            </strong>
           </div>
         </div>
 
-        {/* VIEW ORDER */}
         <button
           className="track-btn"
-          onClick={() => navigate(`/orders/${order.id}`)}
+          onClick={() => {
+            if (order?.id) {
+              navigate(`/orders/${order.id}`);
+            } else {
+              toast("Order details are not available");
+            }
+          }}
         >
-          <FaReceipt />
-          View Order Details
+          <FaShoppingBag />
+          Track Order
         </button>
 
-        {/* CONTINUE SHOPPING */}
         <button
           className="home-btn"
           onClick={() => navigate("/")}
