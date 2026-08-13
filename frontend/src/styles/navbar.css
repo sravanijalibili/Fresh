@@ -1,41 +1,152 @@
 .navbar {
   display: flex;
-
   justify-content: space-between;
+  align-items: center;
+
+  background: #ffffff;
+
+  padding: 14px 24px;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 1000;
+
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   BRAND
+========================= */
+
+.navbar-brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar-brand h2 {
+  margin: 0;
+
+  color: #16a34a;
+
+  font-size: 26px;
+
+  font-weight: 700;
+
+  line-height: 1.2;
+}
+
+.navbar-brand p {
+  margin: 2px 0 0;
+
+  color: #777;
+
+  font-size: 12px;
+
+  font-weight: 500;
+}
+
+
+/* =========================
+   DESKTOP MENU
+========================= */
+
+.desktop-menu {
+  display: none;
 
   align-items: center;
 
-  background: white;
-
-  padding: 18px;
-
-  position: sticky;
-
-  top: 0;
-
-  z-index: 100;
-
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  gap: 32px;
 }
 
-.navbar h2 {
+.desktop-menu a {
+  text-decoration: none;
+
+  color: #333;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: color 0.2s ease;
+}
+
+.desktop-menu a:hover {
   color: #16a34a;
-
-  font-size: 28px;
 }
 
-.navbar p {
-  color: gray;
-
-  font-size: 14px;
+.desktop-menu a.active {
+  color: #16a34a;
 }
 
-.cart {
-  width: 50px;
 
-  height: 50px;
+/* =========================
+   RIGHT SIDE
+========================= */
+
+.navbar-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+/* =========================
+   PROFILE AVATAR
+========================= */
+
+.profile-avatar {
+  width: 42px;
+
+  height: 42px;
 
   border-radius: 50%;
+
+  border: none;
+
+  background: #dcfce7;
+
+  color: #15803d;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.profile-avatar:hover {
+  background: #bbf7d0;
+
+  transform: scale(1.05);
+}
+
+
+/* =========================
+   CART
+========================= */
+
+.cart {
+  width: 44px;
+
+  height: 44px;
+
+  border-radius: 50%;
+
+  border: none;
 
   background: #16a34a;
 
@@ -47,31 +158,42 @@
 
   color: white;
 
-  font-size: 22px;
-}
+  font-size: 20px;
 
-.cart {
   position: relative;
 
   cursor: pointer;
 
-  font-size: 26px;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
+
+.cart:hover {
+  background: #15803d;
+
+  transform: scale(1.05);
+}
+
+
+/* =========================
+   CART BADGE
+========================= */
 
 .cart-badge {
   position: absolute;
 
-  top: -10px;
+  top: -6px;
 
-  right: -10px;
+  right: -6px;
 
-  background: #ff3b30;
+  background: #ef4444;
 
   color: white;
 
-  width: 22px;
+  width: 20px;
 
-  height: 22px;
+  height: 20px;
 
   border-radius: 50%;
 
@@ -81,81 +203,94 @@
 
   align-items: center;
 
-  font-size: 12px;
+  font-size: 11px;
 
-  font-weight: bold;
+  font-weight: 700;
+
+  border: 2px solid white;
 }
 
-.desktop-menu {
-  display: none;
-}
+
+/* =========================
+   DESKTOP
+========================= */
 
 @media (min-width: 768px) {
+
+  .navbar {
+    padding: 14px 40px;
+  }
+
   .desktop-menu {
     display: flex;
-
-    gap: 35px;
-
-    font-size: 17px;
-
-    font-weight: 600;
   }
 
-  .desktop-menu a {
-    text-decoration: none;
-
-    color: #333;
-  }
-
-  .desktop-menu a.active {
-    color: #1ba94c;
-  }
 }
 
-.item-row {
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .navbar {
+    padding: 12px 16px;
+  }
+
+  .navbar-brand h2 {
+    font-size: 22px;
+  }
+
+  .navbar-brand p {
+    font-size: 10px;
+  }
+
+  .profile-avatar {
+    width: 38px;
+    height: 38px;
+
+    font-size: 15px;
+  }
+
+  .cart {
+    width: 40px;
+    height: 40px;
+
+    font-size: 18px;
+  }
+
+}
+
+.navbar-right {
   display: flex;
-
-  justify-content: space-between;
-
   align-items: center;
-
-  padding: 12px 0;
-
-  border-bottom: 1px solid #eee;
+  gap: 12px;
 }
 
-.item-left {
+.profile-initial {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  border: none;
+
+  background: #dcfce7;
+  color: #15803d;
+
   display: flex;
-
   align-items: center;
-
-  gap: 15px;
-}
-
-.item-image {
-  width: 70px;
-
-  height: 70px;
-
-  border-radius: 12px;
-
-  object-fit: cover;
-
-  border: 1px solid #eee;
-}
-
-.item-left h4 {
-  margin: 0;
+  justify-content: center;
 
   font-size: 16px;
+  font-weight: 700;
 
-  color: #333;
+  cursor: pointer;
+
+  transition: 0.2s;
 }
 
-.item-left p {
-  margin-top: 6px;
-
-  color: #666;
-
-  font-size: 14px;
+.profile-initial:hover {
+  background: #bbf7d0;
 }

@@ -1,13 +1,17 @@
-import { FaHome, FaThLarge, FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaHome, FaThLarge, FaShoppingCart } from "react-icons/fa";
 
 import { NavLink, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+
 import "../styles/bottomnav.css";
 
 function BottomNav() {
   const { cartItems } = useCart();
 
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const cartCount = cartItems.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
 
   const location = useLocation();
 
@@ -20,6 +24,15 @@ function BottomNav() {
   ].includes(location.pathname);
 
   if (hideBottomNav) return null;
+
+  // Logged-in user
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const username = user?.username || "";
+
+  const initial = username
+    ? username.charAt(0).toUpperCase()
+    : "U";
 
   const menuItems = [
     {
@@ -40,7 +53,7 @@ function BottomNav() {
     {
       name: "Account",
       path: "/account",
-      icon: <FaUser />,
+      initial: initial,
     },
   ];
 
@@ -55,11 +68,21 @@ function BottomNav() {
           }
         >
           <div className="icon-wrapper">
-            {item.icon}
+
+            {item.initial ? (
+              <span className="bottom-profile">
+                {item.initial}
+              </span>
+            ) : (
+              item.icon
+            )}
 
             {item.name === "Cart" && cartCount > 0 && (
-              <span className="cart-badge">{cartCount}</span>
+              <span className="cart-badge">
+                {cartCount}
+              </span>
             )}
+
           </div>
 
           <span>{item.name}</span>
