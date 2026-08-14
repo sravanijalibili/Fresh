@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import toast from "react-hot-toast";
-
 import { createAddress, updateAddress } from "../services/addressService";
-
 import "../styles/address-form.css";
 import "leaflet/dist/leaflet.css";
-
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
