@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const BASE_URL = "http://127.0.0.1:8000";
-export const DEV_BASE_URL = "https://fresh-backend-1007.onrender.com";
+// export const BASE_URL = "http://127.0.0.1:8000";
+export const BASE_URL = "https://fresh-backend-1007.onrender.com";
 const API = axios.create({
-  baseURL: `${DEV_BASE_URL}/api`,
+  baseURL: `${BASE_URL}/api`,
 });
 // ============================================================
 // ATTACH JWT TOKEN
