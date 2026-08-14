@@ -219,3 +219,332 @@
     padding: 0 14px;
   }
 }
+
+
+/* =========================================================
+   OFFERS & COUPONS PAGE
+   ========================================================= */
+
+.coupons-page {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.coupons-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  padding: 30px 20px;
+  color: #666;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-coupons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  padding: 40px 20px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.empty-coupons-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: #fff3e8;
+  color: #ff7a00;
+  font-size: 28px;
+}
+
+.empty-coupons h2 {
+  margin: 0 0 8px;
+  color: #222;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.empty-coupons p {
+  max-width: 420px;
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   COUPON GRID
+   ========================================================= */
+
+.coupons-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* =========================================================
+   COUPON CARD
+   ========================================================= */
+
+.coupon-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: linear-gradient(135deg, #fff8f3, #ffffff);
+  border: 1px solid #f1e2d7;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.coupon-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.09);
+}
+
+/* Left colored strip */
+
+.coupon-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #ff7a00;
+}
+
+/* =========================================================
+   COUPON ICON
+   ========================================================= */
+
+.coupon-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #fff0e5;
+  color: #ff7a00;
+  font-size: 21px;
+}
+
+/* =========================================================
+   COUPON CONTENT
+   ========================================================= */
+
+.coupon-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.coupon-content h2 {
+  margin: 0 0 8px;
+  color: #222;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  word-break: break-word;
+}
+
+.coupon-description {
+  margin: 0 0 10px;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.coupon-minimum,
+.coupon-maximum {
+  margin: 5px 0;
+  color: #777;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.coupon-maximum {
+  color: #444;
+  font-weight: 600;
+}
+
+/* =========================================================
+   COPY BUTTON
+   ========================================================= */
+
+.copy-coupon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  margin-top: 14px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 10px;
+  background: #222;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.copy-coupon-btn:hover {
+  background: #111;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.16);
+}
+
+.copy-coupon-btn:active {
+  transform: scale(0.97);
+}
+
+.copy-coupon-btn svg {
+  font-size: 13px;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .coupons-page {
+    padding: 20px 16px;
+  }
+
+  .coupons-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .coupon-card {
+    padding: 18px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .coupons-page {
+    padding: 16px 12px;
+  }
+
+  .coupon-card {
+    gap: 12px;
+    padding: 16px;
+    border-radius: 15px;
+  }
+
+  .coupon-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    font-size: 18px;
+  }
+
+  .coupon-content h2 {
+    font-size: 17px;
+  }
+
+  .coupon-description {
+    font-size: 13px;
+  }
+
+  .coupon-minimum,
+  .coupon-maximum {
+    font-size: 11px;
+  }
+
+  .copy-coupon-btn {
+    width: 100%;
+    min-height: 40px;
+    margin-top: 12px;
+    font-size: 12px;
+  }
+
+  .empty-coupons {
+    min-height: 280px;
+    padding: 30px 18px;
+  }
+
+  .empty-coupons-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+
+  .empty-coupons h2 {
+    font-size: 18px;
+  }
+
+  .empty-coupons p {
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+  .coupons-page {
+    padding: 14px 10px;
+  }
+
+  .coupon-card {
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .coupon-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 17px;
+  }
+
+  .coupon-content h2 {
+    font-size: 16px;
+  }
+
+  .coupon-description {
+    font-size: 12px;
+  }
+
+  .copy-coupon-btn {
+    min-height: 38px;
+  }
+}
