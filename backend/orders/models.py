@@ -30,6 +30,38 @@ class Order(models.Model):
         max_length=20, choices=PAYMENT_CHOICES, default="COD"
     )
 
+    subtotal = models.DecimalField(
+    max_digits=10,
+    decimal_places=2,
+    default=0,
+    )
+
+    discount_amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+    )
+
+    delivery_charge = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+    )
+
+    platform_fee = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=5,
+    )
+
+    coupon_code = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+
+
+
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
 
     status = models.CharField(max_length=30, choices=STATUS_CHOICES, default="Pending")

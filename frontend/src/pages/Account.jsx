@@ -45,15 +45,14 @@ function Account() {
       title: "Wishlist",
       subtitle: "Your favourite products",
       icon: <FaHeart />,
-      action: () => toast("Coming Soon"),
+      action: () => navigate("/wishlist"),
     },
 
     {
       title: "Offers & Coupons",
       subtitle: "Latest deals for you",
       icon: <FaGift />,
-      action: () => toast("Coming Soon"),
-    },
+      action: () => navigate("/coupons"),    },
 
     {
       title: "Help & Support",

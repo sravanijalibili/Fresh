@@ -33,6 +33,8 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/orders/", include("orders.urls")),
     path("api/admin/", include("adminpanel.urls")),
+    path("api/wishlist/", include("wishlist.urls")),
+    path("api/coupons/", include("coupons.urls")),
 ]
 
 if settings.DEBUG:

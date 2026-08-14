@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     "accounts",
     "orders",
     "adminpanel",
+    "wishlist",
+    "coupons"
 ]
 
 MIDDLEWARE = [

@@ -81,11 +81,19 @@ class LoginSerializer(serializers.Serializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
 
-    username = serializers.CharField(source="user.username")
-    email = serializers.EmailField(source="user.email")
+    username = serializers.CharField(
+        source="user.username",
+        read_only=True,
+    )
+
+    email = serializers.EmailField(
+        source="user.email",
+        read_only=True,
+    )
 
     class Meta:
         model = UserProfile
+
         fields = [
             "username",
             "email",
@@ -96,7 +104,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "pincode",
             "profile_image",
         ]
-
 
 class AddressSerializer(serializers.ModelSerializer):
 

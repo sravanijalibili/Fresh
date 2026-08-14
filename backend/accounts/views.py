@@ -100,6 +100,10 @@ class LoginView(APIView):
 # PROFILE
 # =========================================================
 
+# =========================================================
+# PROFILE
+# =========================================================
+
 
 class ProfileView(APIView):
 
@@ -107,7 +111,48 @@ class ProfileView(APIView):
 
     def get(self, request):
 
-        profile, created = UserProfile.objects.get_or_create(user=request.user)
+        profile, created = UserProfile.objects.get_or_create(
+            user=request.user
+        )
+
+        # If profile fields are empty, try to use the user's default address
+        default_address = (
+            Address.objects.filter(
+                user=request.user,
+                is_default=True,
+            )
+            .first()
+        )
+
+        if default_address:
+
+            changed = False
+
+            if not profile.phone:
+                profile.phone = default_address.phone
+                changed = True
+
+            if not profile.address:
+                profile.address = (
+                    f"{default_address.house}, "
+                    f"{default_address.street}"
+                )
+                changed = True
+
+            if not profile.city:
+                profile.city = default_address.city
+                changed = True
+
+            if not profile.state:
+                profile.state = default_address.state
+                changed = True
+
+            if not profile.pincode:
+                profile.pincode = default_address.pincode
+                changed = True
+
+            if changed:
+                profile.save()
 
         serializer = UserProfileSerializer(profile)
 
@@ -115,9 +160,15 @@ class ProfileView(APIView):
 
     def put(self, request):
 
-        profile, created = UserProfile.objects.get_or_create(user=request.user)
+        profile, created = UserProfile.objects.get_or_create(
+            user=request.user
+        )
 
-        serializer = UserProfileSerializer(profile, data=request.data, partial=True)
+        serializer = UserProfileSerializer(
+            profile,
+            data=request.data,
+            partial=True,
+        )
 
         if serializer.is_valid():
 
@@ -125,7 +176,10 @@ class ProfileView(APIView):
 
             return Response(serializer.data)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
 
 # =========================================================

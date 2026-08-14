@@ -10,7 +10,8 @@ from rest_framework.views import APIView
 
 from accounts.models import Address
 from products.models import Product
-
+from decimal import Decimal
+from django.utils import timezone
 from .models import Order, OrderItem
 from .serializers import (
     AdminOrderSerializer,
@@ -36,6 +37,7 @@ class PlaceOrderView(APIView):
         address_id = request.data.get("address")
         payment_method = request.data.get("payment_method")
         items = request.data.get("items", [])
+        coupon_code = request.data.get("coupon_code", "").strip().upper()
 
         if not items:
             return Response(
@@ -65,6 +67,11 @@ class PlaceOrderView(APIView):
             user=request.user,
             address=address,
             payment_method=payment_method,
+            subtotal=0,
+            discount_amount=0,
+            delivery_charge=0,
+            platform_fee=5,
+            coupon_code=coupon_code or None,
             total_amount=0,
         )
 
@@ -89,7 +96,16 @@ class PlaceOrderView(APIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            quantity = int(item["quantity"])
+            try:
+                quantity = int(item["quantity"])
+            except (ValueError, TypeError):
+
+                order.delete()
+
+                return Response(
+                    {"error": "Invalid product quantity."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
 
             if quantity <= 0:
 
@@ -115,6 +131,91 @@ class PlaceOrderView(APIView):
             subtotal += product.price * quantity
 
         # ====================================================
+        # APPLY COUPON
+        # ====================================================
+
+        discount = Decimal("0.00")
+        coupon = None
+
+        if coupon_code:
+
+            from coupons.models import Coupon
+
+            try:
+                coupon = Coupon.objects.get(code=coupon_code)
+
+            except Coupon.DoesNotExist:
+
+                order.delete()
+
+                return Response(
+                    {"error": "Invalid coupon code."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            now = timezone.now()
+
+            if not coupon.is_active:
+
+                order.delete()
+
+                return Response(
+                    {"error": "This coupon is currently inactive."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            if now < coupon.valid_from:
+
+                order.delete()
+
+                return Response(
+                    {"error": "This coupon is not active yet."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            if now > coupon.valid_until:
+
+                order.delete()
+
+                return Response(
+                    {"error": "This coupon has expired."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            if subtotal < coupon.minimum_order_amount:
+
+                order.delete()
+
+                return Response(
+                    {
+                        "error": (
+                            f"Minimum order amount is "
+                            f"₹{coupon.minimum_order_amount}."
+                        )
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            if coupon.discount_type == "PERCENTAGE":
+
+                discount = (
+                    subtotal * coupon.discount_value
+                ) / Decimal("100")
+
+                if coupon.maximum_discount is not None:
+                    discount = min(
+                        discount,
+                        coupon.maximum_discount,
+                    )
+
+            else:
+
+                discount = coupon.discount_value
+
+            # Discount cannot exceed subtotal
+            discount = min(discount, subtotal)
+
+        # ====================================================
         # DELIVERY CHARGE
         # ====================================================
 
@@ -135,12 +236,21 @@ class PlaceOrderView(APIView):
 
         total = (
             subtotal
+            - discount
             + delivery_charge
             + platform_fee
         )
 
-        order.total_amount = total
+        # ====================================================
+        # SAVE ORDER TOTALS
+        # ====================================================
 
+        order.subtotal = subtotal
+        order.discount_amount = discount
+        order.delivery_charge = delivery_charge
+        order.platform_fee = platform_fee
+        order.coupon_code = coupon.code if coupon else None
+        order.total_amount = total
 
         order.save()
 
@@ -150,7 +260,6 @@ class PlaceOrderView(APIView):
             serializer.data,
             status=status.HTTP_201_CREATED,
         )
-    
 # ============================================================
 # CUSTOMER - ORDER LIST
 # ============================================================

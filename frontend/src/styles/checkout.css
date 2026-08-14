@@ -897,3 +897,11 @@
     transition: none;
   }
 }
+
+
+.coupon-error {
+  margin-top: 8px;
+  color: #d93025;
+  font-size: 14px;
+  font-weight: 500;
+}

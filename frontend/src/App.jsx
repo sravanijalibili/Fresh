@@ -20,6 +20,8 @@ import Profile from "./pages/Profile";
 import Addresses from "./pages/Addresses";
 import OrderDetails from "./pages/OrderDetails";
 import About from "./pages/About";
+import Wishlist from "./pages/Wishlist";
+import Coupons from "./pages/Coupons";
 
 import AdminLayout from "./admin/layouts/AdminLayout";
 import Dashboard from "./admin/pages/Dashboard";
@@ -96,7 +98,8 @@ function AppContent() {
         />
         <Route path="/categories" element={<Categories />} />
 
-        <Route path="/order-success" element={<OrderSuccess />} />
+        <Route path="/order-success" element={<OrderSuccess />} /
+        >
         <Route
           path="/account"
           element={
@@ -109,7 +112,28 @@ function AppContent() {
           }
         />
         <Route path="/about" element={<About />} />
-
+        <Route
+          path="/wishlist"
+          element={
+            <ProtectedRoute>
+              <>
+                <Navbar />
+                <Wishlist />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/coupons"
+          element={
+            <ProtectedRoute>
+              <>
+                <Navbar />
+                <Coupons />
+              </>
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/orders"
           element={

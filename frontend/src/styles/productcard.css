@@ -86,55 +86,6 @@
 
 
 /* =========================================================
-   WISHLIST
-   ========================================================= */
-
-.wishlist {
-  position: absolute;
-
-  top: 12px;
-
-  right: 12px;
-
-  width: 40px;
-
-  height: 40px;
-
-  border-radius: 50%;
-
-  border: none;
-
-  background: #fff;
-
-  color: #ff4d6d;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 18px;
-
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-
-  z-index: 2;
-
-  cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease;
-}
-
-.wishlist:hover {
-  transform: scale(1.05);
-
-  background: #fff5f7;
-}
-
-
-/* =========================================================
    DISCOUNT
    ========================================================= */
 
@@ -820,29 +771,6 @@
   transform: scale(0.94);
 }
 
-
-/* =========================================================
-   WISHLIST
-   ========================================================= */
-
-.wishlist {
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.wishlist:hover {
-  transform: scale(1.08);
-
-  box-shadow:
-    0 5px 14px rgba(0, 0, 0, 0.16);
-}
-
-.wishlist:active {
-  transform: scale(0.92);
-}
-
-
 /* =========================================================
    REDUCED MOTION
    ========================================================= */
@@ -862,4 +790,82 @@
   .product-card:hover .product-image img {
     transform: none;
   }
+}
+
+
+/* =========================================================
+   WISHLIST
+   ========================================================= */
+
+.wishlist {
+  position: absolute;
+
+  top: 12px;
+  right: 12px;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  border: none;
+
+  background: #fff;
+
+  /* Normal state */
+  color: #777;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+
+  z-index: 2;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+}
+
+/* Normal heart */
+
+.wishlist svg {
+  color: #777;
+
+  transition:
+    color 0.2s ease,
+    fill 0.2s ease;
+}
+
+/* Wishlist active state */
+
+.wishlist.wishlisted {
+  color: #ff4d6d;
+}
+
+.wishlist.wishlisted svg {
+  color: #ff4d6d;
+  fill: #ff4d6d;
+}
+
+/* Hover */
+
+.wishlist:hover {
+  transform: scale(1.08);
+  background: #fff5f7;
+
+  box-shadow:
+    0 5px 14px rgba(0, 0, 0, 0.16);
+}
+
+/* Click */
+
+.wishlist:active {
+  transform: scale(0.92);
 }

@@ -6,19 +6,22 @@ import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import { Toaster } from "react-hot-toast";
 import "leaflet/dist/leaflet.css";
+import { WishlistProvider } from "./context/WishlistContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <CartProvider>
-        <App />
-        <Toaster
-          position="bottom-center"
-          reverseOrder={false}
-          toastOptions={{
-            duration: 2000,
-          }}
-        />
+        <WishlistProvider>
+          <App />
+          <Toaster
+            position="bottom-center"
+            reverseOrder={false}
+            toastOptions={{
+              duration: 2000,
+            }}
+          />
+        </WishlistProvider>
       </CartProvider>
     </AuthProvider>
   </StrictMode>

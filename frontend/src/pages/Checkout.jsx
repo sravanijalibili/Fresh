@@ -9,15 +9,19 @@ import BottomNav from "../components/BottomNav";
 import { getAddresses, addAddress } from "../services/addressService";
 
 import { placeOrder as placeOrderAPI } from "../services/orderService";
-
+import { applyCoupon } from "../services/couponService";
 import "../styles/checkout.css";
 
 function Checkout() {
   const { cartItems, clearCart } = useCart();
-
   const navigate = useNavigate();
 
   const [payment, setPayment] = useState("cod");
+  const [couponCode, setCouponCode] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [discount, setDiscount] = useState(0);
+  const [applyingCoupon, setApplyingCoupon] = useState(false);
+  const [couponError, setCouponError] = useState("");
 
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState("");
@@ -134,12 +138,53 @@ function Checkout() {
 
   const platformFee = 5;
 
-  const total = subtotal + delivery + platformFee;
-
+  const total = subtotal - discount + delivery + platformFee;
   // ============================================================
   // PLACE ORDER
   // ============================================================
 
+  const handleApplyCoupon = async () => {
+    const code = couponCode.trim();
+
+    if (!code) {
+      setCouponError("Please enter a coupon code.");
+      return;
+    }
+
+    setCouponError("");
+    setApplyingCoupon(true);
+
+    try {
+      const data = await applyCoupon(code, subtotal);
+
+      setAppliedCoupon(data.coupon);
+      setDiscount(Number(data.discount));
+      setCouponError("");
+
+      toast.success("Coupon applied successfully");
+    } catch (error) {
+      console.error(error);
+
+      setAppliedCoupon(null);
+      setDiscount(0);
+
+      const message = error.response?.data?.error || "Unable to apply coupon.";
+
+      setCouponError(message);
+
+      toast.error(message);
+    } finally {
+      setApplyingCoupon(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setDiscount(0);
+    setCouponCode("");
+
+    toast.success("Coupon removed");
+  };
   const placeOrder = async () => {
     if (!selectedAddress) {
       toast.error("Please add or select a delivery address");
@@ -153,12 +198,13 @@ function Checkout() {
 
         payment_method: payment.toUpperCase(),
 
+        coupon_code: appliedCoupon ? appliedCoupon.code : "",
+
         items: cartItems.map((item) => ({
           product: item.id,
           quantity: item.quantity,
         })),
       };
-
       const order = await placeOrderAPI(payload);
 
       clearCart();
@@ -382,6 +428,48 @@ function Checkout() {
             </div>
           ))}
 
+          {/* =====================================================
+    COUPON
+===================================================== */}
+
+          <div className="coupon-section">
+            <h4>Offers & Coupons</h4>
+
+            {!appliedCoupon ? (
+              <div className="coupon-input-row">
+              <input
+                type="text"
+                placeholder="Enter coupon code"
+                value={couponCode}
+                onChange={(e) => {
+                  setCouponCode(e.target.value.toUpperCase());
+                  setCouponError("");
+                }}
+              />
+
+                <button
+                  type="button"
+                  onClick={handleApplyCoupon}
+                  disabled={applyingCoupon}
+                >
+                  {applyingCoupon ? "Applying..." : "Apply"}
+                </button>
+              </div>
+            ) : (
+              <div className="applied-coupon">
+                <div>
+                  <strong>{appliedCoupon.code}</strong>
+
+                  <small>Coupon applied successfully</small>
+                </div>
+
+                <button type="button" onClick={handleRemoveCoupon}>
+                  Remove
+                </button>
+              </div>
+            )}
+          </div>
+
           <hr />
 
           <div className="summary-row">
@@ -389,6 +477,17 @@ function Checkout() {
 
             <strong>₹{subtotal}</strong>
           </div>
+
+          {discount > 0 && (
+            <div className="summary-row discount-row">
+              <span>
+                Coupon Discount
+                {appliedCoupon && ` (${appliedCoupon.code})`}
+              </span>
+
+              <strong>-₹{discount}</strong>
+            </div>
+          )}
 
           <div className="summary-row">
             <span>Delivery</span>

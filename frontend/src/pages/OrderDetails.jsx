@@ -311,16 +311,16 @@ function OrderDetails() {
             <div
               className="item-row"
               key={item.id}
-            >
+           src={
+                    item.product_image?.startsWith("http")
+                      ? item.product_image
+                      : `${BASE_URL}${item.product_image}`
+                  } >
 
               <div className="item-left">
 
                <img
-                  src={
-                    item.product_image?.startsWith("http")
-                      ? item.product_image
-                      : `${BASE_URL}${item.product_image}`
-                  }
+                  
                   alt={item.product_name}
                   className="item-image"
                 />
