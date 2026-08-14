@@ -1,5 +1,14 @@
 {
-  "appId": "com.fresh.app",
+  "appId": "com.example.fresh",
   "appName": "Fresh",
-  "webDir": "dist"
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "launchAutoHide": true,
+      "backgroundColor": "#ffffff",
+      "androidSplashResourceName": "splash",
+      "showSpinner": false
+    }
+  }
 }
