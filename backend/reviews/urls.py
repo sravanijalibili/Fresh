@@ -5,6 +5,7 @@ from .views import (
     MyReviewDetailView,
     ProductRatingView,
     ProductReviewListView,
+    ReviewEligibilityView,
 )
 
 urlpatterns = [
@@ -47,4 +48,9 @@ urlpatterns = [
         ProductRatingView.as_view(),
         name="product-rating",
     ),
+
+    path(
+    "product/<int:product_id>/eligibility/",
+    ReviewEligibilityView.as_view(),
+),
 ]

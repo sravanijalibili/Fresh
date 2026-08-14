@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import "../styles/cart.css";
+import { BASE_URL } from "../services/api";
 
 function Cart() {
   const { cartItems, increaseQuantity, decreaseQuantity, removeFromCart } =
@@ -46,8 +47,14 @@ function Cart() {
           <>
             {cartItems.map((item) => (
               <div className="cart-item" key={item.id}>
-                <img src={item.image} alt={item.name} />
-
+                <img
+                  src={
+                    item.image?.startsWith("http")
+                      ? item.image
+                      : `${BASE_URL}${item.image}`
+                  }
+                  alt={item.name}
+                />
                 <div className="cart-details">
                   <h3>{item.name}</h3>
 

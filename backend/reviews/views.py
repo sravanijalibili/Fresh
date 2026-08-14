@@ -262,3 +262,55 @@ class ProductRatingView(APIView):
                 "review_count": reviews.count(),
             }
         )
+
+
+# ============================================================
+# REVIEW ELIGIBILITY
+# ============================================================
+
+class ReviewEligibilityView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, product_id):
+
+        purchased_and_delivered = OrderItem.objects.filter(
+            product_id=product_id,
+            order__user=request.user,
+            order__status="Delivered",
+        ).exists()
+
+        existing_review = Review.objects.filter(
+            product_id=product_id,
+            user=request.user,
+        ).first()
+
+        if existing_review:
+            return Response(
+                {
+                    "can_review": False,
+                    "has_review": True,
+                    "review": ReviewSerializer(existing_review).data,
+                    "message": "You have already reviewed this product.",
+                }
+            )
+
+        if not purchased_and_delivered:
+            return Response(
+                {
+                    "can_review": False,
+                    "has_review": False,
+                    "message": (
+                        "You can review this product "
+                        "after your order is delivered."
+                    ),
+                }
+            )
+
+        return Response(
+            {
+                "can_review": True,
+                "has_review": False,
+                "message": "You can review this product.",
+            }
+        )

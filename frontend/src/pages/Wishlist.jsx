@@ -112,7 +112,7 @@ function Wishlist() {
                   className="wishlist-remove"
                   onClick={() => handleRemove(item.id)}
                   aria-label="Remove from wishlist"
-                >
+                >]
                   <FaTrash />
                 </button>
 

@@ -87,3 +87,15 @@ export const deleteReview = async (productId) => {
 
   return response.data;
 };
+
+// ============================================================
+// CHECK REVIEW ELIGIBILITY
+// ============================================================
+
+export const getReviewEligibility = async (productId) => {
+  const response = await API.get(
+    `reviews/product/${productId}/eligibility/`
+  );
+
+  return response.data;
+};
