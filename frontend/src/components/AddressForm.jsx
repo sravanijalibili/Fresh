@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import L from "leaflet";
 import toast from "react-hot-toast";
 import { createAddress, updateAddress } from "../services/addressService";
-import "../styles/addressForm.css";
 import "leaflet/dist/leaflet.css";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
@@ -14,6 +13,7 @@ import {
   useMap,
   useMapEvents,
 } from "react-leaflet";
+import "../styles/addressform.css";
 
 const DefaultIcon = L.icon({
   iconUrl: markerIcon,
