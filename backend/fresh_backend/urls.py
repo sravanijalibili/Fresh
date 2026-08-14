@@ -35,6 +35,7 @@ urlpatterns = [
     path("api/admin/", include("adminpanel.urls")),
     path("api/wishlist/", include("wishlist.urls")),
     path("api/coupons/", include("coupons.urls")),
+    path("api/reviews/", include("reviews.urls")),
 ]
 
 if settings.DEBUG:

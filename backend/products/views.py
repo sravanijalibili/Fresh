@@ -1,10 +1,13 @@
-from rest_framework import generics
+from django.db.models import Avg
+from rest_framework import status , generics
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.parsers import FormParser, MultiPartParser
-from rest_framework.permissions import IsAdminUser
-
+from orders.models import Order
 from .models import Category, Product
 from .serializers import CategorySerializer, ProductSerializer
-
+from rest_framework.permissions import AllowAny
 
 class CategoryList(generics.ListAPIView):
     queryset = Category.objects.all()
@@ -89,3 +92,43 @@ class AdminCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminUser]
 
     parser_classes = [MultiPartParser, FormParser]
+
+
+# ============================================================
+# RELATED PRODUCTS
+# ============================================================
+
+
+class RelatedProductsView(APIView):
+
+    permission_classes = [AllowAny]
+
+    def get(self, request, product_id):
+
+        try:
+            product = Product.objects.select_related(
+                "category"
+            ).get(id=product_id)
+
+        except Product.DoesNotExist:
+
+            return Response(
+                {"error": "Product not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        related_products = (
+            Product.objects
+            .filter(category=product.category)
+            .exclude(id=product.id)
+            .select_related("category")
+            .order_by("id")[:8]
+        )
+
+        serializer = ProductSerializer(
+            related_products,
+            many=True,
+            context={"request": request},
+        )
+
+        return Response(serializer.data)

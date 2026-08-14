@@ -14,6 +14,10 @@ from .views import (
     ProductUpdate,
 )
 
+from .views import (
+    RelatedProductsView,
+)
+
 urlpatterns = [
     # =====================================================
     # PUBLIC CATEGORY
@@ -69,6 +73,12 @@ urlpatterns = [
         ProductDelete.as_view(),
         name="admin-product-delete",
     ),
+    path(
+        "products/<int:product_id>/related/",
+        RelatedProductsView.as_view(),
+        name="related-products",
+    ),
+   
     # =====================================================
     # ADMIN CATEGORIES
     # =====================================================

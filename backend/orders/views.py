@@ -1,26 +1,16 @@
 from decimal import Decimal
 
+from django.db import transaction
 from rest_framework import status
-from rest_framework.permissions import (
-    IsAdminUser,
-    IsAuthenticated,
-)
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.models import Address
 from products.models import Product
-from decimal import Decimal
-from django.utils import timezone
-from .models import Order, OrderItem
-from .serializers import (
-    AdminOrderSerializer,
-    OrderSerializer,
-)
 
-# ============================================================
-# CUSTOMER - PLACE ORDER
-# ============================================================
+from .models import Order, OrderItem
+from .serializers import AdminOrderSerializer, OrderSerializer
 
 
 # ============================================================
@@ -32,18 +22,26 @@ class PlaceOrderView(APIView):
 
     permission_classes = [IsAuthenticated]
 
+    @transaction.atomic
     def post(self, request):
 
         address_id = request.data.get("address")
         payment_method = request.data.get("payment_method")
         items = request.data.get("items", [])
-        coupon_code = request.data.get("coupon_code", "").strip().upper()
+
+        # ====================================================
+        # VALIDATE CART
+        # ====================================================
 
         if not items:
             return Response(
-                {"error": "Cart is empty"},
+                {"error": "Cart is empty."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+        # ====================================================
+        # VALIDATE ADDRESS
+        # ====================================================
 
         try:
             address = Address.objects.get(
@@ -53,167 +51,136 @@ class PlaceOrderView(APIView):
 
         except Address.DoesNotExist:
             return Response(
-                {"error": "Invalid Address"},
+                {"error": "Invalid delivery address."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
         # ====================================================
-        # CALCULATE SUBTOTAL
+        # VALIDATE PAYMENT METHOD
         # ====================================================
 
-        subtotal = Decimal("0.00")
+        valid_payment_methods = ["COD", "ONLINE"]
 
-        order = Order.objects.create(
-            user=request.user,
-            address=address,
-            payment_method=payment_method,
-            subtotal=0,
-            discount_amount=0,
-            delivery_charge=0,
-            platform_fee=5,
-            coupon_code=coupon_code or None,
-            total_amount=0,
-        )
+        if payment_method not in valid_payment_methods:
+            return Response(
+                {"error": "Invalid payment method."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # ====================================================
+        # LOCK PRODUCTS
+        # ====================================================
+
+        product_ids = []
 
         for item in items:
 
-            try:
-                product = Product.objects.get(
-                    id=item["product"]
+            product_id = item.get("product")
+
+            if not product_id:
+                return Response(
+                    {"error": "Invalid product information."},
+                    status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            except Product.DoesNotExist:
+            product_ids.append(product_id)
 
-                order.delete()
+        products = {
+            product.id: product
+            for product in Product.objects.select_for_update().filter(
+                id__in=product_ids
+            )
+        }
 
+        # ====================================================
+        # VALIDATE PRODUCTS AND STOCK
+        # ====================================================
+
+        validated_items = []
+
+        subtotal = Decimal("0.00")
+
+        for item in items:
+
+            product_id = item.get("product")
+            quantity = item.get("quantity")
+
+            # ------------------------------------------------
+            # PRODUCT EXISTS
+            # ------------------------------------------------
+
+            if product_id not in products:
                 return Response(
                     {
                         "error": (
-                            f"Product {item['product']} "
+                            f"Product {product_id} "
                             "does not exist."
                         )
                     },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
+            product = products[product_id]
+
+            # ------------------------------------------------
+            # VALIDATE QUANTITY
+            # ------------------------------------------------
+
             try:
-                quantity = int(item["quantity"])
-            except (ValueError, TypeError):
+                quantity = int(quantity)
 
-                order.delete()
-
+            except (TypeError, ValueError):
                 return Response(
-                    {"error": "Invalid product quantity."},
+                    {
+                        "error": (
+                            f"Invalid quantity for "
+                            f"{product.name}."
+                        )
+                    },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             if quantity <= 0:
-
-                order.delete()
-
                 return Response(
                     {
                         "error": (
-                            "Product quantity must be "
-                            "greater than zero."
+                            f"Quantity for {product.name} "
+                            "must be greater than zero."
                         )
                     },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            OrderItem.objects.create(
-                order=order,
-                product=product,
-                quantity=quantity,
-                price=product.price,
+            # ------------------------------------------------
+            # CHECK STOCK
+            # ------------------------------------------------
+
+            if product.stock < quantity:
+                return Response(
+                    {
+                        "error": (
+                            f"Only {product.stock} "
+                            f"unit(s) of {product.name} "
+                            "are available."
+                        )
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            # ------------------------------------------------
+            # CALCULATE SUBTOTAL
+            # ------------------------------------------------
+
+            item_total = product.price * quantity
+
+            subtotal += item_total
+
+            validated_items.append(
+                {
+                    "product": product,
+                    "quantity": quantity,
+                }
             )
-
-            subtotal += product.price * quantity
-
-        # ====================================================
-        # APPLY COUPON
-        # ====================================================
-
-        discount = Decimal("0.00")
-        coupon = None
-
-        if coupon_code:
-
-            from coupons.models import Coupon
-
-            try:
-                coupon = Coupon.objects.get(code=coupon_code)
-
-            except Coupon.DoesNotExist:
-
-                order.delete()
-
-                return Response(
-                    {"error": "Invalid coupon code."},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-
-            now = timezone.now()
-
-            if not coupon.is_active:
-
-                order.delete()
-
-                return Response(
-                    {"error": "This coupon is currently inactive."},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-
-            if now < coupon.valid_from:
-
-                order.delete()
-
-                return Response(
-                    {"error": "This coupon is not active yet."},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-
-            if now > coupon.valid_until:
-
-                order.delete()
-
-                return Response(
-                    {"error": "This coupon has expired."},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-
-            if subtotal < coupon.minimum_order_amount:
-
-                order.delete()
-
-                return Response(
-                    {
-                        "error": (
-                            f"Minimum order amount is "
-                            f"₹{coupon.minimum_order_amount}."
-                        )
-                    },
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-
-            if coupon.discount_type == "PERCENTAGE":
-
-                discount = (
-                    subtotal * coupon.discount_value
-                ) / Decimal("100")
-
-                if coupon.maximum_discount is not None:
-                    discount = min(
-                        discount,
-                        coupon.maximum_discount,
-                    )
-
-            else:
-
-                discount = coupon.discount_value
-
-            # Discount cannot exceed subtotal
-            discount = min(discount, subtotal)
 
         # ====================================================
         # DELIVERY CHARGE
@@ -236,23 +203,43 @@ class PlaceOrderView(APIView):
 
         total = (
             subtotal
-            - discount
             + delivery_charge
             + platform_fee
         )
 
         # ====================================================
-        # SAVE ORDER TOTALS
+        # CREATE ORDER
         # ====================================================
 
-        order.subtotal = subtotal
-        order.discount_amount = discount
-        order.delivery_charge = delivery_charge
-        order.platform_fee = platform_fee
-        order.coupon_code = coupon.code if coupon else None
-        order.total_amount = total
+        order = Order.objects.create(
+            user=request.user,
+            address=address,
+            payment_method=payment_method,
+            total_amount=total,
+        )
 
-        order.save()
+        # ====================================================
+        # CREATE ORDER ITEMS + REDUCE STOCK
+        # ====================================================
+
+        for item in validated_items:
+
+            product = item["product"]
+            quantity = item["quantity"]
+
+            OrderItem.objects.create(
+                order=order,
+                product=product,
+                quantity=quantity,
+                price=product.price,
+            )
+
+            product.stock -= quantity
+            product.save(update_fields=["stock"])
+
+        # ====================================================
+        # RESPONSE
+        # ====================================================
 
         serializer = OrderSerializer(order)
 
@@ -260,6 +247,8 @@ class PlaceOrderView(APIView):
             serializer.data,
             status=status.HTTP_201_CREATED,
         )
+
+
 # ============================================================
 # CUSTOMER - ORDER LIST
 # ============================================================
@@ -271,9 +260,14 @@ class OrderListView(APIView):
 
     def get(self, request):
 
-        orders = Order.objects.filter(user=request.user).order_by("-created_at")
+        orders = Order.objects.filter(
+            user=request.user
+        ).order_by("-created_at")
 
-        serializer = OrderSerializer(orders, many=True)
+        serializer = OrderSerializer(
+            orders,
+            many=True,
+        )
 
         return Response(serializer.data)
 
@@ -290,12 +284,16 @@ class OrderDetailView(APIView):
     def get(self, request, pk):
 
         try:
-
-            order = Order.objects.get(id=pk, user=request.user)
+            order = Order.objects.get(
+                id=pk,
+                user=request.user,
+            )
 
         except Order.DoesNotExist:
-
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"error": "Order not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
         serializer = OrderSerializer(order)
 
@@ -311,35 +309,66 @@ class CancelOrderView(APIView):
 
     permission_classes = [IsAuthenticated]
 
+    @transaction.atomic
     def patch(self, request, pk):
 
         try:
-
-            order = Order.objects.get(id=pk, user=request.user)
+            order = Order.objects.select_for_update().get(
+                id=pk,
+                user=request.user,
+            )
 
         except Order.DoesNotExist:
-
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"error": "Order not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
         if order.status == "Delivered":
-
             return Response(
-                {"error": "Delivered order cannot be cancelled."},
+                {
+                    "error": (
+                        "Delivered order cannot be cancelled."
+                    )
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         if order.status == "Cancelled":
-
             return Response(
-                {"error": "Order is already cancelled."},
+                {
+                    "error": "Order is already cancelled."
+                },
                 status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # ====================================================
+        # RESTORE STOCK
+        # ====================================================
+
+        for order_item in order.items.select_related("product"):
+
+            product = Product.objects.select_for_update().get(
+                id=order_item.product_id
+            )
+
+            product.stock += order_item.quantity
+
+            product.save(
+                update_fields=["stock"]
             )
 
         order.status = "Cancelled"
 
-        order.save()
+        order.save(
+            update_fields=["status"]
+        )
 
-        return Response({"message": "Order Cancelled"})
+        return Response(
+            {
+                "message": "Order cancelled successfully."
+            }
+        )
 
 
 # ============================================================
@@ -355,7 +384,10 @@ class AdminOrderListView(APIView):
 
         orders = Order.objects.all().order_by("-created_at")
 
-        serializer = AdminOrderSerializer(orders, many=True)
+        serializer = AdminOrderSerializer(
+            orders,
+            many=True,
+        )
 
         return Response(serializer.data)
 
@@ -372,13 +404,12 @@ class AdminOrderDetailView(APIView):
     def get(self, request, pk):
 
         try:
-
             order = Order.objects.get(id=pk)
 
         except Order.DoesNotExist:
-
             return Response(
-                {"error": "Order not found."}, status=status.HTTP_404_NOT_FOUND
+                {"error": "Order not found."},
+                status=status.HTTP_404_NOT_FOUND,
             )
 
         serializer = AdminOrderSerializer(order)
@@ -398,21 +429,22 @@ class AdminOrderStatusUpdateView(APIView):
     def patch(self, request, pk):
 
         try:
-
             order = Order.objects.get(id=pk)
 
         except Order.DoesNotExist:
-
             return Response(
-                {"error": "Order not found."}, status=status.HTTP_404_NOT_FOUND
+                {"error": "Order not found."},
+                status=status.HTTP_404_NOT_FOUND,
             )
 
         new_status = request.data.get("status")
 
-        valid_statuses = [choice[0] for choice in Order.STATUS_CHOICES]
+        valid_statuses = [
+            choice[0]
+            for choice in Order.STATUS_CHOICES
+        ]
 
         if new_status not in valid_statuses:
-
             return Response(
                 {
                     "error": "Invalid order status.",
@@ -423,13 +455,17 @@ class AdminOrderStatusUpdateView(APIView):
 
         order.status = new_status
 
-        order.save()
+        order.save(
+            update_fields=["status"]
+        )
 
         serializer = AdminOrderSerializer(order)
 
         return Response(
             {
-                "message": "Order status updated successfully.",
+                "message": (
+                    "Order status updated successfully."
+                ),
                 "order": serializer.data,
             }
         )

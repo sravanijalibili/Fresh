@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -18,7 +19,7 @@ class Product(models.Model):
 
     name = models.CharField(max_length=100)
     quantity = models.CharField(max_length=30)
-
+    stock = models.PositiveIntegerField(default=0)
     original_price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
@@ -35,3 +36,5 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+

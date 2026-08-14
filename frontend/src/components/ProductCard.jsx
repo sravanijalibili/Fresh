@@ -64,7 +64,6 @@ function ProductCard({ product }) {
     setWishlistLoading(true);
 
     try {
-      // REMOVE
       if (wishlisted && wishlistId) {
         await removeFromWishlist(wishlistId);
 
@@ -76,7 +75,6 @@ function ProductCard({ product }) {
         return;
       }
 
-      // ADD
       const data = await addToWishlist(product.id);
 
       setWishlisted(true);
@@ -86,10 +84,7 @@ function ProductCard({ product }) {
     } catch (error) {
       console.error("Wishlist error:", error);
 
-      toast.error(
-        error.response?.data?.error ||
-          "Unable to update wishlist"
-      );
+      toast.error(error.response?.data?.error || "Unable to update wishlist");
     } finally {
       setWishlistLoading(false);
     }
@@ -102,10 +97,43 @@ function ProductCard({ product }) {
   const handleAddToCart = (e) => {
     e.stopPropagation();
 
+    if (product.stock <= 0) {
+      toast.error("This product is currently out of stock.");
+
+      return;
+    }
+
     addToCart(product);
 
     toast.success(`${product.name} added to cart`);
   };
+
+  // =========================================================
+  // STOCK STATUS
+  // =========================================================
+
+  const getStockStatus = () => {
+    if (product.stock <= 0) {
+      return {
+        text: "Out of Stock",
+        className: "out-of-stock",
+      };
+    }
+
+    if (product.stock <= 5) {
+      return {
+        text: `Only ${product.stock} left`,
+        className: "low-stock",
+      };
+    }
+
+    return {
+      text: "In Stock",
+      className: "in-stock",
+    };
+  };
+
+  const stockStatus = getStockStatus();
 
   return (
     <div
@@ -113,38 +141,28 @@ function ProductCard({ product }) {
       onClick={() => navigate(`/product/${product.id}`)}
     >
       <div className="product-image">
-        <img
-          src={product.image}
-          alt={product.name}
-        />
-
+        <img src={product.image} alt={product.name} />
         {/* Rating */}
 
-        <span className="rating">
-          ⭐ 4.8
-        </span>
-
+        {Number(product.review_count || 0) > 0 && (
+          <div className="product-rating">
+            ⭐ {Number(product.average_rating || 0).toFixed(1)}
+            <span> ({product.review_count})</span>
+          </div>
+        )}
         {/* Discount */}
 
         {product.discount_percentage > 0 && (
-          <span className="discount">
-            {product.discount_percentage}% OFF
-          </span>
+          <span className="discount">{product.discount_percentage}% OFF</span>
         )}
 
         {/* Wishlist */}
 
         <button
-          className={`wishlist ${
-            wishlisted ? "wishlisted" : ""
-          }`}
+          className={`wishlist ${wishlisted ? "wishlisted" : ""}`}
           onClick={handleWishlist}
           disabled={wishlistLoading}
-          aria-label={
-            wishlisted
-              ? "Remove from wishlist"
-              : "Add to wishlist"
-          }
+          aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
         >
           <FaHeart />
         </button>
@@ -155,17 +173,23 @@ function ProductCard({ product }) {
 
         <p>{product.quantity}</p>
 
+        {/* Stock */}
+
+        <div className={`stock-status ${stockStatus.className}`}>
+          {stockStatus.text}
+        </div>
+
         <div className="price-row">
-          <h2 className="product-price">
-            ₹{product.price}
-          </h2>
+          <h2 className="product-price">₹{product.price}</h2>
 
           <button
             className="add-btn"
             onClick={handleAddToCart}
+            disabled={product.stock <= 0}
           >
             <FaPlus />
-            Add
+
+            {product.stock <= 0 ? "Unavailable" : "Add"}
           </button>
         </div>
       </div>
