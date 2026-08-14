@@ -80,7 +80,6 @@ function ProductCard({ product }) {
       const data = await addToWishlist(product.id);
 
       setWishlisted(true);
-
       setWishlistId(data.id);
 
       toast.success("Added to wishlist");
@@ -127,9 +126,11 @@ function ProductCard({ product }) {
 
         {/* Discount */}
 
-        <span className="discount">
-          20% OFF
-        </span>
+        {product.discount_percentage > 0 && (
+          <span className="discount">
+            {product.discount_percentage}% OFF
+          </span>
+        )}
 
         {/* Wishlist */}
 

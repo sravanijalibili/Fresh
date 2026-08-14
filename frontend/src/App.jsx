@@ -22,6 +22,7 @@ import OrderDetails from "./pages/OrderDetails";
 import About from "./pages/About";
 import Wishlist from "./pages/Wishlist";
 import Coupons from "./pages/Coupons";
+import HelpSupport from "./pages/HelpSupport";
 
 import AdminLayout from "./admin/layouts/AdminLayout";
 import Dashboard from "./admin/pages/Dashboard";
@@ -145,6 +146,10 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+        <Route
+  path="/help-support"
+  element={<HelpSupport />}
+/>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route

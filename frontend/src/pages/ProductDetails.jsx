@@ -67,7 +67,6 @@ function ProductDetails() {
   const loadWishlist = async () => {
     const token = localStorage.getItem("access");
 
-    // User is not logged in
     if (!token) {
       return;
     }
@@ -155,6 +154,14 @@ function ProductDetails() {
   }
 
   // ============================================================
+  // DISCOUNT
+  // ============================================================
+
+  const hasDiscount =
+    Number(product.discount_percentage) > 0 &&
+    Number(product.original_price) > Number(product.price);
+
+  // ============================================================
   // UI
   // ============================================================
 
@@ -170,9 +177,12 @@ function ProductDetails() {
           ================================================== */}
 
           <div className="product-image-container">
-            <div className="discount-tag">
-              10% OFF
-            </div>
+
+            {hasDiscount && (
+              <div className="discount-tag">
+                {product.discount_percentage}% OFF
+              </div>
+            )}
 
             <button
               className={`wishlist-heart ${
@@ -224,6 +234,7 @@ function ProductDetails() {
             </div>
 
             <div className="product-meta">
+
               <div className="rating">
                 ⭐ 4.8
               </div>
@@ -231,7 +242,12 @@ function ProductDetails() {
               <div className="stock-badge">
                 🟢 In Stock
               </div>
+
             </div>
+
+            {/* ==================================================
+                PRICE
+            ================================================== */}
 
             <div className="price-section">
 
@@ -239,15 +255,21 @@ function ProductDetails() {
                 ₹{product.price}
               </div>
 
-              <div className="original-price">
-                ₹{Math.round(product.price * 1.1)}
-              </div>
+              {hasDiscount && (
+                <div className="original-price">
+                  ₹{product.original_price}
+                </div>
+              )}
 
             </div>
 
             <div className="product-quantity">
               {product.quantity}
             </div>
+
+            {/* ==================================================
+                DELIVERY
+            ================================================== */}
 
             <div className="delivery-card">
               <h4>⚡ Delivery</h4>
@@ -258,9 +280,20 @@ function ProductDetails() {
               </p>
             </div>
 
-            <div className="offer-badge">
-              🔥 10% OFF on this product
-            </div>
+            {/* ==================================================
+                OFFER
+            ================================================== */}
+
+            {hasDiscount && (
+              <div className="offer-badge">
+                🔥 {product.discount_percentage}% OFF on this
+                product
+              </div>
+            )}
+
+            {/* ==================================================
+                ABOUT PRODUCT
+            ================================================== */}
 
             <div className="about-product">
 
@@ -313,7 +346,6 @@ function ProductDetails() {
             <button
               className="cart-btn"
               onClick={() => {
-
                 for (let i = 0; i < quantity; i++) {
                   addToCart(product);
                 }
@@ -321,7 +353,6 @@ function ProductDetails() {
                 toast.success(
                   `${product.name} added to cart`
                 );
-
               }}
             >
               <FaShoppingCart />

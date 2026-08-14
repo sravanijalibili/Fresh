@@ -1,0 +1,314 @@
+.help-support-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-bottom: 100px;
+}
+
+/* ============================================================
+   SUPPORT HEADER
+   ============================================================ */
+
+.support-header-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 24px;
+
+  margin-bottom: 20px;
+
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.support-icon {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background: #e8f7ee;
+
+  color: #16a34a;
+
+  font-size: 25px;
+
+  flex-shrink: 0;
+}
+
+.support-header-card h2 {
+  margin: 0 0 6px;
+
+  font-size: 22px;
+}
+
+.support-header-card p {
+  margin: 0;
+
+  color: #777;
+
+  line-height: 1.5;
+}
+
+/* ============================================================
+   COMMON CARD
+   ============================================================ */
+
+.support-card {
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  padding: 22px;
+
+  margin-bottom: 20px;
+
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.support-card h3 {
+  margin: 0 0 18px;
+
+  font-size: 19px;
+}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+
+.support-contact {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding: 16px;
+
+  border-radius: 14px;
+
+  background: #f8faf9;
+}
+
+.support-contact-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #e8f7ee;
+
+  color: #16a34a;
+
+  font-size: 20px;
+
+  flex-shrink: 0;
+}
+
+.support-contact h4 {
+  margin: 0 0 5px;
+
+  font-size: 16px;
+}
+
+.support-contact p {
+  margin: 0 0 5px;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+.support-contact a {
+  color: #16a34a;
+
+  text-decoration: none;
+
+  font-weight: 600;
+}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+
+.faq-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.faq-item {
+  border: 1px solid #eeeeee;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+.faq-question {
+  width: 100%;
+
+  border: none;
+
+  background: transparent;
+
+  padding: 16px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  text-align: left;
+}
+
+.faq-question-left {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.faq-icon {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #f0fdf4;
+
+  color: #16a34a;
+
+  flex-shrink: 0;
+}
+
+.faq-arrow {
+  color: #777;
+
+  transition: transform 0.2s ease;
+}
+
+.faq-open .faq-arrow {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  padding: 0 16px 16px 62px;
+
+  color: #666;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.support-footer {
+  text-align: center;
+
+  padding: 30px 20px;
+
+  color: #777;
+}
+
+.support-footer svg {
+  font-size: 30px;
+
+  color: #16a34a;
+
+  margin-bottom: 8px;
+}
+
+.support-footer h3 {
+  margin: 0 0 6px;
+
+  color: #333;
+}
+
+.support-footer p {
+  margin: 0;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .help-support-page {
+    padding: 15px;
+
+    padding-bottom: 100px;
+  }
+
+  .support-header-card {
+    padding: 18px;
+
+    gap: 14px;
+  }
+
+  .support-icon {
+    width: 50px;
+    height: 50px;
+
+    font-size: 21px;
+  }
+
+  .support-header-card h2 {
+    font-size: 18px;
+  }
+
+  .support-header-card p {
+    font-size: 13px;
+  }
+
+  .support-card {
+    padding: 17px;
+
+    border-radius: 15px;
+  }
+
+  .faq-question {
+    padding: 14px;
+
+    font-size: 14px;
+  }
+
+  .faq-answer {
+    padding: 0 14px 14px 60px;
+
+    font-size: 13px;
+  }
+}

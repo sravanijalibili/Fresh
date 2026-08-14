@@ -52,15 +52,15 @@ function Account() {
       title: "Offers & Coupons",
       subtitle: "Latest deals for you",
       icon: <FaGift />,
-      action: () => navigate("/coupons"),    },
+      action: () => navigate("/coupons"),
+    },
 
     {
       title: "Help & Support",
       subtitle: "Need any help?",
       icon: <FaHeadset />,
-      action: () => toast("Support Coming Soon"),
+      action: () => navigate("/help-support"),
     },
-
     {
       title: "About Fresh",
       subtitle: "About the app & developer",
