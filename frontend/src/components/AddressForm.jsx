@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import L from "leaflet";
 import toast from "react-hot-toast";
-import { createAddress, updateAddress } from "../services/addressService";
+import { addAddress, updateAddress } from "../services/addressService";
 import "leaflet/dist/leaflet.css";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
@@ -161,7 +161,7 @@ function AddressForm({ address, onClose }) {
 
         toast.success("Address updated");
       } else {
-        await createAddress(payload);
+        await addAddress(payload);
 
         toast.success("Address added");
       }
